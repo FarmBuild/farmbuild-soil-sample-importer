@@ -1,6 +1,6 @@
-# Farm Dairy Nutrient Calculator
+# FarmBuild Soil Sample Importer
 
-This is the dairy nutrient calculator module of farm build JavaScript library.
+This is the soil sample importer module of farm build JavaScript library.
 
 
 ## Getting Started
@@ -24,9 +24,9 @@ GA implementation.
 Example
 ```
 //Calling the calculate API
-farmbuild.nutrientCalculator.calculate(farmData);
+farmbuild.soilSampleImporter.calculate(farmData);
 var organisationName = 'Spatial Vision';
 //Calling the track API for the usage
-farmbuild.nutrientCalculator.ga.trackCalculate(organisationName);
+farmbuild.soilSampleImporter.ga.trackCalculate(organisationName);
 ```
 
