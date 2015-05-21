@@ -1,7 +1,7 @@
 {
   "name": "farmbuild-soil-sample-importer",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "This project is the soil sample importer module of farm build JavaScript library",
   "repository": "https://github.com/FarmBuild/farmbuild-soil-sample-importer",
   "license": "MIT",
