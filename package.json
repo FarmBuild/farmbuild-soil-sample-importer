@@ -8,6 +8,7 @@
   "dependencies": {},
   "devDependencies": {
     "karma": "^0.12",
+    "karma-cli": "^0.0",
     "karma-html2js-preprocessor": "^0.1",
     "karma-fixture": "^0.2",
     "karma-chrome-launcher": "^0.1",
