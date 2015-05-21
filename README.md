@@ -9,7 +9,7 @@ To get you started simply download this repository using <a href="https://github
 Unzip the downloaded folder and go to "examples" and open one of the html files in a browser.
 
 
-<a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/docs/farmbuild-soil-sample-importer/0.1.1/index.html" target="_blank">API documentation</a>
+<a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/docs/farmbuild-soil-sample-importer/0.1.2/index.html" target="_blank">API documentation</a>
 
 
 For more information about API and Testing see the [Wiki](https://github.com/SpatialVision/farm-build-nutrient-calculator/wiki) section.
