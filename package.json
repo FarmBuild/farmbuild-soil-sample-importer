@@ -52,7 +52,7 @@
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json",
     "version": "node_modules/.bin/replace '@version {version}' '@version 0.1.1' src/*.js src/**/*.js",
     "jshint": " node_modules/.bin/jshint -c .jshintrc --filename src/**/*-src.js src/soil-sample-importer.js --verbose --show-non-errors",
-    "concat": "uglifyjs src/soil-sample-importer.js src/**/*.src.js src/index.js -o dist/farmbuild-soilsampleimporter.js -v -b",
+    "concat": "uglifyjs src/soil-sample-importer.js src/**/*.src.js src/index.src.js -o dist/farmbuild-soilsampleimporter.js -v -b",
     "uglify": "uglifyjs dist/farmbuild-soilsampleimporter.js --source-map dist/farmbuild-soilsampleimporter.min.js.map --source-map-url farmbuild-nutrientcalculator.min.js.map -o dist/farmbuild-soilsampleimporter.min.js -v -c",
     "copy-core": "ncp bower_components/farmbuild-core/dist/ dist/ && ncp bower_components/farmbuild-farmdata/dist/ dist/",
     "dist": "npm run clean && npm run generate-docs && npm run concat && npm run uglify && npm run copy-core"

@@ -7,17 +7,16 @@ module.exports = function(config){
       'bower_components/farmbuild-core/dist/farmbuild-core.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/farmbuild-farmdata/dist/farmbuild-farmdata.js',
-      'src/soil-sample-import.js',
-
+      'src/soil-sample-importer.js',
       'src/session/index.src.js',
       'src/ga/index.src.js',
-      'src/index.js',
-//      'src/blank.spec.js',//use this as a basis of creating your module test
+      'src/index.src.js',
+      'src/blank.spec.js',//use this as a basis of creating your module test
 //      'src/session/index.spec.js',
 //      'src/collections/index.spec.js',
 //      'src/ga/index.spec.js',
-      'src/index.spec.js',
-//      'src/**/*.spec.js',
+//      'src/index.spec.js',
+      'src/**/*.spec.js',
       {pattern: 'examples/data/*.json'}
     ],
 

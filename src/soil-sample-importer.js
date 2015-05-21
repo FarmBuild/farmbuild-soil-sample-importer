@@ -27,7 +27,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
     soilSampleImporter.ga = googleAnalyticsImporter;
     soilSampleImporter.session = soilSampleImporterSession;
 
-		$log.info('Welcome to Farm Dairy Soil Sample Importer... ' +
+		$log.info('Welcome to Soil Sample Importer... ' +
       'this should only be initialised once! why we see twice in the example?');
     function createDefault() {
       return {

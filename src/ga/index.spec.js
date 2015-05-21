@@ -25,7 +25,7 @@ describe('farmbuild.soilSampleImporter module', function() {
         }));
 
         it('googleAnalyticsImporter.track should create a track', inject(function() {
-            googleAnalyticsImporter.trackCalculate('AgSmart')
+            googleAnalyticsImporter.track('AgSmart')
         }));
     });
 
