@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="farmbuild.soilSampleImporter.examples">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Farmbuild Soil Sample Import (angularJS)</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-controller="FarmCtrl">
+<content>
+<modal ng-if="noResult" ng-include="'modal-validation-error.html'"></modal>
+<form role="form" name="form" novalidate>
+  <h3>
+    FarmBuild Soil Sample Importer
+    <small>(angularJS)</small>
+  </h3>
+  <hr/>
+  <h4>
+    ...
+  </h4>
+  <p>
+
+  </p>
+  <br/>
+  <hr/>
+  <h4>
+    Load FarmData to start mapping with the soil sample result in csv.
+  </h4>
+  <p>
+    You must have a farmData for paddock info
+    Please use the example farmData files in ../data/.
+  </p>
+  <form-item class="form-group col-sm-12">
+    <label>Please select your farm data</label>
+    <input id="loadFile" name="farmData" type="file" on-read-file="loadFarmData($fileContent)" class="form-control">
+
+  </form-item>
+  <buttons class="col-md-12" ng-if="farmData.name">
+    <button class="btn btn-primary" ng-click="calculate()">Load</button>
+    <a type="button" class="btn btn-primary" ng-click="exportFarmData(farmData)" ng-disabled="!farmData.name">Export
+      farm data</a>
+    <button class="btn btn-primary" ng-click="clear()">Clear session</button>
+  </buttons>
+
+  <div class="clearfix"></div>
+</form>
+<empty-message ng-if="!farmData.name"><i class="fa fa-warning icon"></i>
+  Provide a farm data to see the soil sample result with paddocks
+</empty-message>
+
+<summary ng-if="farmData.name">
+</summary>
+<version>
+  Version: <span ng-bind="appVersion"></span>
+</version>
+</content>
+
+<script src="../../dist/farmbuild-core.js"></script>
+<script src="../../dist/farmbuild-farmdata.js"></script>
+<script src="../../dist/farmbuild-soilsampleimporter.js"></script>
+<script src="../config.js"></script>
+<script src="index.js"></script>
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+  var GA_TRACKING_CODE = 'UA-53478356-1';
+
+  ga('create', GA_TRACKING_CODE, 'auto');
+</script>
+
+
+</body>
+</html>
