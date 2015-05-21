@@ -5,11 +5,15 @@ node_js:
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - npm install npm -g
   - npm start > /dev/null &
   - npm update
   - npm run update-webdriver
   - sleep 1 # give server time to start
 
 script:
-  - ./node_modules/.bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
-  - ./node_modules/.bin/protractor protractor.conf.js --browser=firefox
+  - npm -v
+  - node -v
+  - karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
+  #- ./node_modules/.bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
+  #- ./node_modules/.bin/protractor protractor.conf.js --browser=firefox
