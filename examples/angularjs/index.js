@@ -28,6 +28,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
         updateFarmData($scope, farmData);
 
+        $scope.prettyContent = JSON.stringify(farmData,null,"    ");
       } catch (e) {
         console.error('farmbuild.soilSampleImporter.examples > load: Your file should be in json format: ', e);
         $scope.noResult = true;
@@ -70,11 +71,11 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
         return;
       }
       $scope.farmData = farmData;
-      $scope.balance = farmData.soilSampleImporter.balance;
-      $scope.efficiency = farmData.soilSampleImporter.efficiency;
-      $scope.feedBalance = farmData.soilSampleImporter.feedBalance;
-      $scope.milkProduction = farmData.soilSampleImporter.milkProduction;
-      $scope.stockingRate = farmData.soilSampleImporter.stockingRate;
+//      $scope.balance = farmData.soilSampleImporter.balance;
+//      $scope.efficiency = farmData.soilSampleImporter.efficiency;
+//      $scope.feedBalance = farmData.soilSampleImporter.feedBalance;
+//      $scope.milkProduction = farmData.soilSampleImporter.milkProduction;
+//      $scope.stockingRate = farmData.soilSampleImporter.stockingRate;
 
     }
 //    $scope.file;
