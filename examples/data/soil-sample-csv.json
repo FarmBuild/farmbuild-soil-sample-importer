@@ -1,0 +1,27 @@
+{
+    "dateLastUpdated": "2015-05-25T02:23:51",
+	"columns" :[ 
+	{ "name":"pH (1:5 Water)",
+	  "isSelected":true
+	},
+	{ "name":"pH (1:5 CaCl2)",
+	   "isSelected":true
+	},
+	{  "name":"Phosphorus (Olsen) - mg/kg",
+	   "isSelected":true
+	}
+	],
+	"paddockResults" : 	[
+		{ 	"selectedName":"P3",
+			"mappedName":"P3",
+			"id":1,
+			"results":[ 1.2,3.4,5.6 ]
+		},
+		{   "selectedName":"P3",
+			"mappedName":"P1",
+			"id":2,
+			"results":[ 9.8,33,5.4 ]
+		}
+	]
+
+}
