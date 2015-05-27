@@ -19,9 +19,9 @@
   </h3>
   <hr/>
   <h4>
-    ...
   </h4>
   <p>
+
 
   </p>
   <br/>
@@ -52,6 +52,48 @@
 </empty-message>
 
 <summary ng-if="farmData.name">
+
+    <legend>Paddock Soil Information</legend>
+
+    <paddocks ng-repeat="item in paddockSoilInfo">
+      <td>
+        Paddock Name: {{item.paddockName}}
+      </td>
+      <table class="table table-striped">
+        <tr>
+          <th class="col">Area
+          </th>
+          <th>Description
+          </th>
+          <th>Soil Group
+          </th>
+          <th>Soil Class
+          </th>
+        </tr>
+        <tr ng-repeat="soil in item.soilTypes">
+          <td>
+            {{soil.area}}
+          </td>
+          <td>
+            {{soil.description}}
+          </td>
+          <td>
+            {{soil.soilGroup}}
+          </td>
+          <td>
+            {{soil.soilClass}}
+          </td>
+
+          </td>
+        </tr>
+
+      </table>
+    </paddocks>
+
+
+  <pre>
+    {{prettyContent}}
+  </pre>
 </summary>
 <version>
   Version: <span ng-bind="appVersion"></span>

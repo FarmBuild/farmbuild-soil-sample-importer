@@ -7,20 +7,20 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
   .controller('FarmCtrl', function ($scope, $log, soilSampleImporter) {
 
-    var load = false;
-    if (location.href.split('?').length > 1 && location.href.split('?')[1].indexOf('load') === 0) {
-      load = (location.href.split('?')[1].split('=')[1] === 'true');
-    }
+//    var load = false;
+//    if (location.href.split('?').length > 1 && location.href.split('?')[1].indexOf('load') === 0) {
+//      load = (location.href.split('?')[1].split('=')[1] === 'true');
+//    }
 
     $scope.farmData = {};
 
     $scope.loadFarmData = function ($fileContent) {
-      $log.info('$scope.loadFarmData $fileContent..');
+      $log.info('FarmCtrl>>loadFarmData>>start');
 
       try {
         $scope.farmData = {};
         var farmData = soilSampleImporter.load(angular.fromJson($fileContent));
-
+        $log.info('FarmCtrl>>loadFarmData');
         if (!angular.isDefined(farmData)) {
           $scope.noResult = true;
           return;
