@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="farmbuild.soilSampleImporter.examples.paddockSelector">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Farm Build Soil Imported - Paddock Selector</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body ng-controller="PaddockSelectorCtrl">
+<content>
+    <h3>FarmBuild Soil Importer
+    </h3>
+    {{paddockSelection}}
+    <form role="form" name="form" novalidate>
+        <table>
+            <tr>
+                <th ng-repeat="header in paddockSelection.columnHeaders">
+                    {{header}}
+
+                    <select ng-if="paddockColumnIndex+'' != $index" >
+                        <option value="-1">Discard</option>
+                        <option ng-repeat="clsType in classificationTypes" >{{clsType.label}}</option>
+                    </select>
+                </th>
+            </tr>
+            <tr ng-repeat="row in paddockSelection.rows">
+                <td ng-repeat="col in row">
+
+                    <select ng-if="paddockColumnIndex+'' == $index" >
+                        <option ng-repeat="paddock in paddocks" >{{paddock.name}}</option>
+                    </select>
+                    <div ng-if="paddockColumnIndex+'' != $index">
+                        {{col}}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</content>
+<script src="../../../dist/farmbuild-core.js"></script>
+<script src="../../../dist/farmbuild-farmdata.js"></script>
+<script src="../../../dist/farmbuild-soilsampleimporter.js"></script>
+<script src="../../config.js"></script>
+<script src="index.js"></script>
+
+</body>
+\</html>
