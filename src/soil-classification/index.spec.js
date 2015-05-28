@@ -8,7 +8,8 @@ describe('farmbuild.soilSampleImporter.soilClassification module', function() {
     // instantiate service
     var soilClassification, soilClassificationTypes, validations,
         $log,
-        h2O = 'pH H2O (Water)';
+        h2O = 'pH H2O (Water)',
+        colWellPhosphor = "Colwell Phosphorus (mg/kg)";
 
     beforeEach(module('farmbuild.farmdata', function($provide) {
         $provide.value('$log', console)
@@ -47,6 +48,20 @@ describe('farmbuild.soilSampleImporter.soilClassification module', function() {
             expect(soilClassification.findRange(found, 5.5).name).toEqual("Acidic");
             expect(soilClassification.findRange(found, 6).name).toEqual("Slightly Acidic");
             expect(soilClassification.findRange(found, 10).name).toEqual("Neutral");
+        }));
+
+    });
+
+    describe('soilClassification Colwell Phosphorus', function(){
+        it('Colwell Phosphorus classification should be correct', inject(function() {
+            var found = soilClassificationTypes.byName(colWellPhosphor);
+
+            expect(found.name).toEqual(colWellPhosphor);
+            expect(soilClassification.findRangeWithDependency(found, 0, 15).name).toEqual("Deficient");
+            /*expect(soilClassification.findRange(found, 5.2).name).toEqual("Very Acidic");
+            expect(soilClassification.findRange(found, 5.5).name).toEqual("Acidic");
+            expect(soilClassification.findRange(found, 6).name).toEqual("Slightly Acidic");
+            expect(soilClassification.findRange(found, 10).name).toEqual("Neutral");*/
         }));
 
     });

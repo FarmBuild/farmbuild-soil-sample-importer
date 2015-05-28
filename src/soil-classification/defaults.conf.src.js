@@ -4,32 +4,118 @@ angular.module('farmbuild.soilSampleImporter').
             {
                 "name": "pH H2O (Water)",
                 "ranges": [
-                    {"name":"Very Acidic", "min":undefined, "max":5.2, "defaultColor": "#fffe03"},
-                    {"name":"Acidic", "min":5.2, "max":5.5, "defaultColor": "#96cf4c"},
-                    {"name":"Slightly Acidic", "min":5.5, "max":6.1, "defaultColor": "#96cf4c"},
-                    {"name":"Neutral", "min":6.1, "max":undefined, "defaultColor": "#aba3cc"}
+                    {
+                        "name": ["Very Acidic", "Acidic", "Slightly Acidic", "Neutral"],
+                        "min": [undefined, 5.2, 5.5, 6.1],
+                        "max": [5.2, 5.5, 6.1, undefined],
+                        "defaultColor": ["#fffe03", "#96cf4c", "#96cf4c", "#aba3cc"]
+                    }
                 ]
             },
             {
                 "name": "Olsen Phosphorus (mg/kg)",
                 "ranges": [
-                    {"name":"Deficient", "min":undefined, "max":9, "defaultColor": "#fff6a6"},
-                    {"name":"Marginal", "min":9, "max":14, "defaultColor": "#98d6ea"},
-                    {"name":"Adequate", "min":14, "max":20, "defaultColor": "#9fba9b"},
-                    {"name":"High", "min":20, "max":27, "defaultColor": "#ffbfdc"},
-                    {"name":"Very High", "min":27, "max":undefined, "defaultColor": "#ff7573"}
+                    {
+                        "name": ["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "min": [undefined, 9, 14, 20, 27],
+                        "max":[9, 14, 20, 27,  undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    }
                 ]
             },
             {
                 "name": "PBI",
                 "ranges": [
-                    {"name":"Very Sandy", "min":undefined, "max":15, "defaultColor": undefined},
-                    {"name":"Sand, Sandy Loams", "min":15, "max":35, "defaultColor": undefined},
-                    {"name":"Sandy/Silty Loams", "min":35, "max":70, "defaultColor": undefined},
-                    {"name":"Sandy/Silty Clay Loams", "min":70, "max":140, "defaultColor": undefined},
-                    {"name":"Clay Loams", "min":140, "max":280, "defaultColor": undefined},
-                    {"name":"Clay Loams & Clay", "min":280, "max":840, "defaultColor": undefined},
-                    {"name":"Volcanic Clay & Peat", "min":840, "max":undefined, "defaultColor": undefined}
+                    {
+                        "name": ["Very Sandy", "Sand, Sandy Loams", "Sandy/Silty Loams", "Sandy/Silty Clay Loams", "Clay Loams", "Clay Loams & Clay", "Volcanic Clay & Peat"],
+                        "min": [undefined, 15, 35, 70, 140, 280, 840],
+                        "max": [15, 35, 70, 140, 280, 840, undefined],
+                        "defaultColor": [undefined, undefined, undefined, undefined, undefined, undefined, undefined]
+                    }
+                ]
+            },
+            {
+                "name" : "KCl 40 Sulphur (mg/kg)",
+                "ranges": [
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "min": [undefined, 4.5, 7.5, 10.5, 14],
+                        "max": [4.5, 7.5, 10.5, 14, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    }
+                ]
+            },
+            {
+                "name" : "Colwell Phosphorus (mg/kg)",
+                "ranges": [
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":undefined, "max":15, "defaultColor": undefined},
+                        "min": [undefined, 15, 23, 30, 41],
+                        "max": [15, 23, 30, 41, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    },
+                    {
+                        "name": ["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":15, "max":35, "defaultColor": undefined},
+                        "min": [undefined, 17, 26, 34, 47],
+                        "max": [17, 26, 34, 47, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    },
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":35, "max":70, "defaultColor": undefined},
+                        "min": [undefined, 19, 30, 39, 53],
+                        "max": [19, 30, 39, 53, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    },
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":70, "max":140, "defaultColor": undefined},
+                        "min": [undefined, 22, 35, 45, 61],
+                        "max": [22, 35, 45, 61, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    },
+                    {
+                        "name": ["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name": "PBI", "min": 140, "max": 280, "defaultColor": undefined},
+                        "min": [undefined, 26, 42, 54, 74],
+                        "max": [26, 42, 54, 74, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    },
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":280, "max":840, "defaultColor": undefined},
+                        "min": [undefined, 37, 58, 75, 102],
+                        "max": [37, 58, 75, 102, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    },
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":840, "max":undefined, "defaultColor": undefined},
+                        "min": [undefined, 50, 90, 120, 150],
+                        "max": [50, 90, 120, 150, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    }
+                ]
+            },
+            {
+                "name" : "Colwell Potassium (mg/kg)",
+                "ranges": [
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":undefined, "max":35, "defaultColor": undefined},
+                        "min": [undefined, 70, 120, 170, 230],
+                        "max": [70, 120, 170, 230, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    },
+                    {
+                        "name":["Deficient", "Marginal", "Adequate", "High", "Very High"],
+                        "dependencyRange": {"name":"PBI", "min":35, "max":70, "defaultColor": undefined},
+                        "min": [undefined, 80, 130, 190, 250],
+                        "max": [80, 130, 190, 250, undefined],
+                        "defaultColor": ["#fff6a6", "#98d6ea", "#9fba9b", "#ffbfdc", "#ff7573"]
+                    }
                 ]
             }
         ]
