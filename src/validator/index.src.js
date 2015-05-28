@@ -26,7 +26,7 @@ angular.module('farmbuild.soilSampleImporter')
         return false;
       }
 
-      var csvColumns = soilSampleResults.columns;
+      var csvColumns = soilSampleResults.columnHeaders;
       if (!_isDefined(csvColumns)) {
         return false;
       }
@@ -39,6 +39,8 @@ angular.module('farmbuild.soilSampleImporter')
       if(!_isDefined(paddocks.soils)){
         return false;
       }
+
+
       return true;
     };
 

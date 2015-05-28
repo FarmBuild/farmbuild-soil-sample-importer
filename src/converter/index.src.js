@@ -28,50 +28,98 @@ angular.module('farmbuild.soilSampleImporter')
       $log.info('soilSampleValidator.isSoilSampleResultDefined');
       return{
         dateLastUpdated: new Date(),
-        columns :[],
-        paddockResults : 	[]
+        results:{
+          columnHeaders :[],
+          rows:[]
+        },
+        classifications :{},
+        selected :[],
+
+        paddocks : 	[],
+        paddockNameColumn: undefined
+
       };
 
     }
 
       var soils =farmData.soils;
-      var soilSampleResults = soils.sampleResults;
-      var updatedDate =  soilSampleResults.dateLastUpdated;
+      var sampleResults = soils.sampleResults;
+
+      var updatedDate =  sampleResults.dateLastUpdated;
       if (!_isDefined(updatedDate)) {
         updatedDate = new Date();
       }
 
-      var csvColumns = soilSampleResults.columns;
-      $log.info('soilSampleConverter.toSoilSampleResults>>csvColumns '+csvColumns);
+      var columnHeaders = sampleResults.columnHeaders;
+      $log.info('soilSampleConverter.toSoilSampleResults>>columnHeaders '+columnHeaders);
+
+      var classifications={};
+      if(_isDefined(sampleResults.classifications)){
+        classifications = sampleResults.classifications;
+      };
+
+      var paddockNameColumn=undefined;
+      if(_isDefined(sampleResults.paddockNameColumn)){
+        paddockNameColumn = sampleResults.paddockNameColumn;
+      };
+
+      var selectedColumns={};
+      if(_isDefined(sampleResults.selected)){
+        selectedColumns = sampleResults.selected;
+      };
 
       var paddocks = farmData.paddocks;
       $log.info('soilSampleConverter.toSoilSampleResults>>paddocks '+paddocks);
-      var paddockResult =[];
+      var rows =[], paddockRows={};
+      var rowIndexCount=1;
 
       for(var i=0;i<paddocks.length;i++){
 
         var singlePaddock = paddocks[i];
 
-        var singleSampleResult ={};
+        var paddickName = singlePaddock.name;
+        $log.info('paddickName '+paddickName);
+        if(!_isDefined(singlePaddock.soils)){ continue; };
+        var singleSoil = singlePaddock.soils;
 
-        singleSampleResult.name = singlePaddock.name;
-        singleSampleResult.results=[];
+        if(!_isDefined(singleSoil.sampleResults)){ continue; };
+        var singleSampleResult = singleSoil.sampleResults;
+        $log.info('singleSampleResult '+singleSampleResult);
 
-        if(_isDefined(singlePaddock.soils)){
-            var paddickSoil=singlePaddock.soils;
-             if(_isDefined(paddickSoil.sampleResults)){
-                singleSampleResult.results = paddickSoil.sampleResults;
-              }
-        }
+        var singlePaddockRow = [];
+        $log.info('paddockRows[paddickName '+paddockRows[paddickName]);
+        if(_isDefined(paddockRows[paddickName])){
+          singlePaddockRow = paddockRows[paddickName];
+        };
 
-        paddockResult.push(singleSampleResult);
+
+
+        for(var j=0;j<singleSampleResult.length;j++){
+          rows.push(singleSampleResult[j]);
+          singlePaddockRow.push(rowIndexCount++);
+
+        };
+
+        $log.info('rows '+rows);
+
+
+        paddockRows[paddickName]=singlePaddockRow;
+        $log.info('soilSampleConverter.toSoilSampleResults>>singlePaddockRow ',singlePaddockRow);
+
 
       }
 
-      return {
-        dateLastUpdated : new Date(),
-        columns : csvColumns,
-        paddockResults :paddockResult
+      return{
+        dateLastUpdated: new Date(),
+        results:{
+          columnHeaders :columnHeaders,
+          rows:rows
+        },
+        classifications :classifications,
+        selected :selectedColumns,
+
+        paddocks : 	paddockRows,
+        paddockNameColumn: paddockNameColumn
 
       };
 

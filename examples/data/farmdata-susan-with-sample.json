@@ -50,7 +50,7 @@
         ],
          "sampleResults" :{	
                	"dateLastUpdated": "2015-05-25T02:23:51",
-               	"columns" :["Paddock name","Farm pH","Lab pH (1:5 CaCl2)","Sample Phosphorus (Olsen) - mg/kg"],
+               	"columnHeaders" :["Paddock name","Farm pH","Lab pH (1:5 CaCl2)","Sample Phosphorus (Olsen) - mg/kg"],
                	"classifications":{
 									"pH (1:5 Water)":1,
 									"pH (1:5 CaCl2)":2,

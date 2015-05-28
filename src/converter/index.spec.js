@@ -12,6 +12,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
   //define soil sample result converter
   var $log, soilSampleConverter, farmdataWithSoilSamples,
     soilImportResults,
+    fileFarmData ='farmdata-susan.json',
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
     fileSoilImports = 'soil-sample-import-result.json' ;
 
@@ -32,6 +33,19 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
       expect(soilSampleConverter).toBeDefined();
     }));
 
+    it('soilSampleConverter toSoilSampleResults should have specific structure', inject(function () {
+      var loadedFarmData = fixture.load(fileFarmData);
+      expect(loadedFarmData).toBeDefined();
+      var emptySoilImportResults = soilSampleConverter.toSoilSampleResults(loadedFarmData);
+      expect(emptySoilImportResults).toBeDefined();
+
+      var results = emptySoilImportResults.results;
+      expect(results).toBeDefined();
+      expect(results.columnHeaders).toBeDefined();
+      expect(results.rows).toBeDefined();
+      expect(emptySoilImportResults.paddocks).toBeDefined();
+
+    }));
 
     it('soilSampleConverter toSoilSampleResults should have specific structure', inject(function () {
       var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
@@ -43,9 +57,19 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
       expect(soilImportResults).toBeDefined();
 
 
-      expect(soilImportResults.paddockResults).toBeDefined();
+      expect(soilImportResults).toBeDefined();
 
-      expect(soilImportResults.paddockResults.length).toBeGreaterThan(0);
+      var results = soilImportResults.results;
+      expect(results).toBeDefined();
+      expect(results.columnHeaders).toBeDefined();
+      expect(results.rows).toBeDefined();
+      $log.info('results.rows'+results.rows);
+      expect(soilImportResults.paddocks).toBeDefined();
+      $log.info('soilImportResults.paddocks '+soilImportResults.paddocks);
+
+
+
+
     }));
 
 
