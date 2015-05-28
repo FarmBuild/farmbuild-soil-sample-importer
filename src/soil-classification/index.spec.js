@@ -17,8 +17,9 @@ describe('farmbuild.soilSampleImporter.soilClassification module', function() {
         $provide.value('$log', console);
     }));
 
-    beforeEach(inject(function (_$log_, _soilClassification_, _snmoilClassificationTypes_,
-                                _validations_) {
+    beforeEach(inject(function (_$log_, _soilClassification_, _soilClassificationTypes_,
+                                _validations_
+                                ) {
         $log = _$log_;
         soilClassificationTypes = _soilClassificationTypes_;
         soilClassification = _soilClassification_;
