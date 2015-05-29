@@ -32,4 +32,43 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
 
     });
 
+    describe('Paddock selector dictionary selection', function(){
+        var test = {};
+        test.paddockRowDictionary=[];
+        var paddock = {};
+        paddock.name="Test P1";
+        it('paddock selection should be added', inject(function() {
+            paddockSelector.connectRow(test, paddock, 1);
+            expect(test.paddockRowDictionary[paddock.name]).toBeDefined();
+            expect(test.paddockRowDictionary[paddock.name].length).toEqual(1);
+            paddockSelector.disconnectRow(test, paddock, 1);
+            expect(test.paddockRowDictionary[paddock.name]).toBeDefined();
+            expect(test.paddockRowDictionary[paddock.name].length).toEqual(0);
+        }));
+
+        it('paddock selection should be removed', inject(function() {
+            paddockSelector.disconnectRow(test, paddock, 1);
+            expect(test.paddockRowDictionary[paddock.name]).toBeDefined();
+            expect(test.paddockRowDictionary[paddock.name].length).toEqual(0);
+        }));
+
+    });
+    describe('Soil Classification selector dictionary selection', function(){
+        var test = {};
+        test.classificationColumnDictionary=[];
+        var classType = {};
+        classType.name="H2O";
+        it('classification selection should be added', inject(function() {
+            paddockSelector.classifyColumn(test, classType, 1);
+            expect(test.classificationColumnDictionary[classType.name]).toBeDefined();
+            expect(test.classificationColumnDictionary[classType.name]).toEqual(1);
+        }));
+        it('classification selection should be removed', inject(function() {
+            paddockSelector.declassifyColumn(test, classType);
+            expect(test.classificationColumnDictionary[classType.name]).toBeUndefined();
+        }));
+
+    });
+
+
 });
