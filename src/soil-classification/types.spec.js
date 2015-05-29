@@ -24,7 +24,6 @@ describe('farmbuild.soilSampleImporter module', function() {
     describe('types.byName', function(){
         it('byName should find ' + h2O, inject(function() {
             var found = soilClassificationTypes.byName(h2O);
-
             expect(found.name).toEqual(h2O);
         }));
     });

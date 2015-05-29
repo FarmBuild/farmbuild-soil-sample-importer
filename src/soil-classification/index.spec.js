@@ -58,10 +58,8 @@ describe('farmbuild.soilSampleImporter.soilClassification module', function() {
 
             expect(found.name).toEqual(colWellPhosphor);
             expect(soilClassification.findRangeWithDependency(found, 0, 15).name).toEqual("Deficient");
-            /*expect(soilClassification.findRange(found, 5.2).name).toEqual("Very Acidic");
-            expect(soilClassification.findRange(found, 5.5).name).toEqual("Acidic");
-            expect(soilClassification.findRange(found, 6).name).toEqual("Slightly Acidic");
-            expect(soilClassification.findRange(found, 10).name).toEqual("Neutral");*/
+            expect(soilClassification.findRangeWithDependency(found, 16, 15).name).toEqual("Marginal");
+            expect(soilClassification.findRangeWithDependency(found, 16, 16).name).toEqual("Deficient");
         }));
 
     });

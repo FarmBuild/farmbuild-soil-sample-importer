@@ -14,6 +14,7 @@ angular.module('farmbuild.soilSampleImporter')
         var soilClassification = {},
             _isDefined = validations.isDefined;
 
+
         function _isWithinRange(min, max, classificationValue) {
             //$log.info("range : "+ JSON.stringify(classificationRange));
             if (!(_isDefined(min)) && _isDefined(max) ) {
@@ -28,7 +29,7 @@ angular.module('farmbuild.soilSampleImporter')
             return false;
         }
 
-        function _findRangeIndex (minArray, maxArray, classificationValue) {
+        function _findRangeIndex(minArray, maxArray, classificationValue) {
             for(var i=0 ; i<minArray.length; i++) {
                 if (_isWithinRange(minArray[i], maxArray[i], classificationValue)) {
                     return i;
@@ -47,22 +48,36 @@ angular.module('farmbuild.soilSampleImporter')
             return undefined;
         }
 
+        function _isValidType(anObject) {
+            try {
+                if (_isDefined(anObject) && _isDefined(anObject.name) && _isDefined(anObject.ranges)) {
+                    return true;
+                }
+            }
+            catch(err) {
+
+            }
+            return false;
+        }
+
         /**
          * Find the range for a given classification type and value
+         *
          * @param classificationType
          * @param classificationValue
          */
         soilClassification.findRange = function (classificationType, classificationValue) {
+            
+            if (!_isValidType(classificationType)) {
+                return undefined;
+            }
 
             for (var i=0; i<classificationType.ranges.length; i++) {
                 var aRange = classificationType.ranges[i];
 
-                /*if (_isWithinRange(aRange.min, aRange.max, classificationValue)) {
-                    return aRange;
-                }*/
                 var index = _findRangeIndex(aRange.min, aRange.max, classificationValue);
                 if (index>=0) {
-                    $log.info("copy "+JSON.stringify(aRange));
+
                     return _copyResult(aRange, index);
                 }
             }
@@ -70,23 +85,27 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Find the range for a given classification type and value
+         * Find the range for a given classification type, value, and type dependency value
+         *
          * @param classificationType
          * @param classificationValue
+         * @param dependencyValue
+         * @returns {*}
          */
         soilClassification.findRangeWithDependency = function (classificationType, classificationValue,
                                                  dependencyValue) {
 
+            if (!_isValidType(classificationType)) {
+                return undefined;
+            }
+
             for (var i=0; i<classificationType.ranges.length; i++) {
                 var aRange = classificationType.ranges[i];
-                if (_isWithinRange(aRange.dependencyRange.min, aRange.dependencyRange.max, dependencyValue)) {
+                if (_findRangeIndex(aRange.dependencyRange.min, aRange.dependencyRange.max, dependencyValue) >= 0) {
+
                     var index = _findRangeIndex(aRange.min, aRange.max, classificationValue);
                     if (index>=0) {
-                        var result = {};
-                        angular.copy(aRange, result);
-                        result.name = aRange.name[index];
-                        result.defaultColor = aRange.defaultColor[index];
-                        return result;
+                        return _copyResult(aRange, index);
                     }
                     return undefined;
                 }
