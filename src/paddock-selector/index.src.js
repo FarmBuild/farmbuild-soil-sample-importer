@@ -26,11 +26,17 @@ angular.module('farmbuild.soilSampleImporter')
                     "SampleId",
                     "SampleName",
                     "Ph",
-                    "Saturation"
+                    "Saturation",
+                    "aaa",
+                    "bbb",
+                    "ccc",
+                    "dd",
+                    "ee"
                 ],
                 "rows" : [
                     [undefined,'123', 'Front Barn', 1,2,3,4,5,6,7],
-                    [undefined,'456', 'Left Barn', 1,2,3,4,5,6,7]
+                    [undefined,'456', 'Left Barn', 2,3,4,5,6,7,8],
+                    [undefined,'789', 'Back Barn', 3,4,5,6,7,8,9]
                 ],
                 "classificationColumnDictionary": {},
                 "paddockRowDictionary": {},
@@ -62,7 +68,7 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         paddockSelector.save = function(paddockSelection) {
-
+            $log.info(JSON.stringify(paddockSelection));
         }
 
         /**
