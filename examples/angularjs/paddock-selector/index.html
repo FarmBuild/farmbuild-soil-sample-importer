@@ -14,16 +14,18 @@
     <h3>FarmBuild Soil Importer
     </h3>
     {{paddockSelection}}
+    {{classificationTypes}}
     <form role="form" name="form" novalidate>
         <table>
             <tr>
                 <th ng-repeat="header in paddockSelection.columnHeaders">
-                    {{header}}
-
-                    <select ng-if="paddockColumnIndex+'' != $index" >
-                        <option value="-1">Discard</option>
-                        <option ng-repeat="clsType in classificationTypes" >{{clsType.label}}</option>
-                    </select>
+                    <div>{{header}}</div>
+                    <div>
+                        <select ng-if="paddockColumnIndex+'' != $index" >
+                            <option value="-1">None</option>
+                            <option ng-repeat="clsType in classificationTypes" >{{clsType.label}}</option>
+                        </select>
+                    </div>
                 </th>
             </tr>
             <tr ng-repeat="row in paddockSelection.rows">
