@@ -19,9 +19,11 @@
                 <th ng-repeat="header in paddockSelection.columnHeaders">
                     <div>{{header}}</div>
                     <div>
-                        <select ng-if="paddockColumnIndex+'' != $index" >
-                            <option value="">None</option>
-                            <option value="{{clsType.label}}" ng-repeat="clsType in classificationTypes" >{{clsType.label}}</option>
+                        <select ng-model="selectedClassification"
+                                ng-change="changeClassification(paddockSelection, $index, selectedClassification, '{{selectedClassification}}')"
+                                ng-if="paddockColumnIndex+'' != $index"
+                                ng-options="clsType as clsType.name for clsType in classificationTypes">
+                            <option value="" selected="selected">None</option>
                         </select>
                     </div>
                 </th>

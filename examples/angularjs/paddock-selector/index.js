@@ -16,12 +16,24 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
         for(var i=0; i<paddockSelector.types.length;i++) {
             var newClassificication = {};
-            newClassificication.label=paddockSelector.types[i].name;
+            newClassificication.name=paddockSelector.types[i].name;
             $scope.classificationTypes.push(newClassificication);
         }
 
-        $scope.changePaddock = function (paddockSelection, rowIndex, paddock, oldValueString) {
+        $scope.changeClassification = function (paddockSelection, colIndex, classificationType, oldValueString) {
+            if (!(validations.isEmpty(oldValueString))) {
+                $log.info('removing previously selected classificationType '+oldValueString);
+                //oldValue is string literal of previous value
+                var prevClassification = JSON.parse(oldValueString);
+                paddockSelector.declassifyColumn(paddockSelection, prevClassification, colIndex);
+            }
+            if (!(validations.isEmpty(classificationType))) {
+                $log.info('adding newly selected classificationType '+classificationType + " to col "+colIndex);
+                paddockSelector.classifyColumn(paddockSelection, classificationType, colIndex);
+            }
+        }
 
+        $scope.changePaddock = function (paddockSelection, rowIndex, paddock, oldValueString) {
             if (!(validations.isEmpty(oldValueString))) {
                 $log.info('removing previously selected paddock '+oldValueString);
                 //oldValue is string literal of previous value
