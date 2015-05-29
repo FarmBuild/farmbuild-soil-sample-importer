@@ -20,30 +20,24 @@ angular.module('farmbuild.soilSampleImporter')
       if (!_isDefined(soils)) {
         return false;
       }
-
       var soilSampleResults = soils.sampleResults;
       if (!_isDefined(soilSampleResults)) {
         return false;
       }
-
       var csvColumns = soilSampleResults.columnHeaders;
       if (!_isDefined(csvColumns)) {
         return false;
       }
-
-      if (!_isDefined(soils.selected)) {
+      if (!_isDefined(soilSampleResults.selected)) {
         return false;
       }
-
       if (!_isDefined(farmData.paddocks)) {
         return false;
       }
-
       var paddocks = farmData.paddocks[0];
       if(!_isDefined(paddocks.soils)){
         return false;
       }
-
 
       return true;
     };
@@ -68,11 +62,11 @@ angular.module('farmbuild.soilSampleImporter')
       if (!_isDefined(soilSampleResult.selected)) {
         return false;
       }
-      if (!_isDefined(soilSampleResult.paddockColumnDictionary)) {
+      if (!_isDefined(soilSampleResult.paddockRowDictionary)) {
         return false;
       }
 
-     var numberOfPaddocks =  Object.keys(soilSampleResult.paddockColumnDictionary).length;
+     var numberOfPaddocks =  Object.keys(soilSampleResult.paddockRowDictionary).length;
       if(!(numberOfPaddocks>0)){
         return false;
       }

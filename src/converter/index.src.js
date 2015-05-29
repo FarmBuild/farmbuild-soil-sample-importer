@@ -24,23 +24,23 @@ angular.module('farmbuild.soilSampleImporter')
      */
     soilSampleConverter.toSoilSampleResults = function(farmData){
 
-    if(!soilSampleValidator.isSoilSampleResultDefined(farmData)){
-      $log.info('soilSampleValidator.isSoilSampleResultDefined');
-      return{
-        dateLastUpdated: new Date(),
-        results:{
-          columnHeaders :[],
-          rows:[]
-        },
-        classifications :{},
-        selected :[],
+      if(!soilSampleValidator.isValidFarmDataWithSoilSample(farmData)){
+        $log.info('soilSampleValidator.isValidFarmDataWithSoilSample');
+        return{
+          dateLastUpdated: new Date(),
+          results:{
+            columnHeaders :[],
+            rows:[]
+          },
+          classificationColumnDictionary :{},
+          selected :[],
 
-        paddocks : 	[],
-        paddockNameColumn: undefined
+          paddockRowDictionary : 	{},
+          paddockNameColumn: undefined
 
-      };
+        };
 
-    }
+      }
 
       var soils =farmData.soils;
       var sampleResults = soils.sampleResults;
@@ -54,8 +54,8 @@ angular.module('farmbuild.soilSampleImporter')
       $log.info('soilSampleConverter.toSoilSampleResults>>columnHeaders '+columnHeaders);
 
       var classifications={};
-      if(_isDefined(sampleResults.classifications)){
-        classifications = sampleResults.classifications;
+      if(_isDefined(sampleResults.classificationColumnDictionary)){
+        classifications = sampleResults.classificationColumnDictionary;
       };
 
       var paddockNameColumn=undefined;
@@ -92,20 +92,13 @@ angular.module('farmbuild.soilSampleImporter')
           singlePaddockRow = paddockRows[paddickName];
         };
 
-
-
         for(var j=0;j<singleSampleResult.length;j++){
           rows.push(singleSampleResult[j]);
           singlePaddockRow.push(rowIndexCount++);
-
         };
-
-        $log.info('rows '+rows);
-
 
         paddockRows[paddickName]=singlePaddockRow;
         $log.info('soilSampleConverter.toSoilSampleResults>>singlePaddockRow ',singlePaddockRow);
-
 
       }
 
@@ -115,10 +108,10 @@ angular.module('farmbuild.soilSampleImporter')
           columnHeaders :columnHeaders,
           rows:rows
         },
-        classifications :classifications,
+        classificationColumnDictionary :classifications,
         selected :selectedColumns,
 
-        paddocks : 	paddockRows,
+        paddockRowDictionary : 	paddockRows,
         paddockNameColumn: paddockNameColumn
 
       };
@@ -132,7 +125,56 @@ angular.module('farmbuild.soilSampleImporter')
      * @param sampleResults soil sample results soilSampleConverter.toSoilSampleResults output
      */
     soilSampleConverter.toFarmData = function(farmData , sampleResults){
+        if(!_isDefined(farmData)){
+          return undefined;
+        };
+      if(!_isDefined(sampleResults)){
+        return undefined;
+      };
 
+      if(!soilSampleValidator.isValidSoilSampleResult(sampleResults)){
+        return undefined;
+      };
+
+      var modifiedSoils={};
+      if(_isDefined(farmData.soils)){modifiedSoils=farmData.soils;}
+
+      var modifiedPaddocks=farmData.paddocks;
+      if(!_isDefined(modifiedPaddocks)){
+        return undefined;
+      }
+
+
+      var modifiedSampleResults = {};
+      if(_isDefined(modifiedPaddocks.sampleResults)){
+        modifiedSampleResults=modifiedPaddocks.sampleResult;
+      }
+      var newResults = sampleResults.results;
+      //Set up data for the info in the soils{}
+      modifiedSampleResults.dateLastUpdated = sampleResults.dateLastUpdated;
+      modifiedSampleResults.columnHeaders = newResults.columnHeaders;
+      modifiedSampleResults.classificationColumnDictionary = sampleResults.classificationColumnDictionary;
+      modifiedSampleResults.selected = sampleResults.selected;
+      modifiedSampleResults.paddockNameColumn = sampleResults.paddockNameColumn;
+      modifiedSoils.sampleResults = modifiedSampleResults;
+//      $log.info('modifiedSoils ',JSON.stringify(modifiedSampleResults,null,'   '));
+      //Set up data for the info for each paddock
+      var rows = newResults.rows ;
+//
+//      for(var i=0;i<modifiedPaddocks.length;i++){
+//        var singlePaddock = modifiedPaddocks[i];
+//
+//
+//        var objectIndex =
+//      }
+
+
+
+
+      farmData.soils = modifiedSoils;
+      farmData.paddocks = {};//modifiedPaddocks;
+      $log.info('farmData ',JSON.stringify(farmData,null,'   '));
+      return farmData;
     };
 
     return soilSampleConverter;

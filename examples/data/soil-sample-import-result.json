@@ -12,7 +12,7 @@
       "pH (1:5 CaCl2)":2
     },
 	"selected" :[0,1,2,3],
-	"paddockColumnDictionary" : {
+	"paddockRowDictionary" : {
       "P3": [1],
       "P1": [2,3],
       "P4": []
