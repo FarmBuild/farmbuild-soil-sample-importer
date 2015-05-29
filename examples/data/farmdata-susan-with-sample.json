@@ -56,6 +56,7 @@
 									"pH (1:5 CaCl2)":2,
 									"Phosphorus (Olsen) - mg/kg":3
 									},
+				"selected" :[0,1,2,3],
 				"paddockNameColumn":0
          }
     },
