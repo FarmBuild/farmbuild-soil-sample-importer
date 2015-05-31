@@ -80,8 +80,10 @@ angular.module('farmbuild.soilSampleImporter')
           return false;
         }
       };
+
       return true;
     };
+
 
     return soilSampleValidator;
 
