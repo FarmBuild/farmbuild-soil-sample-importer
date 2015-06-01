@@ -13,6 +13,10 @@ module.exports = function(config){
       'src/converter/validator.src.js',
       'src/ga/index.src.js',
       'src/index.src.js',
+      'src/soil-classification/types.src.js',
+      'src/soil-classification/defaults.conf.src.js',
+      'src/soil-classification/index.src.js',
+      'src/paddock-selector/index.src.js',
       'src/blank.spec.js',//use this as a basis of creating your module test
 //      'src/session/index.spec.js',
 //      'src/collections/index.spec.js',
