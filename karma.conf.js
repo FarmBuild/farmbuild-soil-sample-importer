@@ -9,14 +9,16 @@ module.exports = function(config){
       'bower_components/farmbuild-farmdata/dist/farmbuild-farmdata.js',
       'src/soil-sample-importer.js',
       'src/session/index.src.js',
+      'src/converter/index.src.js',
+      'src/converter/validator.src.js',
       'src/ga/index.src.js',
       'src/index.src.js',
       'src/blank.spec.js',//use this as a basis of creating your module test
 //      'src/session/index.spec.js',
 //      'src/collections/index.spec.js',
 //      'src/ga/index.spec.js',
-//      'src/index.spec.js',
-      'src/**/*.js',
+//      'src/converter/index.spec.js',
+      'src/**/*.spec.js',
       {pattern: 'examples/data/*.json'}
     ],
 
