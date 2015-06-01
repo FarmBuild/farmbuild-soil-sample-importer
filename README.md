@@ -11,6 +11,8 @@ Unzip the downloaded folder and go to "examples" and open one of the html files 
 
 <a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/docs/farmbuild-soil-sample-importer/0.1.2/index.html" target="_blank">API documentation</a>
 
+### AngularJS example
+* <a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/examples/angularjs/index.html" target="_blank">Soil Sample - angularJS example</a>
 
 For more information about API and Testing see the [Wiki](https://github.com/SpatialVision/farm-build-nutrient-calculator/wiki) section.
 
