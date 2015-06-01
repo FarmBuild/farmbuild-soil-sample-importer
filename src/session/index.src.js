@@ -76,6 +76,10 @@ angular.module('farmbuild.soilSampleImporter')
       return farmdata.session.find();
     }
 
+    soilSampleImporterSession.export = function(document, farmData) {
+       return farmdata.session.export(document, save(farmData));
+    }
+
     return soilSampleImporterSession;
 
   });

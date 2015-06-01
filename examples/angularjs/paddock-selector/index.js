@@ -6,7 +6,8 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $rootScope.appVersion = farmbuild.examples.soilsampleimporter.version;
     })
 
-    .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, paddockSelector, validations) {
+    .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, paddockSelector, validations,
+            collections) {
         //$scope.paddockSelection = paddockSelector.createNew();
         $scope.paddockSelection = {};
 
@@ -75,9 +76,17 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             }
         }
 
-        $scope.save = function (paddockSelection) {
+        $scope.export = function (paddockSelection) {
 
             $scope.result = paddockSelector.save(paddockSelection);
+
+            if ($scope.result) {
+                soilSampleImporter.export(document, $scope.result);
+            }
+            else {
+                $scope.noResult = true;
+            }
+
         };
     })
 

@@ -85,7 +85,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 		};
 
 
-
+      soilSampleImporter.export = soilSampleImporterSession.export;
 
 		if (typeof window.farmbuild === 'undefined') {
 			window.farmbuild = {

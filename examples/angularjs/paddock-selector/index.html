@@ -13,11 +13,11 @@
 <content>
     <h3>FarmBuild Soil Importer
     </h3>
-    <form role="form" name="form" ng-submit="save(paddockSelection)"  novalidate>
+    <form role="form" name="form" ng-submit="export(paddockSelection)"  novalidate>
         <input id="loadFile" name="soilData" type="file" on-read-file="loadSoilSample($fileContent)" class="form-control">
         <table class="table table-striped table-hover">
             <tr>
-                <th ng-repeat="header in paddockSelection.columnHeaders">
+                <th ng-repeat="header in paddockSelection.results.columnHeaders">
                     <div>{{header}}</div>
                     <div>
                         <select ng-model="selectedClassification"
@@ -29,7 +29,7 @@
                     </div>
                 </th>
             </tr>
-            <tr ng-repeat="row in paddockSelection.rows track by $index">
+            <tr ng-repeat="row in paddockSelection.results.rows track by $index">
                 <td ng-repeat="col in row track by $index">
                     <select ng-model="selectedPaddock" ng-change="changePaddock(paddockSelection, $parent.$parent.$index, selectedPaddock, '{{selectedPaddock}}')"
                             ng-if="paddockColumnIndex+'' == $index"
@@ -42,8 +42,8 @@
                 </td>
             </tr>
         </table>
-        <button type="Submit" class="btn btn-primary" ng-disabled="!paddockSelection.rows ">
-            Save
+        <button type="Submit" class="btn btn-primary" ng-disabled="!paddockSelection.results ">
+            Export
         </button>
     </form>
 </content>
