@@ -31,5 +31,9 @@ angular.module('farmbuild.soilSampleImporter')
             return true;
         }
 
+        paddockSelectionValidator.validatePaddockSelection = function(paddockSelection) {
+            return true;
+        }
+
         return paddockSelectionValidator;
     });

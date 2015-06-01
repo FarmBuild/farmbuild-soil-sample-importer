@@ -176,16 +176,10 @@ angular.module('farmbuild.soilSampleImporter')
             };
             return test;
         }
-
-        paddockSelector.validateNew = function(paddockSelection) {
-
-            return true;
-        }
-
         paddockSelector.save = function(paddockSelection) {
             $log.info(JSON.stringify(paddockSelection));
 
-            if (!this.validateNew(paddockSelection)) {
+            if (!paddockSelectionValidator.validatePaddockSelection(paddockSelection)) {
                 return undefined;
             }
 
@@ -219,20 +213,39 @@ angular.module('farmbuild.soilSampleImporter')
             return paddockSelection;
         }
 
-        paddockSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
-            paddockSelection.classificationColumnDictionary[classificationType.name] = index;
+        paddockSelector.selectColumn =  function(paddockSelection, index) {
             collections.add(paddockSelection.selected, index);
         }
 
+        paddockSelector.deselectColumn =  function(paddockSelection, index) {
+            delete paddockSelection.classificationColumnDictionary[classificationType.name];
+        }
+
+        /**
+         * Add classification for column with given index
+         * @param paddockSelection
+         * @param classificationType
+         * @param index
+         */
+        paddockSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
+            paddockSelection.classificationColumnDictionary[classificationType.name] = index;
+            this.selectColumn(paddockSelection.selected, index);
+        }
+
+        /**
+         * remove classification for column with given index
+         * @param paddockSelection
+         * @param classificationType
+         * @param index
+         */
         paddockSelector.declassifyColumn =  function(paddockSelection, classificationType, index) {
-            collections.remove(paddockSelection.selected, index);
+            this.deselectColumn(paddockSelection.selected, index);
             delete paddockSelection.classificationColumnDictionary[classificationType.name];
         }
 
 
         paddockSelector.types = _types;
         paddockSelector.paddocks = _paddocks;
-        paddockSelector.farmData = myFarmData;
 
         return paddockSelector;
     });
