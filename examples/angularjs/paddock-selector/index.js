@@ -7,12 +7,14 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
     })
 
     .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, paddockSelector, validations) {
-        $scope.paddockSelection = paddockSelector.createNew();
+        //$scope.paddockSelection = paddockSelector.createNew();
+        $scope.paddockSelection = {};
 
         $scope.paddockColumnIndex = paddockSelector.paddockColumnIndex;
         $scope.classificationTypes = [];
         $scope.paddocks = paddockSelector.paddocks;
 
+        $scope.myFarmData = soilSampleImporter.find();
 
         for(var i=0; i<paddockSelector.types.length;i++) {
             var newClassificication = {};
@@ -46,9 +48,69 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             }
         }
 
+        $scope.loadSoilSample = function ($fileContent) {
+            try {
+                $scope.soilSampleData = {};
+                //$log.info("Content "+$fileContent);
+                var csv = d3.csv.parseRows($fileContent);
+
+
+                for(var i=0; i<csv.length; i++) {
+                    if (i==0) {
+                        csv[i].splice(0, 0, "PaddockName");
+                    }
+                    else {
+                        csv[i].splice(0, 0, '-1');
+                    }
+                }
+                $log.info(csv);
+                var header = csv.shift();
+                $scope.paddockSelection = paddockSelector.createNew(header,
+                    csv, 0);
+
+
+            } catch (e) {
+                console.error('farmbuild.soilSampleImporter.loadsample > load: Your file should be in csv format: ', e);
+                $scope.noResult = true;
+            }
+        }
 
         $scope.save = function (paddockSelection) {
 
             $scope.result = paddockSelector.save(paddockSelection);
+        };
+    })
+
+    .directive('onReadFile', function ($parse, $log) {
+        return {
+            restrict: 'A',
+            scope: false,
+            link: function (scope, element, attrs) {
+                var fn = $parse(attrs.onReadFile);
+
+                element.on('change', function (onChangeEvent) {
+                    //var file =  (onChangeEvent.srcElement || onChangeEvent.target).files[0]
+                    var file =  (onChangeEvent.target).files[0]
+                    $log.info('onReadFile.onChange... onChangeEvent.srcElement:%s, ' +
+                        'onChangeEvent.target:%s, (onChangeEvent.srcElement || onChangeEvent.target).files[0]: %s',
+                        onChangeEvent.srcElement, onChangeEvent.target,
+                        file)
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (onLoadEvent) {
+                        //console.log('reader.onload', angular.toJson(onLoadEvent));
+                        scope.$apply(function () {
+                            fn(scope, {$fileContent: onLoadEvent.target.result});
+                        });
+                    };
+                    reader.onerror = function (onLoadEvent) {
+                        //console.log('reader.onload', angular.toJson(onLoadEvent));
+                    };
+
+                    reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+
+                });
+            }
         };
     });

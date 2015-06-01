@@ -18,29 +18,16 @@ angular.module('farmbuild.soilSampleImporter')
             _types = soilClassificationTypes.toArray();
 
 
-        paddockSelector.createNew = function() {
+        paddockSelector.createNew = function(columnHeaders, rows, paddockColumnIndex) {
+            $log.info("col headers "+columnHeaders);
+            $log.info("rows "+rows);
             var test= {
-                "dateLastUpdated": "2015-05-25T02:23:51",
-                "columnHeaders" : [
-                    "Paddock",
-                    "SampleId",
-                    "SampleName",
-                    "Ph",
-                    "Saturation",
-                    "aaa",
-                    "bbb",
-                    "ccc",
-                    "dd",
-                    "ee"
-                ],
-                "rows" : [
-                    [undefined,'123', 'Front Barn', 1,2,3,4,5,6,7],
-                    [undefined,'456', 'Left Barn', 2,3,4,5,6,7,8],
-                    [undefined,'789', 'Back Barn', 3,4,5,6,7,8,9]
-                ],
+                "dateLastUpdated": new Date(),
+                "columnHeaders" : columnHeaders,
+                "rows" : rows,
                 "classificationColumnDictionary": {},
                 "paddockRowDictionary": {},
-                "paddockColumnIndex":0
+                "paddockColumnIndex":paddockColumnIndex
             };
             return test;
         }
