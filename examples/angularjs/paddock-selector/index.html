@@ -11,6 +11,7 @@
 </head>
 <body ng-controller="PaddockSelectorCtrl">
 <content>
+    <modal ng-if="noResult" ng-include="'../modal-validation-error.html'"></modal>
     <h3>FarmBuild Soil Importer
     </h3>
     <form role="form" name="form" ng-submit="export(paddockSelection)"  novalidate>

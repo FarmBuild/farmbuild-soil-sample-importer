@@ -10,11 +10,10 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             collections) {
         //$scope.paddockSelection = paddockSelector.createNew();
         $scope.paddockSelection = {};
-
+        $scope.noResult = false;
         $scope.paddockColumnIndex = paddockSelector.paddockColumnIndex;
         $scope.classificationTypes = [];
         $scope.paddocks = paddockSelector.paddocks;
-
         $scope.myFarmData = soilSampleImporter.find();
 
         for(var i=0; i<paddockSelector.types.length;i++) {
@@ -51,11 +50,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
         $scope.loadSoilSample = function ($fileContent) {
             try {
-                $scope.soilSampleData = {};
-                //$log.info("Content "+$fileContent);
                 var csv = d3.csv.parseRows($fileContent);
-
-
                 for(var i=0; i<csv.length; i++) {
                     if (i==0) {
                         csv[i].splice(0, 0, "PaddockName");
@@ -68,7 +63,9 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 var header = csv.shift();
                 $scope.paddockSelection = paddockSelector.createNew(header,
                     csv, 0);
-
+                if (!$scope.paddockSelection) {
+                    $scope.noResult = true;
+                }
 
             } catch (e) {
                 console.error('farmbuild.soilSampleImporter.loadsample > load: Your file should be in csv format: ', e);

@@ -56,6 +56,7 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
     describe('Soil Classification selector dictionary selection', function(){
         var test = {};
         test.classificationColumnDictionary=[];
+        test.selected=[];
         var classType = {};
         classType.name="H2O";
         it('classification selection should be added', inject(function() {

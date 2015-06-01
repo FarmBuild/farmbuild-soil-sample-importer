@@ -11,7 +11,7 @@
 angular.module('farmbuild.soilSampleImporter')
     .factory('paddockSelector',
     function ($log, farmdata, soilSampleImporterSession, soilClassificationTypes,
-              collections, soilSampleConverter) {
+              collections, soilSampleConverter, paddockSelectionValidator) {
         $log.info("paddockSelector ");
 
         var myFarmData = {
@@ -136,9 +136,12 @@ angular.module('farmbuild.soilSampleImporter')
 
 
         paddockSelector.createNew = function(columnHeaders, rows, paddockColumnIndex) {
-            $log.info("col headers "+columnHeaders);
-            $log.info("rows "+rows);
-            var test= {
+
+            if(!paddockSelectionValidator.validateCreateNew(columnHeaders, rows)) {
+                return undefined;
+            }
+
+            var result= {
                 "dateLastUpdated": new Date(),
                 "results": {
                     "columnHeaders": columnHeaders,
@@ -149,7 +152,7 @@ angular.module('farmbuild.soilSampleImporter')
                 "paddockRowDictionary": {},
                 "paddockNameColumn":paddockColumnIndex
             };
-            return test;
+            return result;
         }
 
 
