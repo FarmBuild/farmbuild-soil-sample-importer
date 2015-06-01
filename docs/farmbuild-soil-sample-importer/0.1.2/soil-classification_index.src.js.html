@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>soil-classification/index.src.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soilSampleImporter.html">soilSampleImporter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter.html#.find">find</a></li><li data-type='method'><a href="module-soilSampleImporter.html#.load">load</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">soil-classification/index.src.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @since 0.0.1
+ * @copyright 2015 Spatial Vision, Inc. http://spatialvision.com.au
+ * @license The MIT License
+ * @author Spatial Vision
+ * @version 0.1.0
+ */
+
+'use strict';
+angular.module('farmbuild.soilSampleImporter')
+    .factory('soilClassification',
+    function ($log, soilClassificationTypes, validations) {
+        $log.info("soilClassification ");
+        var soilClassification = {},
+            _isDefined = validations.isDefined;
+
+
+        function _isWithinRange(min, max, classificationValue) {
+            //$log.info("range : "+ JSON.stringify(classificationRange));
+            if (!(_isDefined(min)) &amp;&amp; _isDefined(max) ) {
+                return (classificationValue &lt;= max);
+            }
+            else if (_isDefined(min) &amp;&amp; _isDefined(max)) {
+                return ((min &lt; classificationValue) &amp;&amp; (classificationValue &lt;= max));
+            }
+            else if (_isDefined(min) &amp;&amp; !(_isDefined(max))) {
+                return (min &lt; classificationValue);
+            }
+            return false;
+        }
+
+        function _findRangeIndex(minArray, maxArray, classificationValue) {
+            for(var i=0 ; i&lt;minArray.length; i++) {
+                if (_isWithinRange(minArray[i], maxArray[i], classificationValue)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        function _copyResult (classificationRange, index) {
+            if (index>=0 &amp;&amp; index &lt; classificationRange.name.length) {
+                var result = {};
+                result.name = classificationRange.name[index];
+                result.defaultColor = classificationRange.defaultColor[index];
+                return result;
+            }
+            return undefined;
+        }
+
+        function _isValidType(anObject) {
+            try {
+                if (_isDefined(anObject) &amp;&amp; _isDefined(anObject.name) &amp;&amp; _isDefined(anObject.ranges)) {
+                    return true;
+                }
+            }
+            catch(err) {
+
+            }
+            return false;
+        }
+
+        /**
+         * Find the range for a given classification type and value
+         *
+         * @param classificationType
+         * @param classificationValue
+         */
+        soilClassification.findRange = function (classificationType, classificationValue) {
+            
+            if (!_isValidType(classificationType)) {
+                return undefined;
+            }
+
+            for (var i=0; i&lt;classificationType.ranges.length; i++) {
+                var aRange = classificationType.ranges[i];
+
+                var index = _findRangeIndex(aRange.min, aRange.max, classificationValue);
+                if (index>=0) {
+
+                    return _copyResult(aRange, index);
+                }
+            }
+            return undefined;
+        }
+
+        /**
+         * Find the range for a given classification type, value, and type dependency value
+         *
+         * @param classificationType
+         * @param classificationValue
+         * @param dependencyValue
+         * @returns {*}
+         */
+        soilClassification.findRangeWithDependency = function (classificationType, classificationValue,
+                                                 dependencyValue) {
+
+            if (!_isValidType(classificationType)) {
+                return undefined;
+            }
+
+            for (var i=0; i&lt;classificationType.ranges.length; i++) {
+                var aRange = classificationType.ranges[i];
+                if (_findRangeIndex(aRange.dependencyRange.min, aRange.dependencyRange.max, dependencyValue) >= 0) {
+
+                    var index = _findRangeIndex(aRange.min, aRange.max, classificationValue);
+                    if (index>=0) {
+                        return _copyResult(aRange, index);
+                    }
+                    return undefined;
+                }
+            }
+            return undefined;
+        }
+
+        return soilClassification;
+    });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Mon Jun 01 2015 11:25:53 GMT+1000 (AEST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
