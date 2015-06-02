@@ -83,7 +83,6 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $scope.export = function (paddockSelection) {
 
             $scope.result = paddockSelector.save($scope.myFarmData, paddockSelection);
-
             if ($scope.result) {
                 soilSampleImporter.export(document, $scope.result);
             }
