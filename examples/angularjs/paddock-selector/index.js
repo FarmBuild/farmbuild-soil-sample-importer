@@ -15,6 +15,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $scope.classificationTypes = [];
         $scope.paddocks = [];
         $scope.myFarmData = soilSampleImporter.find();
+        $scope.classifiedColumns = [];
 
         for(var i=0; i<paddockSelector.types.length;i++) {
             var newClassificication = {};
@@ -28,10 +29,12 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 //oldValue is string literal of previous value
                 var prevClassification = JSON.parse(oldValueString);
                 paddockSelector.declassifyColumn(paddockSelection, prevClassification, colIndex);
+                $scope.classifiedColumns[colIndex]=undefined;
             }
             if (!(validations.isEmpty(classificationType))) {
                 $log.info('adding newly selected classificationType '+classificationType + " to col "+colIndex);
                 paddockSelector.classifyColumn(paddockSelection, classificationType, colIndex);
+                $scope.classifiedColumns[colIndex]=classificationType;
             }
         }
 
@@ -68,6 +71,9 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                     return;
                 }
                 $scope.paddocks = paddockSelector.paddocks;
+                for(var i=0; i<$scope.paddockSelection.results.columnHeaders.length; i++) {
+                    $scope.classifiedColumns[i] = undefined;
+                }
             } catch (e) {
                 console.error('farmbuild.soilSampleImporter.loadsample > load: Your file should be in csv format: ', e);
                 $scope.noResult = true;
@@ -76,7 +82,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
         $scope.export = function (paddockSelection) {
 
-            $scope.result = paddockSelector.save(paddockSelection);
+            $scope.result = paddockSelector.save($scope.myFarmData, paddockSelection);
 
             if ($scope.result) {
                 soilSampleImporter.export(document, $scope.result);
@@ -119,4 +125,21 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 });
             }
         };
-    });
+    })
+    .filter('excludeFrom', [function() {
+        return function(array,expression1, expression2, comparator){
+            //$log.info("expr "+expression);
+            return array.filter(function(item) {
+                if (expression1) {
+                    for (var i = 0; i < expression1.length; i++) {
+                        if (i!= expression2 && expression1[i] && angular.equals(expression1[i].name, item.name)) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            });
+        }
+    }])
+
+;

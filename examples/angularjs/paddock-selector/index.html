@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Farm Build Soil Imported - Paddock Selector</title>
+    <title>Farm Build Soil Imported - Import Data Matching</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../main.css">
@@ -12,7 +12,7 @@
 <body ng-controller="PaddockSelectorCtrl">
 <content>
     <modal ng-if="noResult" ng-include="'../modal-validation-error.html'"></modal>
-    <h3>FarmBuild Soil Importer
+    <h3>FarmBuild Soil Importer - Import Data Matching
     </h3>
     <form role="form" name="form" ng-submit="export(paddockSelection)"  novalidate>
         <input id="loadFile" name="soilData" type="file" on-read-file="loadSoilSample($fileContent)" class="form-control">
@@ -24,7 +24,7 @@
                         <select ng-model="selectedClassification"
                                 ng-change="changeClassification(paddockSelection, $index, selectedClassification, '{{selectedClassification}}')"
                                 ng-if="paddockColumnIndex+'' != $index"
-                                ng-options="clsType as clsType.name for clsType in classificationTypes">
+                                ng-options="clsType as clsType.name for clsType in classificationTypes | excludeFrom:classifiedColumns:$index">
                             <option value="" selected="selected">None</option>
                         </select>
                     </div>
