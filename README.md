@@ -1,6 +1,6 @@
 # FarmBuild Soil Sample Importer
 
-This is the dairy nutrient calculator module of farm build JavaScript library.
+This is the soil sample importer module of farm build JavaScript library.
 
 
 ## Getting Started
@@ -14,6 +14,6 @@ Unzip the downloaded folder and go to "examples" and open one of the html files 
 ### AngularJS example
 * <a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/examples/angularjs/index.html" target="_blank">Soil Sample - angularJS example</a>
 
-For more information about API and Testing see the [Wiki](https://github.com/SpatialVision/farm-build-nutrient-calculator/wiki) section.
+For more information about API and Testing see the [Wiki](https://github.com/FarmBuild/farmbuild-soil-sample-importer/wiki) section.
 
 [![Build Status](https://travis-ci.org/FarmBuild/farmbuild-soil-sample-importer.svg?branch=master)](https://travis-ci.org/FarmBuild/farmbuild-soil-sample-importer)
