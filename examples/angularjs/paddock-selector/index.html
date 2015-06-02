@@ -12,7 +12,7 @@
 <body ng-controller="PaddockSelectorCtrl">
 <content>
     <modal ng-if="noResult" ng-include="'../modal-validation-error.html'"></modal>
-    <h3><a href="../">FarmBuild Soil Importer</a> - Import Data Matching
+    <h3><a href="../index.html">FarmBuild Soil Importer</a> - Import Data Matching
     </h3>
     <form role="form" name="form" ng-submit="export(paddockSelection)"  novalidate>
         <input id="loadFile" name="soilData" type="file" on-read-file="loadSoilSample($fileContent)" class="form-control">
