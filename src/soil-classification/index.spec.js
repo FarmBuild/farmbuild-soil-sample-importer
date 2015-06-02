@@ -38,30 +38,30 @@ describe('farmbuild.soilSampleImporter.soilClassification module', function() {
 
     });
 
-    describe('soilClassification H2O', function(){
-        it('H2O classification should be correct', inject(function() {
-            var found = soilClassificationTypes.byName(h2O);
-
-            expect(found.name).toEqual(h2O);
-            expect(soilClassification.findRange(found, 0).name).toEqual("Very Acidic");
-            expect(soilClassification.findRange(found, 5.2).name).toEqual("Very Acidic");
-            expect(soilClassification.findRange(found, 5.5).name).toEqual("Acidic");
-            expect(soilClassification.findRange(found, 6).name).toEqual("Slightly Acidic");
-            expect(soilClassification.findRange(found, 10).name).toEqual("Neutral");
-        }));
-
-    });
-
-    describe('soilClassification Colwell Phosphorus', function(){
-        it('Colwell Phosphorus classification should be correct', inject(function() {
-            var found = soilClassificationTypes.byName(colWellPhosphor);
-
-            expect(found.name).toEqual(colWellPhosphor);
-            expect(soilClassification.findRangeWithDependency(found, 0, 15).name).toEqual("Deficient");
-            expect(soilClassification.findRangeWithDependency(found, 16, 15).name).toEqual("Marginal");
-            expect(soilClassification.findRangeWithDependency(found, 16, 16).name).toEqual("Deficient");
-        }));
-
-    });
+//    describe('soilClassification H2O', function(){
+//        it('H2O classification should be correct', inject(function() {
+//            var found = soilClassificationTypes.byName(h2O);
+//
+//            expect(found.name).toEqual(h2O);
+//            expect(soilClassification.findRange(found, 0).name).toEqual("Very Acidic");
+//            expect(soilClassification.findRange(found, 5.2).name).toEqual("Very Acidic");
+//            expect(soilClassification.findRange(found, 5.5).name).toEqual("Acidic");
+//            expect(soilClassification.findRange(found, 6).name).toEqual("Slightly Acidic");
+//            expect(soilClassification.findRange(found, 10).name).toEqual("Neutral");
+//        }));
+//
+//    });
+//
+//    describe('soilClassification Colwell Phosphorus', function(){
+//        it('Colwell Phosphorus classification should be correct', inject(function() {
+//            var found = soilClassificationTypes.byName(colWellPhosphor);
+//
+//            expect(found.name).toEqual(colWellPhosphor);
+//            expect(soilClassification.findRangeWithDependency(found, 0, 15).name).toEqual("Deficient");
+//            expect(soilClassification.findRangeWithDependency(found, 16, 15).name).toEqual("Marginal");
+//            expect(soilClassification.findRangeWithDependency(found, 16, 16).name).toEqual("Deficient");
+//        }));
+//
+//    });
 
 });
