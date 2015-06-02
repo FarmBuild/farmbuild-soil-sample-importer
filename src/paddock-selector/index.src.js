@@ -64,7 +64,7 @@ angular.module('farmbuild.soilSampleImporter')
             return test;
         }*/
 
-        paddockSelector.save = function(paddockSelection) {
+        paddockSelector.save = function(myFarmData, paddockSelection) {
             $log.info(JSON.stringify(paddockSelection));
 
             if (!paddockSelectionValidator.validatePaddockSelection(paddockSelection)) {
