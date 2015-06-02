@@ -71,6 +71,13 @@ angular.module('farmbuild.soilSampleImporter')
                 return undefined;
             }
 
+            for (var key in paddockSelection.paddockRowDictionary) {
+                for(var i=0; i<paddockSelection.paddockRowDictionary[key].length; i++) {
+                    var rowIndex = paddockSelection.paddockRowDictionary[key][i];
+                    paddockSelection.results.rows[rowIndex][paddockSelection.paddockNameColumn] = key;
+                }
+            }
+            $log.info(JSON.stringify(paddockSelection));
             return soilSampleImporter.toFarmData(myFarmData, paddockSelection);
 
         }
