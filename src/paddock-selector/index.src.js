@@ -11,7 +11,7 @@
 angular.module('farmbuild.soilSampleImporter')
     .factory('paddockSelector',
     function ($log, farmdata, soilSampleImporter, soilClassificationTypes,
-              collections, soilSampleConverter, paddockSelectionValidator) {
+              collections, paddockSelectionValidator) {
         $log.info("paddockSelector ");
 
         var paddockSelector = {},
@@ -71,7 +71,7 @@ angular.module('farmbuild.soilSampleImporter')
                 return undefined;
             }
 
-            return soilSampleConverter.toFarmData(myFarmData, paddockSelection);
+            return soilSampleImporter.toFarmData(myFarmData, paddockSelection);
 
         }
 
