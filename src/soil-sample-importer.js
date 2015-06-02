@@ -85,14 +85,17 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 		};
 
 
-      soilSampleImporter.export = soilSampleImporterSession.export;
+    soilSampleImporter.export = soilSampleImporterSession.export;
+    soilSampleImporter.toSoilSampleResult = soilSampleConverter.toSoilSampleResults;
+    soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
+
 
 		if (typeof window.farmbuild === 'undefined') {
 			window.farmbuild = {
-				nutrientcalculator: soilSampleImporter
+        soilSampleImporter: soilSampleImporter
 			};
 		} else {
-			window.farmbuild.nutrientcalculator = soilSampleImporter;
+			window.farmbuild.soilSampleImporter = soilSampleImporter;
 		}
 
 		return soilSampleImporter;
