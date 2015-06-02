@@ -39,7 +39,8 @@
 
   </form-item>
   <buttons class="col-md-12" ng-if="farmData.name">
-    <button class="btn btn-primary" ng-click="calculate()">Load</button>
+    <a type="button" class="btn btn-primary" ng-href="paddock-selector/index.html" ng-disabled="!farmData.name">Import
+      soil sample </a>
     <a type="button" class="btn btn-primary" ng-click="exportFarmData(farmData)" ng-disabled="!farmData.name">Export
       farm data</a>
     <button class="btn btn-primary" ng-click="clear()">Clear session</button>
@@ -90,9 +91,26 @@
       </table>
     </paddocks>
 
+  {{soiSampleTable}}
+  <table class="table table-striped table-hover">
+    <tr>
+      <th ng-repeat="header in paddockSoilSamples.results.columnHeaders">
+        <div>{{header}}</div>
+      </th>
+    </tr>
+    <tr ng-repeat="row in paddockSoilSamples.results.rows track by $index">
+      <td ng-repeat="col in row track by $index">
+        <div>
+          {{col}}
+        </div>
+      </td>
+    </tr>
+  </table>
+
 
   <pre>
-    {{prettyContent}}
+
+    <!--{{prettyContent}}-->
   </pre>
 </summary>
 <version>

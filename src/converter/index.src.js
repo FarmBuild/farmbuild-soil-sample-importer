@@ -15,7 +15,7 @@ angular.module('farmbuild.soilSampleImporter')
       _isEmpty = validations.isEmpty,
       soilSampleConverter = {};
 
-    soilSampleConverter.createDefault = function(){
+    function createDefault(){
       return{
         dateLastUpdated: new Date(),
         results:{
@@ -31,32 +31,20 @@ angular.module('farmbuild.soilSampleImporter')
       };
 
     }
+    soilSampleConverter.createDefault = createDefault;
 
     /**
      * Soil sample result from farmdata
      * @param farmData
      * @returns {*}
      */
-    soilSampleConverter.toSoilSampleResults = function(farmData){
-
+    function toSoilSampleResults(farmData){
+      $log.info('soilSampleConverter.toSoilSampleResults ');
       if(!soilSampleValidator.isValidFarmDataWithSoilSample(farmData)){
         $log.info('soilSampleValidator.isValidFarmDataWithSoilSample');
-  /*      return{
-          dateLastUpdated: new Date(),
-          results:{
-            columnHeaders :[],
-            rows:[]
-          },
-          classificationColumnDictionary :{},
-          selected :[],
-
-          paddockRowDictionary : 	{},
-          paddockNameColumn: undefined
-
-        };
-        */
         return soilSampleConverter.createDefault();
       }
+
 
       var soils =farmData.soils;
       var sampleResults = soils.sampleResults;
@@ -134,13 +122,15 @@ angular.module('farmbuild.soilSampleImporter')
 
     };
 
+    soilSampleConverter.toSoilSampleResults = toSoilSampleResults;
+
 
     /**
      * Will remove any soil sample info already in farm data and add the new soil sample info
      * @param farmData with or without the soil sample results
      * @param sampleResults soil sample results soilSampleConverter.toSoilSampleResults output
      */
-    soilSampleConverter.toFarmData = function(farmData , newSampleResults){
+    function toFarmData(farmData , newSampleResults){
         if(!_isDefined(farmData)){
           return undefined;
         };
@@ -215,6 +205,7 @@ angular.module('farmbuild.soilSampleImporter')
 //      $log.info('farmData ',JSON.stringify(farmData,null,'   '));
       return farmData;
     };
+    soilSampleConverter.toFarmData = toFarmData;
 
     return soilSampleConverter;
   });

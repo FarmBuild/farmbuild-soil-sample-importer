@@ -26,13 +26,21 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
           return;
         }
 
+        getSampleResultsTable(farmData);
         updateFarmData($scope, farmData);
-
         $scope.prettyContent = JSON.stringify(farmData,null,"    ");
       } catch (e) {
         console.error('farmbuild.soilSampleImporter.examples > load: Your file should be in json format: ', e);
         $scope.noResult = true;
       }
+    };
+
+    function getSampleResultsTable(farmData){
+      $log.info('FarmCtrl>>getSampleResultsTable');
+      var soilSampleResults = soilSampleImporter.toSoilSampleResult(farmData);
+
+      $scope.paddockSoilSamples = soilSampleResults;
+
     };
 
     $scope.exportFarmData = function (farmData) {
@@ -43,7 +51,6 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
     $scope.calculate = function () {
       $log.info('calculate...');
-      var farmData = soilSampleImporter.calculate($scope.farmData);
 
       updateFarmData($scope, farmData);
 
