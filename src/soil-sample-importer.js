@@ -12,9 +12,10 @@
  * soilSampleImporter
  * @module soilSampleImporter
  */
-angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farmdata'])
+angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farmdata',])
 	.factory('soilSampleImporter',
   function (soilSampleImporterSession,
+            soilSampleConverter,
             farmdata,
             validations,
             googleAnalyticsImporter,
@@ -32,12 +33,16 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 		$log.info('Welcome to Soil Sample Importer... ' +
       'this should only be initialised once! why we see twice in the example?');
     function createDefault() {
-      $log.info('soil-sample-importer>>>>createDefault');
-      return {
-          dateLastUpdated :'',
-          types:[]
+      return     {
+          "dateLastUpdated": new Date(),
+            "columnHeaders" :[],
+            "classificationColumnDictionary":{ },
+          "selected" :[],
+          "paddockNameColumn": undefined
 
       };
+
+
      }
 
 
@@ -63,24 +68,19 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 		 */
 		soilSampleImporter.load = function (farmData) {
       var loaded = farmdata.load(farmData);
-      $log.info('soil-sample-importer>>>>load>>after farmdata.load');
 			if (!_isDefined(loaded)) {
 				return undefined;
 			}
 
-      $log.info('soil-sample-importer>>>>load>>check soils');
 
       if(!loaded.hasOwnProperty('soils')){
-        $log.info('soil-sample-importer>>>>load>>no property soils');
-        loaded.soils = {soils:{}};
+        loaded.soils = {};
       }
-      if(!loaded.soils.hasOwnProperty('soilSamples')){
-          $log.info('soil-sample-importer>>>>load>>no property paddocks');
-          loaded.soils.soilSamples = createDefault();
+      if(!loaded.soils.hasOwnProperty('sampleResults')){
+          loaded.soils.sampleResults = createDefault();
           loaded = farmdata.update(loaded);
 
       }
-      $log.info('soil-sample-importer>>>>load>'+loaded);
 			return loaded;
 		};
 

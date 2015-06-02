@@ -15,7 +15,22 @@ angular.module('farmbuild.soilSampleImporter')
       _isEmpty = validations.isEmpty,
       soilSampleConverter = {};
 
+    soilSampleConverter.createDefault = function(){
+      return{
+        dateLastUpdated: new Date(),
+        results:{
+          columnHeaders :[],
+          rows:[]
+        },
+        classificationColumnDictionary :{},
+        selected :[],
 
+        paddockRowDictionary : 	{},
+        paddockNameColumn: undefined
+
+      };
+
+    }
 
     /**
      * Soil sample result from farmdata
@@ -26,7 +41,7 @@ angular.module('farmbuild.soilSampleImporter')
 
       if(!soilSampleValidator.isValidFarmDataWithSoilSample(farmData)){
         $log.info('soilSampleValidator.isValidFarmDataWithSoilSample');
-        return{
+  /*      return{
           dateLastUpdated: new Date(),
           results:{
             columnHeaders :[],
@@ -39,7 +54,8 @@ angular.module('farmbuild.soilSampleImporter')
           paddockNameColumn: undefined
 
         };
-
+        */
+        return soilSampleConverter.createDefault();
       }
 
       var soils =farmData.soils;
@@ -174,7 +190,7 @@ angular.module('farmbuild.soilSampleImporter')
         $log.info('singlePaddockSoils '+paddockRows);
         if(paddockRows.length==0){continue;}
         for(var k=0;k<paddockRows.length;k++){
-          var paddockRowsIndex = paddockRows[k]-1;
+          var paddockRowsIndex = paddockRows[k];
           singlePaddockSoils.push(rows[paddockRowsIndex]);
 
         }
