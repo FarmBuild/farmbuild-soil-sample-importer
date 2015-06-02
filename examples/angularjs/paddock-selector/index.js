@@ -13,7 +13,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $scope.noResult = false;
         $scope.paddockColumnIndex = paddockSelector.paddockColumnIndex;
         $scope.classificationTypes = [];
-        $scope.paddocks = paddockSelector.paddocks;
+        $scope.paddocks = [];
         $scope.myFarmData = soilSampleImporter.find();
 
         for(var i=0; i<paddockSelector.types.length;i++) {
@@ -61,12 +61,14 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 }
                 $log.info(csv);
                 var header = csv.shift();
-                $scope.paddockSelection = paddockSelector.createNew(header,
+                $scope.paddockSelection = paddockSelector.createNew($scope.myFarmData,
+                    header,
                     csv, 0);
                 if (!$scope.paddockSelection) {
                     $scope.noResult = true;
+                    return;
                 }
-
+                $scope.paddocks = paddockSelector.paddocks;
             } catch (e) {
                 console.error('farmbuild.soilSampleImporter.loadsample > load: Your file should be in csv format: ', e);
                 $scope.noResult = true;

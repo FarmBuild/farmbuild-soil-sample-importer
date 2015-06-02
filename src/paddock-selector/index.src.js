@@ -10,7 +10,7 @@
 
 angular.module('farmbuild.soilSampleImporter')
     .factory('paddockSelector',
-    function ($log, farmdata, soilSampleImporterSession, soilClassificationTypes,
+    function ($log, farmdata, soilSampleImporter, soilClassificationTypes,
               collections, soilSampleConverter, paddockSelectionValidator) {
         $log.info("paddockSelector ");
 
@@ -131,15 +131,18 @@ angular.module('farmbuild.soilSampleImporter')
 
 
         var paddockSelector = {},
-            _paddocks = myFarmData.paddocks,
+            _paddocks = [],
             _types = soilClassificationTypes.toArray();
 
 
-        paddockSelector.createNew = function(columnHeaders, rows, paddockColumnIndex) {
+        paddockSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
 
             if(!paddockSelectionValidator.validateCreateNew(columnHeaders, rows)) {
                 return undefined;
             }
+
+            _paddocks = myFarmData.paddocks;
+            paddockSelector.paddocks = _paddocks;
 
             var result= {
                 "dateLastUpdated": new Date(),
@@ -213,12 +216,13 @@ angular.module('farmbuild.soilSampleImporter')
             return paddockSelection;
         }
 
-        paddockSelector.selectColumn =  function(paddockSelection, index) {
-            collections.add(paddockSelection.selected, index);
+        paddockSelector.selectColumn =  function(paddockSelection, value) {
+            $log.info("adding "+value+ " to "+ paddockSelection);
+            collections.add(paddockSelection.selected, value);
         }
 
-        paddockSelector.deselectColumn =  function(paddockSelection, index) {
-            delete paddockSelection.classificationColumnDictionary[classificationType.name];
+        paddockSelector.deselectColumn =  function(paddockSelection, value) {
+            collections.remove(paddockSelection.selected, value)
         }
 
         /**
@@ -229,7 +233,8 @@ angular.module('farmbuild.soilSampleImporter')
          */
         paddockSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
             paddockSelection.classificationColumnDictionary[classificationType.name] = index;
-            this.selectColumn(paddockSelection.selected, index);
+            $log.info("paddockSelection "+JSON.stringify(paddockSelection));
+            this.selectColumn(paddockSelection, index);
         }
 
         /**
@@ -239,7 +244,7 @@ angular.module('farmbuild.soilSampleImporter')
          * @param index
          */
         paddockSelector.declassifyColumn =  function(paddockSelection, classificationType, index) {
-            this.deselectColumn(paddockSelection.selected, index);
+            this.deselectColumn(paddockSelection, index);
             delete paddockSelection.classificationColumnDictionary[classificationType.name];
         }
 
