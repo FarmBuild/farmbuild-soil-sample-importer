@@ -9,24 +9,24 @@
 'use strict';
 
 angular.module('farmbuild.soilSampleImporter')
-    .factory('paddockSelector',
+    .factory('importFieldSelector',
     function ($log, farmdata, soilSampleImporter, soilClassificationTypes,
               collections, paddockSelectionValidator) {
-        $log.info("paddockSelector ");
+        $log.info("importFieldSelector ");
 
-        var paddockSelector = {},
+        var importFieldSelector = {},
             _paddocks = [],
             _types = soilClassificationTypes.toArray();
 
 
-        paddockSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
+        importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
 
             if(!paddockSelectionValidator.validateCreateNew(columnHeaders, rows)) {
                 return undefined;
             }
 
             _paddocks = myFarmData.paddocks;
-            paddockSelector.paddocks = _paddocks;
+            importFieldSelector.paddocks = _paddocks;
 
             var result= {
                 "dateLastUpdated": new Date(),
@@ -43,7 +43,7 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
 
-        /*paddockSelector.load = function() {
+        /*importFieldSelector.load = function() {
             var test= {
                 "dateLastUpdated": "2015-05-25T02:23:51",
                 "columnHeaders" : [
@@ -64,7 +64,7 @@ angular.module('farmbuild.soilSampleImporter')
             return test;
         }*/
 
-        paddockSelector.save = function(myFarmData, paddockSelection) {
+        importFieldSelector.save = function(myFarmData, paddockSelection) {
             $log.info(JSON.stringify(paddockSelection));
 
             if (!paddockSelectionValidator.validatePaddockSelection(paddockSelection)) {
@@ -88,7 +88,7 @@ angular.module('farmbuild.soilSampleImporter')
          * @param paddock
          * @param rowIndex
          */
-        paddockSelector.connectRow =  function(paddockSelection, paddock, rowIndex) {
+        importFieldSelector.connectRow =  function(paddockSelection, paddock, rowIndex) {
             if (!paddockSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
                 paddockSelection.paddockRowDictionary[paddock.name]= [];
             }
@@ -96,23 +96,23 @@ angular.module('farmbuild.soilSampleImporter')
 
         }
 
-        paddockSelector.disconnectRow =  function(paddockSelection, paddock, index) {
+        importFieldSelector.disconnectRow =  function(paddockSelection, paddock, index) {
             if (paddockSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
                 collections.remove(paddockSelection.paddockRowDictionary[paddock.name], index);
             }
         }
 
-        paddockSelector.resetPaddockRowDictionary =  function(paddockSelection) {
+        importFieldSelector.resetPaddockRowDictionary =  function(paddockSelection) {
             paddockSelection.paddockRowDictionary = {};
 
             return paddockSelection;
         }
 
-        paddockSelector.selectColumn =  function(paddockSelection, value) {
+        importFieldSelector.selectColumn =  function(paddockSelection, value) {
             collections.add(paddockSelection.selected, value);
         }
 
-        paddockSelector.deselectColumn =  function(paddockSelection, value) {
+        importFieldSelector.deselectColumn =  function(paddockSelection, value) {
             collections.remove(paddockSelection.selected, value)
         }
 
@@ -122,7 +122,7 @@ angular.module('farmbuild.soilSampleImporter')
          * @param classificationType
          * @param index
          */
-        paddockSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
+        importFieldSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
             paddockSelection.classificationColumnDictionary[classificationType.name] = index;
             $log.info("paddockSelection "+JSON.stringify(paddockSelection));
             this.selectColumn(paddockSelection, index);
@@ -134,14 +134,14 @@ angular.module('farmbuild.soilSampleImporter')
          * @param classificationType
          * @param index
          */
-        paddockSelector.declassifyColumn =  function(paddockSelection, classificationType, index) {
+        importFieldSelector.declassifyColumn =  function(paddockSelection, classificationType, index) {
             this.deselectColumn(paddockSelection, index);
             delete paddockSelection.classificationColumnDictionary[classificationType.name];
         }
 
 
-        paddockSelector.types = _types;
-        paddockSelector.paddocks = _paddocks;
+        importFieldSelector.types = _types;
+        importFieldSelector.paddocks = _paddocks;
 
-        return paddockSelector;
+        return importFieldSelector;
     });
