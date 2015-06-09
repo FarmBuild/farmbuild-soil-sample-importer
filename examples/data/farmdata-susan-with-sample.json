@@ -49,15 +49,7 @@
             }
         ],
          "sampleResults" :{	
-               	"dateLastUpdated": "2015-05-25T02:23:51",
-               	"columnHeaders" :["Paddock name","Farm pH","Lab pH (1:5 CaCl2)","Sample Phosphorus (Olsen) - mg/kg"],
-               	"classificationColumnDictionary":{
-									"pH (1:5 Water)":1,
-									"pH (1:5 CaCl2)":2,
-									"Phosphorus (Olsen) - mg/kg":3
-									},
-				"selected" :[0,1,2,3],
-				"paddockNameColumn":0
+               	"dateLastUpdated": "2015-05-25T02:23:51"
          }
     },
     "paddocks": [
@@ -111,9 +103,13 @@
                      
                     }
                 ],
-                 "sampleResults":[[ "P3","1","2","3"]]
-        		 
-            }
+                 "sampleResults":[
+             	  	"Paddock name":'P1',
+               		"Farm pH":2.3,
+	               	"Lab pH (1:5 CaCl2)":22,
+    	           	"Sample Phosphorus (Olsen) - mg/kg":12.12
+               	]
+        	}
  
         },
         {
@@ -162,7 +158,12 @@
                 
                     }
                 ],
-            	"sampleResults":[ ["P1","9","8","7"], ["P1","4","5","6"]]
+            	"sampleResults":[
+             	  	"Paddock name":'P1',
+               		"Farm pH":2.3,
+	               	"Lab pH (1:5 CaCl2)":22,
+    	           	"Sample Phosphorus (Olsen) - mg/kg":12.12
+               	]
                 
             }
             
