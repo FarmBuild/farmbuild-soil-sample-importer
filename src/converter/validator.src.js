@@ -13,7 +13,11 @@ angular.module('farmbuild.soilSampleImporter')
       _isDefined = validations.isDefined,
       _isArray = validations.isArray;
 
-
+    /**
+     *
+     * @param farmData
+     * @returns {boolean}
+     */
     soilSampleValidator.isValidFarmDataWithSoilSample = function(farmData){
       var soils = farmData.soils;
 
@@ -24,11 +28,12 @@ angular.module('farmbuild.soilSampleImporter')
       if (!_isDefined(soilSampleResults)) {
         return false;
       }
-      var csvColumns = soilSampleResults.columnHeaders;
-      if (!_isDefined(csvColumns)) {
+      var dateLastUpdated = soilSampleResults.dateLastUpdated;
+      if (!_isDefined(dateLastUpdated)) {
         return false;
       }
-      if (!_isDefined(soilSampleResults.selected)) {
+      var importFieldNames = soilSampleResults.importFieldNames;
+      if (!_isDefined(importFieldNames)) {
         return false;
       }
       if (!_isDefined(farmData.paddocks)) {
@@ -42,6 +47,12 @@ angular.module('farmbuild.soilSampleImporter')
       return true;
     };
 
+
+    /**
+     *
+     * @param soilSampleResult
+     * @returns {boolean}
+     */
     soilSampleValidator.isValidSoilSampleResult = function(soilSampleResult){
 
       var results = soilSampleResult.results;
@@ -56,25 +67,24 @@ angular.module('farmbuild.soilSampleImporter')
       if (!_isDefined(rowsData)) {
         return false;
       }
-      if (!_isDefined(soilSampleResult.classificationColumnDictionary)) {
-        return false;
-      }
-      if (!_isDefined(soilSampleResult.selected)) {
+      if (!_isDefined(soilSampleResult.importFieldDictionary)) {
         return false;
       }
       if (!_isDefined(soilSampleResult.paddockRowDictionary)) {
         return false;
       }
 
-     var numberOfPaddocks =  Object.keys(soilSampleResult.paddockRowDictionary).length;
+      var numberOfPaddocks =  Object.keys(soilSampleResult.paddockRowDictionary).length;
+      $log.info("numberOfPaddocks "+numberOfPaddocks);
       if(!(numberOfPaddocks>0)){
         return false;
       }
 
+
       var totalCSVColumns = columnHeaders.length;
       $log.info('Columns in the column headers key '+totalCSVColumns);
       for(var i=0;i<rowsData.length;i++){
-          var singleRow = rowsData[i];
+        var singleRow = rowsData[i];
         if(singleRow.length!=totalCSVColumns){
           $log.error('The '+i+' row with paddick name '+singleRow[0] +' doesn\'t have required number of columns');
           return false;

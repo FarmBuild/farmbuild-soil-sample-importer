@@ -32,19 +32,6 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 
 		$log.info('Welcome to Soil Sample Importer... ' +
       'this should only be initialised once! why we see twice in the example?');
-    function createDefault() {
-      return     {
-          "dateLastUpdated": new Date(),
-            "columnHeaders" :[],
-            "classificationColumnDictionary":{ },
-          "selected" :[],
-          "paddockNameColumn": undefined
-
-      };
-
-
-     }
-
 
     /**
      * Finds the farmData from the session.
@@ -66,8 +53,9 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 		 * @public
 		 * @static
 		 */
-		soilSampleImporter.load = function (farmData) {
-      var loaded = farmdata.load(farmData);
+		soilSampleImporter.load = function (inputFarmData) {
+      var loaded = farmdata.load(inputFarmData);
+      $log.info('loaded '+JSON.stringify(loaded,null,"  "));
 			if (!_isDefined(loaded)) {
 				return undefined;
 			}
@@ -77,7 +65,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
         loaded.soils = {};
       }
       if(!loaded.soils.hasOwnProperty('sampleResults')){
-          loaded.soils.sampleResults = createDefault();
+          loaded.soils.sampleResults =  soilSampleImporter.createDefault();
           loaded = farmdata.update(loaded);
 
       }
@@ -86,8 +74,9 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 
 
     soilSampleImporter.export = soilSampleImporterSession.export;
-    soilSampleImporter.toSoilSampleResult = soilSampleConverter.toSoilSampleResults;
+//    soilSampleImporter.toSoilSampleResult = soilSampleConverter.toSoilSampleResults;
     soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
+    soilSampleImporter.createDefault = soilSampleConverter.createDefault;
 
 
 		if (typeof window.farmbuild === 'undefined') {

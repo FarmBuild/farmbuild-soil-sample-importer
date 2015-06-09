@@ -22,8 +22,7 @@ angular.module('farmbuild.soilSampleImporter')
           columnHeaders :[],
           rows:[]
         },
-        classificationColumnDictionary :{},
-        selected :[],
+        importFieldDictionary :{},
 
         paddockRowDictionary : 	{},
         paddockNameColumn: undefined
@@ -34,11 +33,11 @@ angular.module('farmbuild.soilSampleImporter')
     soilSampleConverter.createDefault = createDefault;
 
     /**
-     * Soil sample result from farmdata
+     * Generate the intermediate object soilSampleResult from farmdata
      * @param farmData
      * @returns {*}
      */
-    function toSoilSampleResults(farmData){
+/*    function toSoilSampleResults(farmData){
       $log.info('soilSampleConverter.toSoilSampleResults ');
       if(!soilSampleValidator.isValidFarmDataWithSoilSample(farmData)){
         $log.info('soilSampleValidator.isValidFarmDataWithSoilSample');
@@ -54,22 +53,13 @@ angular.module('farmbuild.soilSampleImporter')
         updatedDate = new Date();
       }
 
-      var columnHeaders = sampleResults.columnHeaders;
-      $log.info('soilSampleConverter.toSoilSampleResults>>columnHeaders '+columnHeaders);
+      var importFieldNames = sampleResults.importFieldNames;
+      $log.info('soilSampleConverter.toSoilSampleResults>>importFieldNames '+importFieldNames);
 
-      var classifications={};
-      if(_isDefined(sampleResults.classificationColumnDictionary)){
-        classifications = sampleResults.classificationColumnDictionary;
-      };
-
+      importFieldNames.splice(0,0,"Paddock Name");
       var paddockNameColumn=undefined;
       if(_isDefined(sampleResults.paddockNameColumn)){
         paddockNameColumn = sampleResults.paddockNameColumn;
-      };
-
-      var selectedColumns={};
-      if(_isDefined(sampleResults.selected)){
-        selectedColumns = sampleResults.selected;
       };
 
       var paddocks = farmData.paddocks;
@@ -109,11 +99,10 @@ angular.module('farmbuild.soilSampleImporter')
       return{
         dateLastUpdated: new Date(),
         results:{
-          columnHeaders :columnHeaders,
+          columnHeaders :importFieldNames,
           rows:rows
         },
-        classificationColumnDictionary :classifications,
-        selected :selectedColumns,
+        importFieldDictionary :importFieldNames,
 
         paddockRowDictionary : 	paddockRows,
         paddockNameColumn: paddockNameColumn
@@ -124,11 +113,13 @@ angular.module('farmbuild.soilSampleImporter')
 
     soilSampleConverter.toSoilSampleResults = toSoilSampleResults;
 
+*/
 
     /**
      * Will remove any soil sample info already in farm data and add the new soil sample info
      * @param farmData with or without the soil sample results
      * @param sampleResults soil sample results soilSampleConverter.toSoilSampleResults output
+     * @returns {*}
      */
     function toFarmData(farmData , newSampleResults){
         if(!_isDefined(farmData)){
@@ -151,20 +142,48 @@ angular.module('farmbuild.soilSampleImporter')
       }
       $log.info('before loop');
 
-      var currentSampleResults = {};
-      if(_isDefined(currentSoils.sampleResults)){
-        currentSampleResults=currentSoils.sampleResults;
-      }
+      var farmDataSampleResults = {};
+
 
       var newResults = newSampleResults.results;
-      //Set up data for the info in soils{}
-      currentSampleResults.dateLastUpdated = newSampleResults.dateLastUpdated;
-      currentSampleResults.columnHeaders = newResults.columnHeaders;
-      currentSampleResults.classificationColumnDictionary = newSampleResults.classificationColumnDictionary;
-      currentSampleResults.selected = newSampleResults.selected;
-      currentSampleResults.paddockNameColumn = newSampleResults.paddockNameColumn;
-      currentSoils.sampleResults = currentSampleResults;
-      $log.info('modifiedSoils ',JSON.stringify(currentSoils,null,'   '));
+      //Set up data for the info in soils{ sampleResults:{}}
+
+
+      var newImportFieldDictionary = newSampleResults.importFieldDictionary;
+      var importFieldNames =[];
+      importFieldNames = Object.keys(newImportFieldDictionary);
+      $log.info('importFields  '+importFieldNames.length);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      farmDataSampleResults.dateLastUpdated = newSampleResults.dateLastUpdated;
+      farmDataSampleResults.importFieldNames = importFieldNames;
+
+
+//      farmDataSampleResults.importFieldNames = newResults.columnHeaders;
+//      currentSampleResults.classificationColumnDictionary = newSampleResults.classificationColumnDictionary;
+//      currentSampleResults.selected = newSampleResults.selected;
+//      currentSampleResults.paddockNameColumn = newSampleResults.paddockNameColumn;
+      currentSoils.sampleResults = farmDataSampleResults;
+//      $log.info('modifiedSoils ',JSON.stringify(currentSoils,null,'   '));
+
+
+
+
+
+
       //Set up data for the info for each paddock
       var rows = newResults.rows ;
 
@@ -180,8 +199,19 @@ angular.module('farmbuild.soilSampleImporter')
         $log.info('singlePaddockSoils '+paddockRows);
         if(paddockRows.length==0){continue;}
         for(var k=0;k<paddockRows.length;k++){
-          var paddockRowsIndex = paddockRows[k];
-          singlePaddockSoils.push(rows[paddockRowsIndex]);
+
+          var rowValues = rows[paddockRows[k]];
+          var sampleValue = [];
+          for(var j=0;j<importFieldNames.length;j++){
+            var temp = { } ;
+            $log.info('importFieldNames[j] '+importFieldNames[j]);
+            temp[importFieldNames[j]] = rowValues[j];
+            sampleValue.push(temp);
+
+          }
+
+
+          singlePaddockSoils.push(sampleValue);
 
         }
 //        $log.info('AAAAAAAa singlePaddock '+JSON.stringify(singlePaddock,null,'    '));

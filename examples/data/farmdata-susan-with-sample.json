@@ -112,21 +112,23 @@
                      
                     }
                 ],
-                 "sampleResults":{
-                 		  "Farm Paddock Name":"P3",
-                 		  "Sample Id":22, 
-   						  "Sample Name":"p3 sample1",
-               			  "results":[
+                 "sampleResults":[
 	               			  [	{"pH (1:5 Water)": 0.3 },
 				               	{"pH (1:5 CaCl2)": 22 },
-    				           	{"Phosphorus (Olsen) - mg/kg":12.12 }
+    				           	{"Phosphorus (Olsen) - mg/kg":12.12 },
+    				           	{"Sample Id":20}, 
+   						  		{"Sample Name":"p3 sample1"},
+   						  		{"Farm Paddock Name":"P3"}
     			        	  ],
     				          [		{"pH (1:5 Water)": 2.3 },
 			    	           		{"pH (1:5 CaCl2)": 12.8 },
-    			    	       		{"Phosphorus (Olsen) - mg/kg":12.12 }
+    			    	       		{"Phosphorus (Olsen) - mg/kg":12.12 },
+    			    	       		{"Sample Id":23}, 
+   						  			{"Sample Name":"p3 sample2"},
+   						  			{"Farm Paddock Name":"P3"}
     			        	   ]
     	        	    	]
-               	}
+               	
         	}
  
         },
@@ -176,16 +178,65 @@
                 
                     }
                 ],
-                "sampleResults":{
-                 		  "Farm Paddock Name":"P1",
-                 		  "Sample Id":22, 
-   						  "Sample Name":"p3 sample1",
-               			  "results":[
+                "sampleResults":[
                			  	{"pH (1:5 Water)":5.3},
 			               	{"pH (1:5 CaCl2)":82},
-    			           	{"Phosphorus (Olsen) - mg/kg":99.12}
+    			           	{"Phosphorus (Olsen) - mg/kg":99.12},
+    			           	{"Sample Id":23}, 
+   						  	{"Sample Name":"p3 sample2"},
+   						  	{"Farm Paddock Name":"P3"}
     	        	    	]
-               	}
+               	
+                
+            }
+            
+        },
+        {
+            "name": "P1",
+            "geometry": {
+                "type": "Polygon",
+                "crs": "EPSG:4283",
+                "coordinates": [
+                    [
+                        [
+                            145.5820357180293,
+                            -36.224883050102875
+                        ],
+                        [
+                            145.58072609426455,
+                            -36.22488253784964
+                        ],
+                        [
+                            145.58070132605394,
+                            -36.225512331175615
+                        ],
+                        [
+                            145.58218018756546,
+                            -36.22550501283936
+                        ],
+                        [
+                            145.58211312173296,
+                            -36.225216285770216
+                        ],
+                        [
+                            145.5820357180293,
+                            -36.224883050102875
+                        ]
+                    ]
+                ]
+            },
+            "area": 0.87,
+            "soils": {
+                "dateLastUpdated": "2015-05-25T02:23:51",
+                "types": [
+                    {
+                        "area": 0.8707,
+                        "description": "Katamatite loam - yellow phase",
+                        "soilGroup": "2",
+                        "soilClass": "Light"
+                
+                    }
+                ]
                 
             }
             

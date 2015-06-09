@@ -31,10 +31,12 @@ describe('farmbuild.soilSampleImporter module', function() {
 
 
     it('soilSampleImporter create default should have a soilSamples section defined', inject(function() {
-      var farmData = {name: 'Susan\'s farm'};
+      var farmData = {name: 'Susan\'s farm',area:0 ,
+        areaUnit:'hectare'};
       var farmDataWithSoilSamples = soilSampleImporter.load(farmData);
-      expect(farmDataWithSoilSamples.soils).toBeDefined();
       $log.info('farmDataWithSoilSamples '+farmDataWithSoilSamples);
+      expect(farmDataWithSoilSamples.soils).toBeDefined();
+
       var soilsInfo = farmDataWithSoilSamples.soils;
       expect(soilsInfo.sampleResults).toBeDefined();
     }));
