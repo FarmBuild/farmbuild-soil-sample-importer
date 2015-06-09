@@ -32,6 +32,7 @@
         ]
     },
     "area": 28.09,
+    "areaUnit":"hectare",
     "soils": {
         "dateLastUpdated": "2015-05-25T02:23:51",
         "types": [
@@ -51,9 +52,12 @@
          "sampleResults" :{	
                	"dateLastUpdated": "2015-05-25T02:23:51",
                	 "importFieldNames": [
-   						 "pH (1:5 Water)",
-						 "pH (1:5 CaCl2)",
-						 "Phosphorus (Olsen) - mg/kg"
+   						  "Farm Paddock Name",
+   						  "Sample Id", 
+   						  "Sample Name",
+   						  "pH (1:5 Water)",
+   						  "pH (1:5 CaCl2)",
+   						  "Phosphorus (Olsen) - mg/kg"
 				    ]
          }
     },
@@ -108,11 +112,16 @@
                      
                     }
                 ],
-                 "sampleResults":[
-               		"pH (1:5 Water)":2.3,
-	               	"pH (1:5 CaCl2)":22,
-    	           	"Phosphorus (Olsen) - mg/kg":12.12
-               	]
+                 "sampleResults":{
+                 		  "Farm Paddock Name":"P3",
+                 		  "Sample Id":22, 
+   						  "Sample Name":"p3 sample1",
+               			  "results":[
+               			  	{"pH (1:5 Water)": 2.3},
+			               	{"pH (1:5 CaCl2)":22},
+    			           	{"Phosphorus (Olsen) - mg/kg":12.12}
+    	        	    	]
+               	}
         	}
  
         },
@@ -162,11 +171,16 @@
                 
                     }
                 ],
-            	"sampleResults":[
-             	  	"pH (1:5 Water)":2.3,
-	               	"pH (1:5 CaCl2)":22,
-    	           	"Phosphorus (Olsen) - mg/kg":12.12
-               	]
+                "sampleResults":{
+                 		  "Farm Paddock Name":"P3",
+                 		  "Sample Id":22, 
+   						  "Sample Name":"p3 sample1",
+               			  "results":[
+               			  	{"pH (1:5 Water)":5.3},
+			               	{"pH (1:5 CaCl2)":82},
+    			           	{"Phosphorus (Olsen) - mg/kg":99.12}
+    	        	    	]
+               	}
                 
             }
             
