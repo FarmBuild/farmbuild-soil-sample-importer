@@ -21,6 +21,8 @@ module.exports = function(config){
       'src/paddock-selector/validator.src.js',
       'src/blank.spec.js',//use this as a basis of creating your module test
       'src/session/index.spec.js',
+      'src/import-field-definition/types.src.js',
+      'src/import-field-definition/defaults.conf.src.js',
 //      'src/collections/index.spec.js',
 //      'src/ga/index.spec.js',
 //      'src/converter/index.spec.js',
