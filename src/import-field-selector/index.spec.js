@@ -55,18 +55,18 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
     });
     describe('Soil Classification selector dictionary selection', function(){
         var test = {};
-        test.classificationColumnDictionary=[];
+        test.importFieldDictionary=[];
         test.selected=[];
         var classType = {};
         classType.name="H2O";
         it('classification selection should be added', inject(function() {
             importFieldSelector.classifyColumn(test, classType, 1);
-            expect(test.classificationColumnDictionary[classType.name]).toBeDefined();
-            expect(test.classificationColumnDictionary[classType.name]).toEqual(1);
+            expect(test.importFieldDictionary[classType.name]).toBeDefined();
+            expect(test.importFieldDictionary[classType.name]).toEqual(1);
         }));
         it('classification selection should be removed', inject(function() {
             importFieldSelector.declassifyColumn(test, classType);
-            expect(test.classificationColumnDictionary[classType.name]).toBeUndefined();
+            expect(test.importFieldDictionary[classType.name]).toBeUndefined();
         }));
 
     });

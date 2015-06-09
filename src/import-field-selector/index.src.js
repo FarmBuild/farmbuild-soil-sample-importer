@@ -11,7 +11,7 @@
 angular.module('farmbuild.soilSampleImporter')
     .factory('importFieldSelector',
     function ($log, farmdata, soilSampleImporter, importFieldTypes,
-              collections, paddockSelectionValidator) {
+              collections, importFieldSelectionValidator) {
         $log.info("importFieldSelector ");
 
         var importFieldSelector = {},
@@ -21,7 +21,7 @@ angular.module('farmbuild.soilSampleImporter')
 
         importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
 
-            if(!paddockSelectionValidator.validateCreateNew(columnHeaders, rows)) {
+            if(!importFieldSelectionValidator.validateCreateNew(columnHeaders, rows)) {
                 return undefined;
             }
 
@@ -34,8 +34,7 @@ angular.module('farmbuild.soilSampleImporter')
                     "columnHeaders": columnHeaders,
                     "rows": rows
                 },
-                "selected": [],
-                "classificationColumnDictionary": {},
+                "importFieldDictionary": {},
                 "paddockRowDictionary": {},
                 "paddockNameColumn":paddockColumnIndex
             };
@@ -43,31 +42,10 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
 
-        /*importFieldSelector.load = function() {
-            var test= {
-                "dateLastUpdated": "2015-05-25T02:23:51",
-                "columnHeaders" : [
-                    "Paddock",
-                    "SampleId",
-                    "SampleName",
-                    "Ph",
-                    "Saturation"
-                ],
-                "rows" : [
-                    ['P1','123', 'Front Barn', 1,2,3,4,5,6,7],
-                    ['P2','456', 'Left Barn', 1,2,3,4,5,6,7]
-                ],
-                "classificationColumnDictionary": {},
-                "paddockRowDictionary": {},
-                "paddockColumnIndex":0
-            };
-            return test;
-        }*/
-
         importFieldSelector.save = function(myFarmData, paddockSelection) {
             $log.info(JSON.stringify(paddockSelection));
 
-            if (!paddockSelectionValidator.validatePaddockSelection(paddockSelection)) {
+            if (!importFieldSelectionValidator.validatePaddockSelection(paddockSelection)) {
                 return undefined;
             }
 
@@ -108,14 +86,6 @@ angular.module('farmbuild.soilSampleImporter')
             return paddockSelection;
         }
 
-        importFieldSelector.selectColumn =  function(paddockSelection, value) {
-            collections.add(paddockSelection.selected, value);
-        }
-
-        importFieldSelector.deselectColumn =  function(paddockSelection, value) {
-            collections.remove(paddockSelection.selected, value)
-        }
-
         /**
          * Add classification for column with given index
          * @param paddockSelection
@@ -123,9 +93,8 @@ angular.module('farmbuild.soilSampleImporter')
          * @param index
          */
         importFieldSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
-            paddockSelection.classificationColumnDictionary[classificationType.name] = index;
+            paddockSelection.importFieldDictionary[classificationType.name] = index;
             $log.info("paddockSelection "+JSON.stringify(paddockSelection));
-            this.selectColumn(paddockSelection, index);
         }
 
         /**
@@ -135,8 +104,7 @@ angular.module('farmbuild.soilSampleImporter')
          * @param index
          */
         importFieldSelector.declassifyColumn =  function(paddockSelection, classificationType, index) {
-            this.deselectColumn(paddockSelection, index);
-            delete paddockSelection.classificationColumnDictionary[classificationType.name];
+            delete paddockSelection.importFieldDictionary[classificationType.name];
         }
 
 
