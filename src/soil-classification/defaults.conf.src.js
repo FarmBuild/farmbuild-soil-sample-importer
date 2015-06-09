@@ -2,14 +2,6 @@ angular.module('farmbuild.soilSampleImporter').
     constant('soilClassificationDefaults', {
         "types": [
             {
-                "name": "Paddock Id",
-                "ranges": undefined
-            },
-            {
-                "name": "Paddock Name",
-                "ranges": undefined
-            },
-            {
                 "name": "pH H2O (Water)",
                 "ranges": [
                     {

@@ -6,7 +6,7 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
     })
 
     // instantiate service
-    var paddockSelector, farmdata,
+    var importFieldSelector, farmdata,
         $log;
 
     beforeEach(module('farmbuild.farmdata', function($provide) {
@@ -16,9 +16,9 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
         $provide.value('$log', console);
     }));
 
-    beforeEach(inject(function (_$log_, _paddockSelector_) {
+    beforeEach(inject(function (_$log_, _importFieldSelector_) {
         $log = _$log_;
-        paddockSelector = _paddockSelector_;
+        importFieldSelector = _importFieldSelector_;
     }))
 
     afterEach(function() {
@@ -27,7 +27,7 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
 
     describe('Paddock selector ', function(){
         it('paddock selection should be created', inject(function() {
-            expect(paddockSelector).toBeDefined();
+            expect(importFieldSelector).toBeDefined();
         }));
 
     });
@@ -38,16 +38,16 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
         var paddock = {};
         paddock.name="Test P1";
         it('paddock selection should be added', inject(function() {
-            paddockSelector.connectRow(test, paddock, 1);
+            importFieldSelector.connectRow(test, paddock, 1);
             expect(test.paddockRowDictionary[paddock.name]).toBeDefined();
             expect(test.paddockRowDictionary[paddock.name].length).toEqual(1);
-            paddockSelector.disconnectRow(test, paddock, 1);
+            importFieldSelector.disconnectRow(test, paddock, 1);
             expect(test.paddockRowDictionary[paddock.name]).toBeDefined();
             expect(test.paddockRowDictionary[paddock.name].length).toEqual(0);
         }));
 
         it('paddock selection should be removed', inject(function() {
-            paddockSelector.disconnectRow(test, paddock, 1);
+            importFieldSelector.disconnectRow(test, paddock, 1);
             expect(test.paddockRowDictionary[paddock.name]).toBeDefined();
             expect(test.paddockRowDictionary[paddock.name].length).toEqual(0);
         }));
@@ -55,18 +55,18 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
     });
     describe('Soil Classification selector dictionary selection', function(){
         var test = {};
-        test.classificationColumnDictionary=[];
+        test.importFieldDictionary=[];
         test.selected=[];
         var classType = {};
         classType.name="H2O";
         it('classification selection should be added', inject(function() {
-            paddockSelector.classifyColumn(test, classType, 1);
-            expect(test.classificationColumnDictionary[classType.name]).toBeDefined();
-            expect(test.classificationColumnDictionary[classType.name]).toEqual(1);
+            importFieldSelector.classifyColumn(test, classType, 1);
+            expect(test.importFieldDictionary[classType.name]).toBeDefined();
+            expect(test.importFieldDictionary[classType.name]).toEqual(1);
         }));
         it('classification selection should be removed', inject(function() {
-            paddockSelector.declassifyColumn(test, classType);
-            expect(test.classificationColumnDictionary[classType.name]).toBeUndefined();
+            importFieldSelector.declassifyColumn(test, classType);
+            expect(test.importFieldDictionary[classType.name]).toBeUndefined();
         }));
 
     });
