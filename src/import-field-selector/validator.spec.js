@@ -1,11 +1,11 @@
-describe('farmbuild.soilSampleImporter module: paddockSelectionValidator', function () {
+describe('farmbuild.soilSampleImporter module: importFieldSelectionValidator', function () {
 
     //access test data under data dir
     beforeEach(function () {
         fixture.setBase('examples/data')
     });
 
-    var $log, paddockSelectionValidator;
+    var $log, importFieldSelectionValidator;
 
     // inject farmbuild.soilSampleImporter module
     beforeEach(module('farmbuild.soilSampleImporter', function($provide) {
@@ -17,39 +17,39 @@ describe('farmbuild.soilSampleImporter module: paddockSelectionValidator', funct
     });
 
     // inject soilSampleImporter service
-    beforeEach(inject(function (_$log_, _paddockSelectionValidator_) {
+    beforeEach(inject(function (_$log_, _importFieldSelectionValidator_) {
         $log = _$log_,
-            paddockSelectionValidator = _paddockSelectionValidator_;
+            importFieldSelectionValidator = _importFieldSelectionValidator_;
     }));
 
 
-    describe('paddockSelectionValidator ', function(){
-        it('paddockSelectionValidator should be created', inject(function() {
-            expect(paddockSelectionValidator).toBeDefined();
+    describe('importFieldSelectionValidator ', function(){
+        it('importFieldSelectionValidator should be created', inject(function() {
+            expect(importFieldSelectionValidator).toBeDefined();
         }));
 
     });
 
     describe('Valid paddock selection creation ', function(){
-        it('paddockSelection should be created', inject(function() {
+        it('importFieldSelectionValidator should be created', inject(function() {
             var headers = [];
             var rows = [];
-            expect(paddockSelectionValidator.validateCreateNew(headers, rows)).toBeFalsy();
+            expect(importFieldSelectionValidator.validateCreateNew(headers, rows)).toBeFalsy();
 
             headers = ["Sample Id", "Sample Name", "pH", "Phosphor"];
-            expect(paddockSelectionValidator.validateCreateNew(headers, rows)).toBeFalsy();
+            expect(importFieldSelectionValidator.validateCreateNew(headers, rows)).toBeFalsy();
 
             rows = [
                 ["123"]
             ];
 
-            expect(paddockSelectionValidator.validateCreateNew(headers, rows)).toBeFalsy();
+            expect(importFieldSelectionValidator.validateCreateNew(headers, rows)).toBeFalsy();
 
             rows = [
                 ["123", "Test sample", "3.4", "6.4"]
             ];
 
-            expect(paddockSelectionValidator.validateCreateNew(headers, rows)).toBeTruthy();
+            expect(importFieldSelectionValidator.validateCreateNew(headers, rows)).toBeTruthy();
         }));
 
     });

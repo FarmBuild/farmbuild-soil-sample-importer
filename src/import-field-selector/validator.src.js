@@ -8,10 +8,10 @@
 'use strict';
 
 angular.module('farmbuild.soilSampleImporter')
-    .factory('paddockSelectionValidator', function ($log, validations) {
-        var paddockSelectionValidator = {};
+    .factory('importFieldSelectionValidator', function ($log, validations) {
+        var importFieldSelectionValidator = {};
 
-        paddockSelectionValidator.validateCreateNew = function(columnHeaders, rows) {
+        importFieldSelectionValidator.validateCreateNew = function(columnHeaders, rows) {
             if (!validations.isDefined(columnHeaders) || columnHeaders.length == 0) {
                 $log.error("Soil import column headers must be a valid array");
                 return false;
@@ -31,9 +31,9 @@ angular.module('farmbuild.soilSampleImporter')
             return true;
         }
 
-        paddockSelectionValidator.validatePaddockSelection = function(paddockSelection) {
+        importFieldSelectionValidator.validatePaddockSelection = function(paddockSelection) {
             return true;
         }
 
-        return paddockSelectionValidator;
+        return importFieldSelectionValidator;
     });
