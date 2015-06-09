@@ -6,9 +6,9 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $rootScope.appVersion = farmbuild.examples.soilsampleimporter.version;
     })
 
-    .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, paddockSelector, validations,
+    .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, importFieldSelector, validations,
             collections) {
-        //$scope.paddockSelection = paddockSelector.createNew();
+        //$scope.paddockSelection = importFieldSelector.createNew();
         $scope.paddockSelection = {};
         $scope.noResult = false;
         $scope.paddockColumnIndex = 0;
@@ -17,9 +17,9 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $scope.myFarmData = soilSampleImporter.find();
         $scope.classifiedColumns = [];
 
-        for(var i=0; i<paddockSelector.types.length;i++) {
+        for(var i=0; i<importFieldSelector.types.length;i++) {
             var newClassificication = {};
-            newClassificication.name=paddockSelector.types[i].name;
+            newClassificication.name=importFieldSelector.types[i].name;
             $scope.classificationTypes.push(newClassificication);
         }
 
@@ -28,12 +28,12 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 $log.info('removing previously selected classificationType '+oldValueString);
                 //oldValue is string literal of previous value
                 var prevClassification = JSON.parse(oldValueString);
-                paddockSelector.declassifyColumn(paddockSelection, prevClassification, colIndex);
+                importFieldSelector.declassifyColumn(paddockSelection, prevClassification, colIndex);
                 $scope.classifiedColumns[colIndex]=undefined;
             }
             if (!(validations.isEmpty(classificationType))) {
                 $log.info('adding newly selected classificationType '+classificationType + " to col "+colIndex);
-                paddockSelector.classifyColumn(paddockSelection, classificationType, colIndex);
+                importFieldSelector.classifyColumn(paddockSelection, classificationType, colIndex);
                 $scope.classifiedColumns[colIndex]=classificationType;
             }
         }
@@ -43,11 +43,11 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 $log.info('removing previously selected paddock '+oldValueString);
                 //oldValue is string literal of previous value
                 var prevPaddock = JSON.parse(oldValueString);
-                paddockSelector.disconnectRow(paddockSelection, prevPaddock, rowIndex);
+                importFieldSelector.disconnectRow(paddockSelection, prevPaddock, rowIndex);
             }
             if (!(validations.isEmpty(paddock))) {
                 $log.info('adding newly selected paddock '+paddock + " to row "+rowIndex);
-                paddockSelector.connectRow(paddockSelection, paddock, rowIndex);
+                importFieldSelector.connectRow(paddockSelection, paddock, rowIndex);
             }
         }
 
@@ -63,14 +63,14 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                     }
                 }
                 var header = csv.shift();
-                $scope.paddockSelection = paddockSelector.createNew($scope.myFarmData,
+                $scope.paddockSelection = importFieldSelector.createNew($scope.myFarmData,
                     header,
                     csv, 0);
                 if (!$scope.paddockSelection) {
                     $scope.noResult = true;
                     return;
                 }
-                $scope.paddocks = paddockSelector.paddocks;
+                $scope.paddocks = importFieldSelector.paddocks;
                 for(var i=0; i<$scope.paddockSelection.results.columnHeaders.length; i++) {
                     $scope.classifiedColumns[i] = undefined;
                 }
@@ -82,7 +82,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
         $scope.export = function (paddockSelection) {
 
-            $scope.result = paddockSelector.save($scope.myFarmData, paddockSelection);
+            $scope.result = importFieldSelector.save($scope.myFarmData, paddockSelection);
             if ($scope.result) {
                 soilSampleImporter.export(document, $scope.result);
             }
