@@ -1,8 +1,8 @@
 angular.module('farmbuild.soilSampleImporter').
     constant('importFieldDefaults', {
         "types": [
-            {"name": "Paddock Id", "soilClassificationName" : undefined},
-            {"name": "Paddock Name", "soilClassificationName" : undefined},
+            {"name": "Sample Id", "soilClassificationName" : undefined},
+            {"name": "Sample Name", "soilClassificationName" : undefined},
             {"name": "pH H2O (Water)", "soilClassificationName" : "pH H2O (Water)"},
             {"name": "Olsen Phosphorus (mg/kg)", "soilClassificationName" : "Olsen Phosphorus (mg/kg)"},
             {"name": "PBI", "soilClassificationName" : "PBI"},
