@@ -41,6 +41,8 @@ angular.module('farmbuild.soilSampleImporter')
             return result;
         }
 
+        importFieldSelector.validate = importFieldSelectionValidator.validateImportFieldsDefinition;
+
 
         importFieldSelector.save = function(myFarmData, importFieldsDefinition) {
             $log.info(JSON.stringify(importFieldsDefinition));

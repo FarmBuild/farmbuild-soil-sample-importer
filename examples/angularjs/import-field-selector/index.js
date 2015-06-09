@@ -16,6 +16,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $scope.paddocks = [];
         $scope.myFarmData = soilSampleImporter.find();
         $scope.classifiedColumns = [];
+        $scope.valid = false;
 
         for(var i=0; i<importFieldSelector.types.length;i++) {
             var newClassificication = {};
@@ -36,6 +37,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 importFieldSelector.classifyColumn(paddockSelection, classificationType, colIndex);
                 $scope.classifiedColumns[colIndex]=classificationType;
             }
+            $scope.valid = importFieldSelector.validate(paddockSelection);
         }
 
         $scope.changePaddock = function (paddockSelection, rowIndex, paddock, oldValueString) {
