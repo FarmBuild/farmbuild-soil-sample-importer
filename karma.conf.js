@@ -17,8 +17,8 @@ module.exports = function(config){
       'src/soil-classification/types.src.js',
       'src/soil-classification/defaults.conf.src.js',
       'src/soil-classification/index.src.js',
-      'src/paddock-selector/index.src.js',
-      'src/paddock-selector/validator.src.js',
+      'src/import-field-selector/index.src.js',
+      'src/import-field-selector/validator.src.js',
       'src/blank.spec.js',//use this as a basis of creating your module test
       'src/session/index.spec.js',
       'src/import-field-definition/types.src.js',
