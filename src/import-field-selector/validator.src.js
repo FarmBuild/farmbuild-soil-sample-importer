@@ -8,8 +8,16 @@
 'use strict';
 
 angular.module('farmbuild.soilSampleImporter')
-    .factory('importFieldSelectionValidator', function ($log, validations) {
+    .factory('importFieldSelectionValidator', function ($log, validations, importFieldTypes) {
         var importFieldSelectionValidator = {};
+
+        function _isEmptyObject(obj) {
+            var name;
+            for (name in obj) {
+                return false;
+            }
+            return true;
+        }
 
         importFieldSelectionValidator.validateCreateNew = function(columnHeaders, rows) {
             if (!validations.isDefined(columnHeaders) || columnHeaders.length == 0) {
@@ -31,7 +39,19 @@ angular.module('farmbuild.soilSampleImporter')
             return true;
         }
 
-        importFieldSelectionValidator.validatePaddockSelection = function(paddockSelection) {
+        importFieldSelectionValidator.validateImportFieldsDefinition = function(importFieldsDefinition) {
+
+            //Ensure at least 1 paddock is associated to a csv row.
+            if (validations.isEmpty(importFieldsDefinition.paddockRowDictionary) ||
+                    _isEmptyObject(importFieldsDefinition.paddockRowDictionary)) {
+                return false;
+            }
+
+            $log.info('importFieldTypes ', JSON.stringify(importFieldTypes.toArray()));
+            if (importFieldTypes.toArray().length != Object.keys(importFieldsDefinition.importFieldDictionary).length) {
+                return false;
+            }
+
             return true;
         }
 

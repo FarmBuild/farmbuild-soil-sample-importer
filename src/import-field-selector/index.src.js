@@ -42,21 +42,21 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
 
-        importFieldSelector.save = function(myFarmData, paddockSelection) {
-            $log.info(JSON.stringify(paddockSelection));
+        importFieldSelector.save = function(myFarmData, importFieldsDefinition) {
+            $log.info(JSON.stringify(importFieldsDefinition));
 
-            if (!importFieldSelectionValidator.validatePaddockSelection(paddockSelection)) {
+            if (!importFieldSelectionValidator.validateImportFieldsDefinition(importFieldsDefinition)) {
                 return undefined;
             }
 
-            for (var key in paddockSelection.paddockRowDictionary) {
-                for(var i=0; i<paddockSelection.paddockRowDictionary[key].length; i++) {
-                    var rowIndex = paddockSelection.paddockRowDictionary[key][i];
-                    paddockSelection.results.rows[rowIndex][paddockSelection.paddockNameColumn] = key;
+            for (var key in importFieldsDefinition.paddockRowDictionary) {
+                for(var i=0; i<importFieldsDefinition.paddockRowDictionary[key].length; i++) {
+                    var rowIndex = importFieldsDefinition.paddockRowDictionary[key][i];
+                    importFieldsDefinition.results.rows[rowIndex][importFieldsDefinition.paddockNameColumn] = key;
                 }
             }
-            $log.info(JSON.stringify(paddockSelection));
-            return soilSampleImporter.toFarmData(myFarmData, paddockSelection);
+            $log.info(JSON.stringify(importFieldsDefinition));
+            return soilSampleImporter.toFarmData(myFarmData, importFieldsDefinition);
 
         }
 
