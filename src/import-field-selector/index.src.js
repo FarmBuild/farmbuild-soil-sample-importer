@@ -10,13 +10,13 @@
 
 angular.module('farmbuild.soilSampleImporter')
     .factory('importFieldSelector',
-    function ($log, farmdata, soilSampleImporter, soilClassificationTypes,
+    function ($log, farmdata, soilSampleImporter, importFieldTypes,
               collections, paddockSelectionValidator) {
         $log.info("importFieldSelector ");
 
         var importFieldSelector = {},
             _paddocks = [],
-            _types = soilClassificationTypes.toArray();
+            _types = importFieldTypes.toArray();
 
 
         importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
