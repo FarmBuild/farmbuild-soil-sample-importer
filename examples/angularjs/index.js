@@ -37,9 +37,9 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
     function getSampleResultsTable(farmData){
       $log.info('FarmCtrl>>getSampleResultsTable');
-      var soilSampleResults = soilSampleImporter.toSoilSampleResult(farmData);
+      //var soilSampleResults = soilSampleImporter.toSoilSampleResult(farmData);
 
-      $scope.paddockSoilSamples = soilSampleResults;
+      //$scope.paddockSoilSamples = soilSampleResults;
 
     };
 

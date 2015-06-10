@@ -12,7 +12,7 @@
  * soilSampleImporter
  * @module soilSampleImporter
  */
-angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farmdata',])
+angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farmdata'])
 	.factory('soilSampleImporter',
   function (soilSampleImporterSession,
             soilSampleConverter,
