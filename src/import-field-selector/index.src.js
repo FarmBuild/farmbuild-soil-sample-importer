@@ -19,10 +19,25 @@ angular.module('farmbuild.soilSampleImporter')
             _types = importFieldTypes.toArray();
 
 
+        /**
+         *
+         * @param myFarmData
+         * @param columnHeaders
+         * @param rows
+         * @param paddockColumnIndex
+         * @returns {*}
+         */
         importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
 
             if(!importFieldSelectionValidator.validateCreateNew(columnHeaders, rows)) {
                 return undefined;
+            }
+
+            // insert column for farm paddock name
+            collections.add(columnHeaders, "Farm Paddock Name", paddockColumnIndex);
+
+            for(var i=0; i<rows.length; i++) {
+                collections.add(rows[i], "", paddockColumnIndex);
             }
 
             _paddocks = myFarmData.paddocks;

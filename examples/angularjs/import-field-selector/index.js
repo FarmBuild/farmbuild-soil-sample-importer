@@ -56,14 +56,6 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $scope.loadSoilSample = function ($fileContent) {
             try {
                 var csv = d3.csv.parseRows($fileContent);
-                for(var i=0; i<csv.length; i++) {
-                    if (i==0) {
-                        csv[i].splice(0, 0, "PaddockName");
-                    }
-                    else {
-                        csv[i].splice(0, 0, '-1');
-                    }
-                }
                 var header = csv.shift();
                 $scope.paddockSelection = importFieldSelector.createNew($scope.myFarmData,
                     header,
