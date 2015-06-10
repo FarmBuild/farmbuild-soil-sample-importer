@@ -43,7 +43,8 @@ module.exports = function(config){
             'karma-jasmine',
             'karma-junit-reporter',
             'karma-fixture',
-            'karma-html2js-preprocessor'
+            'karma-html2js-preprocessor',
+            'karma-json-fixtures-preprocessor'
             ],
 
     junitReporter : {
@@ -52,7 +53,14 @@ module.exports = function(config){
     },
     preprocessors: {
       '**/*.html'   : ['html2js'],
-      '**/*.json'   : ['html2js']
+      '**/*.json': ['html2js']
+    },
+    jsonFixturesPreprocessor: {
+      variableName: '__json__',
+      // transform the filename 
+      transformPath: function(path) {
+        return path + '.js';
+      }
     }
 
   });
