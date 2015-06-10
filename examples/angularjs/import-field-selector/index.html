@@ -15,7 +15,22 @@
     <h3><a href="../index.html">FarmBuild Soil Importer</a> - Import Data Matching
     </h3>
     <form role="form" name="form" ng-submit="export(paddockSelection)"  novalidate>
-        <input id="loadFile" name="soilData" type="file" on-read-file="loadSoilSample($fileContent)" class="form-control">
+        <span>Please select a soil sample CSV to import</span>
+        <input id="loadFile" name="soilData" type="file" on-read-file="loadSoilSample($fileContent)" class="form-control" style="width: 50%">
+
+        <div ng-show="paddockSelection.results" style="margin-top: 40px; margin-bottom: 10px;">
+            <h4>Import fields definition</h4>
+            <div>
+                <span>Please select a column to match with the farm paddock name</span>
+                <select ng-model="selectedColumn"
+                        ng-options="column as column for column in paddockSelection.results.columnHeaders | filter: '!'+ paddockSelection.results.columnHeaders[paddockSelection.paddockNameColumn]">
+                    <option value="" selected="selected"></option>
+                </select>
+                <button type="button" ng-click="autoLink(paddockSelection)">Link</button>
+            </div>
+        </div>
+
+
         <table class="table table-striped table-hover">
             <tr>
                 <th ng-repeat="header in paddockSelection.results.columnHeaders">
@@ -32,7 +47,7 @@
             </tr>
             <tr ng-repeat="row in paddockSelection.results.rows track by $index">
                 <td ng-repeat="col in row track by $index">
-                    <select ng-model="selectedPaddock" ng-change="changePaddock(paddockSelection, $parent.$parent.$index, selectedPaddock, '{{selectedPaddock}}')"
+                    <select ng-model="connectedRows[$parent.$parent.$index]" ng-change="changePaddock(paddockSelection, $parent.$parent.$index, connectedRows[$parent.$parent.$index], '{{connectedRows[$parent.$parent.$index]}}')"
                             ng-if="paddockColumnIndex+'' == $index"
                             ng-options="paddock as paddock.name for paddock in paddocks">
                         <option value="" selected="selected"></option>
