@@ -71,5 +71,35 @@ describe('farmbuild.soilSampleImporter.paddockSelector module', function() {
 
     });
 
+    describe('Import auto linking', function(){
+        var testFarmData = {};
+        testFarmData.paddocks = [
+            {"name": "Test P1"},
+            {"name": "Test P2"},
+        ];
+
+        var headers = ["P Name 1", "P Name 2"];
+        var rows = [
+            ["Test P1", "Bla"],
+            ["Bla", "Test P2"],
+            ["Blurb", "Test P2"]
+        ];
+
+        it('test auto link', inject(function() {
+
+            var result = importFieldSelector.createNew(testFarmData, headers, rows, 0);
+
+            //$log.info("Result "+JSON.stringify(result));
+
+            expect(importFieldSelector.autoLinkPaddock(result, 1)).toEqual(1);
+            //$log.info("Result1 "+JSON.stringify(result));
+            expect(result.paddockRowDictionary["Test P1"].length).toEqual(1);
+
+            expect(importFieldSelector.autoLinkPaddock(result, 2)).toEqual(2);
+            expect(result.paddockRowDictionary["Test P2"].length).toEqual(2);
+        }));
+
+
+    });
 
 });

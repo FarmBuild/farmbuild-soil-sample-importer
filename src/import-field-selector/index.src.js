@@ -18,6 +18,14 @@ angular.module('farmbuild.soilSampleImporter')
             _paddocks = [],
             _types = importFieldTypes.toArray();
 
+        function _findPaddockWithName(paddocks, name) {
+            for(var i=0; i<paddocks.length; i++) {
+                if (name.trim().toUpperCase() == paddocks[i].name.toUpperCase()) {
+                    return paddocks[i];
+                }
+            }
+            return undefined;
+        }
 
         /**
          *
@@ -30,6 +38,9 @@ angular.module('farmbuild.soilSampleImporter')
         importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
 
             if(!importFieldSelectionValidator.validateCreateNew(columnHeaders, rows)) {
+                return undefined;
+            }
+            if (paddockColumnIndex<0 || paddockColumnIndex>=columnHeaders.length) {
                 return undefined;
             }
 
@@ -75,6 +86,40 @@ angular.module('farmbuild.soilSampleImporter')
             $log.info(JSON.stringify(importFieldsDefinition));
             return soilSampleImporter.toFarmData(myFarmData, importFieldsDefinition);
 
+        }
+
+
+
+        /**
+         *
+         * @param importFieldsDefinition
+         * @param linkColumnIndex
+         */
+        importFieldSelector.autoLinkPaddock = function(importFieldsDefinition, linkColumnIndex) {
+            var linkedCount = 0;
+            if (linkColumnIndex == importFieldsDefinition.paddockNameColumn) {
+                return;
+            }
+            var mappedPaddock = Object.keys(importFieldsDefinition.paddockRowDictionary);
+            var mappedRowIndex = [];
+
+            for (var i=0; i<mappedPaddock.length; i++) {
+                mappedRowIndex = mappedRowIndex.concat(importFieldsDefinition.paddockRowDictionary[mappedPaddock[i]]);
+            }
+
+            for(var i=0; i<importFieldsDefinition.results.rows.length; i++) {
+                // If row is not yet mapped, map it
+                if (mappedRowIndex.indexOf(i)<0 ) {
+                    var paddock = _findPaddockWithName(_paddocks, importFieldsDefinition.results.rows[i][linkColumnIndex]);
+
+                    if (paddock) {
+                        this.connectRow(importFieldsDefinition, paddock, i);
+                        linkedCount++;
+                    }
+                }
+            }
+
+            return linkedCount;
         }
 
         /**
