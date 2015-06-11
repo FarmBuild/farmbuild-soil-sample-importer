@@ -31,6 +31,20 @@ describe('farmbuild.soilSampleImporter module: soilSampleMangementZones', functi
     it('soilSampleMangementZones factory should be defined', inject(function () {
       expect(mangementZones).toBeDefined();
     }));
+
+
+    it('soilSampleMangementZones paddocksInManagementZone should be defined', inject(function () {
+      var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
+      expect(loadedFarmData).toBeDefined();
+
+      var paddocksInZone = mangementZones.paddocksInManagementZone(loadedFarmData,"Zone One");
+      expect(paddocksInZone).toBeDefined();
+
+      expect(paddocksInZone.length).toBeGreaterThan(0);
+
+
+    }));
+
   });
 
 
