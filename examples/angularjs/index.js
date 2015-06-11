@@ -7,8 +7,10 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
     .controller('FarmCtrl', function ($scope, $log, soilSampleImporter) {
 
-
         $scope.farmData = {};
+        $scope.paddocks = [];
+        $scope.paddockFieldNames = [];
+        $scope.managementZones = [];
 
         $scope.loadFarmData = function ($fileContent) {
             $log.info('FarmCtrl>>loadFarmData>>start');
@@ -22,7 +24,6 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
                     return;
                 }
 
-                //getSampleResultsTable(farmData);
                 updateFarmData($scope, farmData);
                 $scope.prettyContent = JSON.stringify(farmData, null, "    ");
             } catch (e) {
@@ -37,6 +38,33 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             window.focus();
         };
 
+        $scope.getPaddockClassification = function(paddockName, key) {
+            if (soilSampleImporter.hasClassification(key)) {
+                //TODO: retrieve average result for a paddock
+                var paddockAverage = {
+                    "Sample Id": 20,
+                    "Sample Name": "p3 sample1",
+                    "pH H2O (Water)": 0.3,
+                    "Olsen Phosphorus (mg/kg)": 12.12,
+                    "PBI": 22,
+                    "KCl 40 Sulphur (mg/kg)": null,
+                    "Colwell Phosphorus (mg/kg)": 10,
+                    "Colwell Potassium (mg/kg)": 10
+                };
+
+                var range = soilSampleImporter.classifyResult(paddockAverage, key);
+                return range;
+            }
+            return "N/A";
+        }
+
+        $scope.getPaddockAverage = function(paddockName, key) {
+            if (soilSampleImporter.hasAverage(key)) {
+                var result = 1.1;
+                return result;
+            }
+            return "N/A";
+        }
 
         $scope.calculate = function () {
             $log.info('calculate...');
@@ -67,55 +95,10 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
                 return;
             }
             $scope.farmData = farmData;
-//      $scope.balance = farmData.soilSampleImporter.balance;
-//      $scope.efficiency = farmData.soilSampleImporter.efficiency;
-//      $scope.feedBalance = farmData.soilSampleImporter.feedBalance;
-//      $scope.milkProduction = farmData.soilSampleImporter.milkProduction;
-//      $scope.stockingRate = farmData.soilSampleImporter.stockingRate;
-
+            $scope.paddocks = farmData.paddocks;
+            $scope.paddockFieldNames = farmData.soils.sampleResults.importFieldNames;
+            $scope.managementZones = farmData.managementZones;
         }
-
-//    $scope.file;
-//
-//    $scope.loadFile =  function (file) {
-//      $log.info('loadFile...');
-//      var reader = new FileReader();
-//
-//      reader.onload = function (onLoadEvent) {
-//        console.log('loadFile... onload, %s', onLoadEvent);
-//      };
-//
-//      reader.onerror = function (onLoadEvent) {
-//        console.log('loadFile... onerror', angular.toJson(onLoadEvent));
-//      };
-//
-//      reader.onloadstart = function(onLoadEvent) {
-//        console.log('loadFile... onloadstart, %s', onLoadEvent);
-//      };
-//
-//      reader.onloadend = function(onLoadEvent) {
-//        console.log('loadFile... onloadend, %s, %j, ', onLoadEvent, onLoadEvent.target.result);
-//        $scope.loadFarmData(onLoadEvent.target.result);
-//        $scope.$apply()
-//      };
-//
-//      reader.readAsText(file);
-//    }
-//
-//
-//    $scope.readFile = function(onChangeEvent) {
-//      $log.info('readFile... onChangeEvent');
-//      $scope.file = (onChangeEvent.srcElement || onChangeEvent.target).files[0];
-//      $scope.$apply()
-//
-////      var reader = new FileReader();
-////      reader.onload = function (onLoadEvent) {
-////        $log.info('readFile... onLoadEvent');
-////        $scope.loadFarmData(onLoadEvent.target.result);
-////        $scope.$apply()
-////      };
-////      reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
-//    };
 
     })
 
