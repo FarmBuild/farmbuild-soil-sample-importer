@@ -47,69 +47,61 @@
   <div class="clearfix"></div>
 </form>
 <empty-message ng-if="!farmData.name"><i class="fa fa-warning icon"></i>
-  Provide a farm data to see the soil sample result with paddocks
+  Provide a farm data to see the soil sample result
 </empty-message>
 
 <summary ng-if="farmData.name">
 
     <legend>Paddock Soil Information</legend>
 
-    <paddocks ng-repeat="item in paddockSoilInfo">
-      <td>
-        Paddock Name: {{item.paddockName}}
-      </td>
-      <table class="table table-striped">
-        <tr>
-          <th class="col">Area
-          </th>
-          <th>Description
-          </th>
-          <th>Soil Group
-          </th>
-          <th>Soil Class
-          </th>
-        </tr>
-        <tr ng-repeat="soil in item.soilTypes">
-          <td>
-            {{soil.area}}
-          </td>
-          <td>
-            {{soil.description}}
-          </td>
-          <td>
-            {{soil.soilGroup}}
-          </td>
-          <td>
-            {{soil.soilClass}}
-          </td>
+    <paddocks ng-repeat="paddock in farmData.paddocks">
+        <div>
+            Paddock Name: {{paddock.name}}
+        </div>
+        <table class="table table-striped" ng-show="paddock.soils.sampleResults">
+            <tr>
+                <th>&nbsp;
+                </th>
+                <th ng-repeat="field in farmData.soils.sampleResults.importFieldNames">{{field}}
+                </th>
+            </tr>
+            <tr ng-repeat="sampleResult in paddock.soils.sampleResults">
+                <td>
+                    &nbsp;
+                </td>
+                <td ng-repeat="fieldName in farmData.soils.sampleResults.importFieldNames">
+                    {{sampleResult[fieldName]}}
+                </td>
+            </tr>
+            <tr>
+                <td>Average:</td>
+                <td ng-repeat="fieldName in farmData.soils.sampleResults.importFieldNames">
+                    &nbsp;
+                </td>
+            </tr>
 
-          </td>
-        </tr>
-
-      </table>
+        </table>
+        <div ng-show="!paddock.soils.sampleResults">
+            This paddock contains no soil sample results.
+        </div>
     </paddocks>
 
-  {{soiSampleTable}}
-  <table class="table table-striped table-hover">
-    <tr>
-      <th ng-repeat="header in paddockSoilSamples.results.columnHeaders">
-        <div>{{header}}</div>
-      </th>
-    </tr>
-    <tr ng-repeat="row in paddockSoilSamples.results.rows track by $index">
-      <td ng-repeat="col in row track by $index">
-        <div>
-          {{col}}
-        </div>
-      </td>
-    </tr>
-  </table>
+    <hr/>
+
+    <legend>Paddock Soil Information</legend>
+
+    <management-zones>
 
 
-  <pre>
+    </management-zones>
 
-    <!--{{prettyContent}}-->
-  </pre>
+    <hr/>
+
+
+    <p>Uploaded farm data raw content:</p>
+    <pre> {{prettyContent}}  </pre>
+
+
 </summary>
 <version>
   Version: <span ng-bind="appVersion"></span>
