@@ -14,8 +14,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
     soilImportResults,
     fileFarmData ='farmdata-susan.json',
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
-    fileSoilImports = 'soil-sample-import-result.json',
-    fileFarmDataWithNewSoilSamples = 'farmdata-susan-with-sample-import.json';
+    fileSoilImports = 'soil-sample-import-result.json';
 
   // inject farmbuild.soilSampleImporter module
   beforeEach(module('farmbuild.soilSampleImporter', function($provide) {
@@ -34,19 +33,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
       expect(soilSampleConverter).toBeDefined();
     }));
 
-//    it('soilSampleConverter toSoilSampleResults should have a structure with empty values', inject(function () {
-//      var loadedFarmData = fixture.load(fileFarmData);
-//      expect(loadedFarmData).toBeDefined();
-//      var emptySoilImportResults = soilSampleConverter.toSoilSampleResults(loadedFarmData);
-//      expect(emptySoilImportResults).toBeDefined();
-//
-//      var results = emptySoilImportResults.results;
-//      expect(results).toBeDefined();
-//      expect(results.columnHeaders).toBeDefined();
-//      expect(results.rows).toBeDefined();
-//      expect(emptySoilImportResults.paddockRowDictionary).toBeDefined();
-//
-//    }));
+
 
 
     it('soilSampleConverter createDefault() should have a structure with empty values', inject(function () {

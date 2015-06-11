@@ -10,7 +10,6 @@ describe('farmbuild.soilSampleImporter module: soilSampleValidator', function ()
 
   //define soil sample validator
   var $log, soilSampleValidator, farmdataWithSoilSamples,
-    soilImportResults,
     fileFarmData ='farmdata-susan.json',
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
     fileSoilImports = 'soil-sample-import-result.json' ;
@@ -25,7 +24,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleValidator', function ()
 
   // inject soilSampleImporter service
   beforeEach(inject(function (_$log_, _soilSampleValidator_) {
-    $log = _$log_,
+      $log = _$log_,
       soilSampleValidator = _soilSampleValidator_;
   }));
 
@@ -46,7 +45,16 @@ describe('farmbuild.soilSampleImporter module: soilSampleValidator', function ()
 
     }));
 
+    it('soilSampleValidator isValidFarmDataWithSoilSample', inject(function () {
+      var soilSampleResults = fixture.load(fileFarmDataWithSoilSamples);
+      expect(soilSampleResults).toBeDefined();
 
+      var isValidSampleResult = soilSampleValidator.isValidFarmDataWithSoilSample(soilSampleResults);
+      expect(isValidSampleResult).toBeTruthy();
+
+
+
+    }));
 
 
   });

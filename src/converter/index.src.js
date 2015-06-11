@@ -181,12 +181,12 @@ angular.module('farmbuild.soilSampleImporter')
         for(var k=0;k<paddockRows.length;k++){
 
           var rowValues = rows[paddockRows[k]];
-          var sampleValue = [];
+          var sampleValue = {};
           for(var j=0;j<importFieldNames.length;j++){
             var temp = { } ;
             $log.info('importFieldNames[j] '+importFieldNames[j]);
-            temp[importFieldNames[j]] = rowValues[j];
-            sampleValue.push(temp);
+            sampleValue[importFieldNames[j]] = rowValues[j];
+//            sampleValue.push(temp);
 
           }
 
