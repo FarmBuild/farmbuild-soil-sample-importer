@@ -1305,6 +1305,219 @@
     }, {}, [ 1 ])(1);
 });
 
+(function(f) {
+    if (typeof exports === "object" && typeof module !== "undefined") {
+        module.exports = f();
+    } else if (typeof define === "function" && define.amd) {
+        define([], f);
+    } else {
+        var g;
+        if (typeof window !== "undefined") {
+            g = window;
+        } else if (typeof global !== "undefined") {
+            g = global;
+        } else if (typeof self !== "undefined") {
+            g = self;
+        } else {
+            g = this;
+        }
+        g.tokml = f();
+    }
+})(function() {
+    var define, module, exports;
+    return function e(t, n, r) {
+        function s(o, u) {
+            if (!n[o]) {
+                if (!t[o]) {
+                    var a = typeof require == "function" && require;
+                    if (!u && a) return a(o, !0);
+                    if (i) return i(o, !0);
+                    var f = new Error("Cannot find module '" + o + "'");
+                    throw f.code = "MODULE_NOT_FOUND", f;
+                }
+                var l = n[o] = {
+                    exports: {}
+                };
+                t[o][0].call(l.exports, function(e) {
+                    var n = t[o][1][e];
+                    return s(n ? n : e);
+                }, l, l.exports, e, t, n, r);
+            }
+            return n[o].exports;
+        }
+        var i = typeof require == "function" && require;
+        for (var o = 0; o < r.length; o++) s(r[o]);
+        return s;
+    }({
+        1: [ function(require, module, exports) {
+            var strxml = require("strxml"), tag = strxml.tag, encode = strxml.encode;
+            module.exports = function tokml(geojson, options) {
+                options = options || {
+                    documentName: undefined,
+                    documentDescription: undefined,
+                    name: "name",
+                    description: "description",
+                    simplestyle: false,
+                    timestamp: "timestamp"
+                };
+                return '<?xml version="1.0" encoding="UTF-8"?>' + tag("kml", tag("Document", documentName(options) + documentDescription(options) + root(geojson, options)), [ [ "xmlns", "http://www.opengis.net/kml/2.2" ] ]);
+            };
+            function feature(options) {
+                return function(_) {
+                    var styleDefinition = "", styleReference = "";
+                    if (options.simplestyle && hasStyle(_.properties)) {
+                        styleDefinition = iconstyle(_.properties);
+                        styleReference = tag("styleUrl", "#" + iconHash(_.properties));
+                    }
+                    if (!_.properties || !geometry.valid(_.geometry)) return "";
+                    var geometryString = geometry.any(_.geometry);
+                    if (!geometryString) return "";
+                    return styleDefinition + tag("Placemark", name(_.properties, options) + description(_.properties, options) + extendeddata(_.properties) + timestamp(_.properties, options) + geometryString + styleReference);
+                };
+            }
+            function root(_, options) {
+                if (!_.type) return "";
+                switch (_.type) {
+                  case "FeatureCollection":
+                    if (!_.features) return "";
+                    return _.features.map(feature(options)).join("");
+
+                  case "Feature":
+                    return feature(options)(_);
+
+                  default:
+                    return feature(options)({
+                        type: "Feature",
+                        geometry: _,
+                        properties: {}
+                    });
+                }
+            }
+            function documentName(options) {
+                return options.documentName !== undefined ? tag("name", options.documentName) : "";
+            }
+            function documentDescription(options) {
+                return options.documentDescription !== undefined ? tag("description", options.documentDescription) : "";
+            }
+            function name(_, options) {
+                return _[options.name] ? tag("name", encode(_[options.name])) : "";
+            }
+            function description(_, options) {
+                return _[options.description] ? tag("description", encode(_[options.description])) : "";
+            }
+            function timestamp(_, options) {
+                return _[options.timestamp] ? tag("TimeStamp", tag("when", encode(_[options.timestamp]))) : "";
+            }
+            var geometry = {
+                Point: function(_) {
+                    return tag("Point", tag("coordinates", _.coordinates.join(",")));
+                },
+                LineString: function(_) {
+                    return tag("LineString", tag("coordinates", linearring(_.coordinates)));
+                },
+                Polygon: function(_) {
+                    if (!_.coordinates.length) return "";
+                    var outer = _.coordinates[0], inner = _.coordinates.slice(1), outerRing = tag("outerBoundaryIs", tag("LinearRing", tag("coordinates", linearring(outer)))), innerRings = inner.map(function(i) {
+                        return tag("innerBoundaryIs", tag("LinearRing", tag("coordinates", linearring(i))));
+                    }).join("");
+                    return tag("Polygon", outerRing + innerRings);
+                },
+                MultiPoint: function(_) {
+                    if (!_.coordinates.length) return "";
+                    return tag("MultiGeometry", _.coordinates.map(function(c) {
+                        return geometry.Point({
+                            coordinates: c
+                        });
+                    }).join(""));
+                },
+                MultiPolygon: function(_) {
+                    if (!_.coordinates.length) return "";
+                    return tag("MultiGeometry", _.coordinates.map(function(c) {
+                        return geometry.Polygon({
+                            coordinates: c
+                        });
+                    }).join(""));
+                },
+                MultiLineString: function(_) {
+                    if (!_.coordinates.length) return "";
+                    return tag("MultiGeometry", _.coordinates.map(function(c) {
+                        return geometry.LineString({
+                            coordinates: c
+                        });
+                    }).join(""));
+                },
+                GeometryCollection: function(_) {
+                    return tag("MultiGeometry", _.geometries.map(geometry.any).join(""));
+                },
+                valid: function(_) {
+                    return _ && _.type && (_.coordinates || _.type === "GeometryCollection" && _.geometries.every(geometry.valid));
+                },
+                any: function(_) {
+                    if (geometry[_.type]) {
+                        return geometry[_.type](_);
+                    } else {
+                        return "";
+                    }
+                }
+            };
+            function linearring(_) {
+                return _.map(function(cds) {
+                    return cds.join(",");
+                }).join(" ");
+            }
+            function extendeddata(_) {
+                return tag("ExtendedData", pairs(_).map(data).join(""));
+            }
+            function data(_) {
+                return tag("Data", tag("value", encode(_[1])), [ [ "name", encode(_[0]) ] ]);
+            }
+            function iconstyle(_) {
+                return tag("Style", tag("IconStyle", tag("Icon", tag("href", iconUrl(_)))) + iconSize(_), [ [ "id", iconHash(_) ] ]);
+            }
+            function iconUrl(_) {
+                var size = _["marker-size"] || "medium", symbol = _["marker-symbol"] ? "-" + _["marker-symbol"] : "", color = (_["marker-color"] || "7e7e7e").replace("#", "");
+                return "https://api.tiles.mapbox.com/v3/marker/" + "pin-" + size.charAt(0) + symbol + "+" + color + ".png";
+            }
+            function iconSize(_) {
+                return tag("hotSpot", "", [ [ "xunits", "fraction" ], [ "yunits", "fraction" ], [ "x", .5 ], [ "y", .5 ] ]);
+            }
+            function hasStyle(_) {
+                return !!(_["marker-size"] || _["marker-symbol"] || _["marker-color"]);
+            }
+            function iconHash(_) {
+                return (_["marker-symbol"] || "") + (_["marker-color"] || "").replace("#", "") + (_["marker-size"] || "");
+            }
+            function pairs(_) {
+                var o = [];
+                for (var i in _) o.push([ i, _[i] ]);
+                return o;
+            }
+        }, {
+            strxml: 2
+        } ],
+        2: [ function(require, module, exports) {
+            module.exports.attr = attr;
+            module.exports.tagClose = tagClose;
+            module.exports.tag = tag;
+            module.exports.encode = encode;
+            function attr(_) {
+                return _ && _.length ? " " + _.map(function(a) {
+                    return a[0] + '="' + a[1] + '"';
+                }).join(" ") : "";
+            }
+            function tagClose(el, attributes) {
+                return "<" + el + attr(attributes) + "/>";
+            }
+            function tag(el, contents, attributes) {
+                return "<" + el + attr(attributes) + ">" + contents + "</" + el + ">";
+            }
+            function encode(_) {
+                return (_ === null ? "" : _.toString()).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            }
+        }, {} ]
+    }, {}, [ 1 ])(1);
+});
+
 "use strict";
 
 angular.module("farmbuild.farmdata", [ "farmbuild.core" ]);
@@ -1315,10 +1528,10 @@ angular.injector([ "ng", "farmbuild.farmdata" ]);
 
 "use strict";
 
-angular.module("farmbuild.farmdata").factory("farmdataConverter", function(farmdata, validations, $log, geoJsonValidator) {
-    var _isDefined = validations.isDefined, farmdataConverter = {}, validator = geoJsonValidator;
+angular.module("farmbuild.farmdata").factory("farmdataConverter", function(validations, $log, $filter, farmdataValidator) {
+    var _isDefined = validations.isDefined, farmdataConverter = {};
     function createFeatureCollection(geometry) {}
-    function convertCrs(geometry, crs) {
+    function convertToGeoJsonGeometry(geometry, crs) {
         geometry.crs = {
             type: "name",
             properties: {
@@ -1327,33 +1540,45 @@ angular.module("farmbuild.farmdata").factory("farmdataConverter", function(farmd
         };
         return geometry;
     }
-    function resetCrs(geometry) {
+    function convertToFarmDataGeometry(geometry) {
         geometry.crs = geometry.crs.properties.name;
         return geometry;
     }
-    function createFeature(geometry, crs, name) {
+    farmdataConverter.convertToFarmDataGeometry = convertToFarmDataGeometry;
+    function createFeature(geoJsonGeometry, name, id, type, comment, area) {
+        var properties;
+        if (_isDefined(type) || _isDefined(comment) || _isDefined(area)) {
+            properties = {
+                name: name,
+                _id: id,
+                type: type,
+                comment: comment,
+                area: area
+            };
+        } else {
+            properties = {
+                name: name,
+                _id: id
+            };
+        }
         return {
             type: "Feature",
-            geometry: angular.copy(convertCrs(geometry, crs)),
-            properties: {
-                name: name
-            }
+            geometry: angular.copy(geoJsonGeometry),
+            properties: properties
         };
     }
+    farmdataConverter.createFeature = createFeature;
     function toGeoJsons(farmData) {
         $log.info("Extracting farm and paddocks geometry from farmData ...");
         var copied = angular.copy(farmData);
-        if (!validator.validate(copied)) {
-            return undefined;
-        }
-        var farm = copied.geometry, paddocks = [];
+        var farmGeometry = copied.geometry, paddocks = [];
         copied.paddocks.forEach(function(paddock) {
-            paddocks.push(createFeature(paddock.geometry, farm.crs, paddock.name));
+            paddocks.push(createFeature(convertToGeoJsonGeometry(paddock.geometry, farmGeometry.crs), paddock.name, paddock._id, paddock.type, paddock.comment, paddock.area));
         });
         return {
             farm: {
                 type: "FeatureCollection",
-                features: [ createFeature(farm, farm.crs, copied.name) ]
+                features: [ createFeature(convertToGeoJsonGeometry(farmGeometry, farmGeometry.crs), copied.name) ]
             },
             paddocks: {
                 type: "FeatureCollection",
@@ -1362,14 +1587,67 @@ angular.module("farmbuild.farmdata").factory("farmdataConverter", function(farmd
         };
     }
     farmdataConverter.toGeoJsons = toGeoJsons;
+    function toGeoJson(farmData) {
+        $log.info("Extracting farm and paddocks geometry from farmData ...");
+        var copied = angular.copy(farmData);
+        if (!farmdataValidator.validate(copied)) {
+            return undefined;
+        }
+        var farmGeometry = copied.geometry, features = [];
+        features.push(createFeature(convertToGeoJsonGeometry(farmGeometry, farmGeometry.crs), copied.name, copied.id));
+        copied.paddocks.forEach(function(paddock) {
+            features.push(createFeature(convertToGeoJsonGeometry(paddock.geometry, farmGeometry.crs), paddock.name, paddock._id, paddock.type, paddock.comment, paddock.area));
+        });
+        return {
+            type: "FeatureCollection",
+            features: features
+        };
+    }
+    farmdataConverter.toGeoJson = toGeoJson;
+    function exportGeoJson(document, farmData) {
+        var a = document.createElement("a"), name = "farmdata-" + farmData.name.replace(/\W+/g, "") + "-" + $filter("date")(new Date(), "yyyyMMddHHmmss") + ".json";
+        a.id = "downloadFarmData123456";
+        document.body.appendChild(a);
+        angular.element(a).attr({
+            download: name,
+            href: "data:application/json;charset=utf8," + encodeURIComponent(JSON.stringify(toGeoJson(farmData), undefined, 2))
+        });
+        a.click();
+    }
+    farmdataConverter.exportGeoJson = exportGeoJson;
+    function toKml(farmData) {
+        $log.info("Extracting farm and paddocks geometry from farmData ...");
+        var copied = angular.copy(farmData);
+        if (!farmdataValidator.validate(copied)) {
+            return undefined;
+        }
+        var farmGeometry = copied.geometry, features = [];
+        features.push(createFeature(convertToGeoJsonGeometry(farmGeometry, farmGeometry.crs), copied.name, copied.id));
+        copied.paddocks.forEach(function(paddock) {
+            features.push(createFeature(convertToGeoJsonGeometry(paddock.geometry, farmGeometry.crs), paddock.name, paddock._id, paddock.type, paddock.comment, paddock.area));
+        });
+        return tokml(JSON.parse(JSON.stringify({
+            type: "FeatureCollection",
+            features: features
+        })));
+    }
+    farmdataConverter.toKml = toKml;
+    function exportKml(document, farmData) {
+        var a = document.createElement("a"), name = "farmdata-" + farmData.name.replace(/\W+/g, "") + "-" + $filter("date")(new Date(), "yyyyMMddHHmmss") + ".kml";
+        a.id = "downloadFarmData123456";
+        document.body.appendChild(a);
+        angular.element(a).attr({
+            download: name,
+            href: "data:application/vnd.google-earth.kml+xml;charset=utf8," + toKml(farmData)
+        });
+        a.click();
+    }
+    farmdataConverter.exportKml = exportKml;
     function toFarmData(farmData, geoJsons) {
         $log.info("Converting geoJsons.farm.features[0] and paddocks geojson to farmData ...");
-        var farmFeature = geoJsons.farm.features[0], paddocks = geoJsons.paddocks;
-        farmData.geometry = resetCrs(farmFeature.geometry);
-        paddocks.features.forEach(function(paddockFeature, i) {
-            farmData.paddocks[i].geometry = paddockFeature.geometry;
-            delete farmData.paddocks[i].geometry.crs;
-        });
+        var farmFeature = geoJsons.farm.features[0];
+        farmData.geometry = convertToFarmDataGeometry(farmFeature.geometry);
+        farmData = farmdataPaddocks.merge(farmData, geoJsons);
         return farmData;
     }
     farmdataConverter.toFarmData = toFarmData;
@@ -1378,7 +1656,7 @@ angular.module("farmbuild.farmdata").factory("farmdataConverter", function(farmd
 
 "use strict";
 
-angular.module("farmbuild.farmdata").factory("farmdata", function($log, farmdataSession, farmdataValidator, crsSupported, validations) {
+angular.module("farmbuild.farmdata").factory("farmdata", function($log, farmdataSession, farmdataValidator, farmdataPaddocks, crsSupported, validations) {
     var farmdata = {
         session: farmdataSession,
         validator: farmdataValidator,
@@ -1426,32 +1704,80 @@ angular.module("farmbuild.farmdata").factory("farmdata", function($log, farmdata
     farmdata.update = function(farmData) {
         return farmdataSession.update(farmData).find();
     };
+    farmdata.merge = function(farmData, geoJsons) {
+        return farmdataSession.merge(farmData, geoJsons).find();
+    };
     window.farmbuild.farmdata = farmdata;
     return farmdata;
 });
 
 "use strict";
 
-angular.module("farmbuild.farmdata").factory("farmdataPaddocks", function($log, collections, validations) {
-    var farmdataPaddocks = {}, isEmpty = validations.isEmpty;
-    function _create(name, gemotry) {
+angular.module("farmbuild.farmdata").factory("farmdataPaddocks", function($log, collections, validations, farmdataConverter) {
+    var farmdataPaddocks = {}, isEmpty = validations.isEmpty, isDefined = validations.isDefined;
+    function createName() {
+        return "Paddock " + new Date().getTime();
+    }
+    function generateId() {
+        return new Date().getTime();
+    }
+    function createPaddockFeature(geoJsonGeometry) {
+        return farmdataConverter.createFeature(geoJsonGeometry, createName());
+    }
+    farmdataPaddocks.createPaddockFeature = createPaddockFeature;
+    function createPaddock(paddockFeature) {
+        var name = paddockFeature.properties.name, id = paddockFeature.properties._id;
+        name = isDefined(name) ? name : createName();
+        id = isDefined(id) ? id : generateId();
         return {
             name: name,
-            gemotry: gemotry,
+            _id: id,
+            geometry: farmdataConverter.convertToFarmDataGeometry(paddockFeature.geometry),
             dateLastUpdated: new Date()
         };
     }
-    farmdataPaddocks.create = _create;
-    function _add(feature) {
-        var item = _create(type, weight, isDry);
-        $log.info("farmdataPaddocks.add item ...", item);
-        if (!validator.validate(item)) {
-            $log.error("farmdataPaddocks.add unable to add as the validation has been failed, %j", item);
-            return undefined;
+    farmdataPaddocks.createPaddock = createPaddock;
+    function findPaddock(paddock, paddocks) {
+        var found;
+        if (!paddock.properties._id) {
+            return;
         }
-        return collections.add(items, item);
+        paddocks.forEach(function(p) {
+            if (paddock.properties._id === p._id) {
+                found = p;
+            }
+        });
+        return found;
     }
-    farmdataPaddocks.add = _add;
+    farmdataPaddocks.findPaddock = findPaddock;
+    function updatePaddock(paddockFeature, paddocksExisting) {
+        var toUpdate = angular.copy(findPaddock(paddockFeature, paddocksExisting));
+        toUpdate.name = paddockFeature.properties.name;
+        toUpdate.comment = paddockFeature.properties.comment;
+        toUpdate.type = paddockFeature.properties.type;
+        toUpdate.geometry = paddockFeature.geometry;
+        toUpdate.area = paddockFeature.area;
+        toUpdate.dateLastUpdated = new Date();
+        return toUpdate;
+    }
+    farmdataPaddocks.updatePaddock = updatePaddock;
+    function isNew(paddockFeature) {
+        return !isDefined(paddockFeature.properties._id);
+    }
+    function merge(paddockFeature, paddocksExisting) {
+        if (isNew(paddockFeature)) {
+            return createPaddock(paddockFeature);
+        }
+        return updatePaddock(paddockFeature, paddocksExisting);
+    }
+    farmdataPaddocks.merge = function(farmData, geoJsons) {
+        var paddockFeatures = geoJsons.paddocks, paddocksExisting = farmData.paddocks, paddocksMerged = [];
+        paddockFeatures.features.forEach(function(paddockFeature, i) {
+            paddocksMerged.push(merge(paddockFeature, paddocksExisting));
+        });
+        farmData.paddocks = paddocksMerged;
+        return farmData;
+    };
     return farmdataPaddocks;
 });
 
@@ -1517,8 +1843,16 @@ angular.module("farmbuild.farmdata").constant("crsSupported", [ {
 
 "use strict";
 
-angular.module("farmbuild.farmdata").factory("farmdataSession", function($log, $filter, farmdataValidator, validations) {
+angular.module("farmbuild.farmdata").factory("farmdataSession", function($log, $filter, farmdataValidator, farmdataConverter, farmdataPaddocks, validations) {
     var farmdataSession = {}, isDefined = validations.isDefined;
+    function merge(farmData, geoJsons) {
+        $log.info("Merging geoJsons.farm.features[0] and paddocks geojson to farmData ...");
+        var farmFeature = geoJsons.farm.features[0], paddocks = geoJsons.paddocks;
+        farmData.geometry = farmdataConverter.convertToFarmDataGeometry(farmFeature.geometry);
+        var farmDataMerged = farmdataPaddocks.merge(farmData, geoJsons);
+        return farmdataSession.update(farmDataMerged);
+    }
+    farmdataSession.merge = merge;
     farmdataSession.clear = function() {
         sessionStorage.clear();
         return farmdataSession;
@@ -1565,7 +1899,7 @@ angular.module("farmbuild.farmdata").factory("farmdataSession", function($log, $
     farmdataSession.isLoadFlagSet = function(location) {
         var load = false;
         if (location.href.split("?").length > 1 && location.href.split("?")[1].indexOf("load") === 0) {
-            load = location.href.split("?")[1].split("=")[1] === "true";
+            load = location.href.split("?")[1].split("=")[1].indexOf("true") > -1;
         }
         return load;
     };
@@ -1584,7 +1918,7 @@ angular.module("farmbuild.farmdata").factory("farmdataSession", function($log, $
 
 "use strict";
 
-angular.module("farmbuild.farmdata").factory("geoJsonValidator", function(validations, farmdata, $log) {
+angular.module("farmbuild.farmdata").factory("geoJsonValidator", function(validations, $log) {
     var geoJsonValidator = {
         geojsonhint: geojsonhint
     }, _isDefined = validations.isDefined, _isArray = validations.isArray, _isPositiveNumber = validations.isPositiveNumber, _isEmpty = validations.isEmpty;
@@ -1601,9 +1935,6 @@ angular.module("farmbuild.farmdata").factory("geoJsonValidator", function(valida
     geoJsonValidator.isGeoJsons = isGeoJsons;
     function _validate(farmData) {
         $log.info("validating farmData...", farmData);
-        if (!farmdata.validate(farmData)) {
-            return false;
-        }
         if (!_isDefined(farmData) || !_isDefined(farmData.geometry) || !_isDefined(farmData.geometry.crs) || !_isDefined(farmData.paddocks)) {
             $log.error("farmData must have geometry, geometry.crs, paddocks");
             return false;
@@ -1616,8 +1947,10 @@ angular.module("farmbuild.farmdata").factory("geoJsonValidator", function(valida
 
 "use strict";
 
-angular.module("farmbuild.core").factory("farmdataValidator", function(validations, $log) {
-    var farmdataValidator = {}, _isDefined = validations.isDefined, _isArray = validations.isArray, _isPositiveNumber = validations.isPositiveNumber, _isPositiveNumberOrZero = validations.isPositiveNumberOrZero, _isEmpty = validations.isEmpty, _isObject = validations.isObject, _isString = validations.isString, areaUnitDefault = "hectare";
+angular.module("farmbuild.core").factory("farmdataValidator", function(validations, $log, geoJsonValidator) {
+    var farmdataValidator = {
+        isGeoJsons: geoJsonValidator.isGeoJsons
+    }, _isDefined = validations.isDefined, _isArray = validations.isArray, _isPositiveNumber = validations.isPositiveNumber, _isPositiveNumberOrZero = validations.isPositiveNumberOrZero, _isEmpty = validations.isEmpty, _isObject = validations.isObject, _isString = validations.isString, areaUnitDefault = "hectare";
     function errorLog() {}
     function _validate(farmData) {
         $log.info("validating farmData...");
@@ -1633,7 +1966,7 @@ angular.module("farmbuild.core").factory("farmdataValidator", function(validatio
             $log.error("farmData must have name, area (positve number or zero) and areaUnit (must be " + areaUnitDefault + "): %j", farmData);
             return false;
         }
-        return true;
+        return geoJsonValidator.validate(farmData);
     }
     farmdataValidator.validate = _validate;
     return farmdataValidator;

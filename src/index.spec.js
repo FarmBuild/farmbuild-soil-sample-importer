@@ -10,7 +10,7 @@ describe('farmbuild.soilSampleImporter module', function() {
 
 
   // define soilSampleImporter service
-  var soilSampleImporter, $log;
+  var soilSampleImporter, $log, fileFarmData ='farmdata-susan.json';
 
   // inject farmbuild.soilSampleImporter module
   beforeEach(module('farmbuild.soilSampleImporter', function($provide) {
@@ -31,8 +31,7 @@ describe('farmbuild.soilSampleImporter module', function() {
 
 
     it('soilSampleImporter create default should have a soilSamples section defined', inject(function() {
-      var farmData = {name: 'Susan\'s farm',area:0 ,
-        areaUnit:'hectare'};
+      var farmData = fixture.load(fileFarmData);
       var farmDataWithSoilSamples = soilSampleImporter.load(farmData);
       $log.info('farmDataWithSoilSamples '+farmDataWithSoilSamples);
       expect(farmDataWithSoilSamples.soils).toBeDefined();
@@ -43,7 +42,7 @@ describe('farmbuild.soilSampleImporter module', function() {
 
 
     it('soilSampleImporter check if find() returns farmdata from session', inject(function() {
-      var farmData = {name: 'Susan\'s farm'};
+      var farmData  = fixture.load(fileFarmData);
       var farmDataWithSoilSamples = soilSampleImporter.load(farmData);
       var sessionFarmData = soilSampleImporter.find();
       expect(sessionFarmData).toBeDefined();
