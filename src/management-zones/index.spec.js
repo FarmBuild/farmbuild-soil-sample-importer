@@ -22,7 +22,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleMangementZones', functi
 
   // inject soilSampleImporter service
   beforeEach(inject(function (_$log_, _mangementZones_) {
-    $log = _$log_,
+      $log = _$log_,
       mangementZones = _mangementZones_;
   }));
 
@@ -33,17 +33,25 @@ describe('farmbuild.soilSampleImporter module: soilSampleMangementZones', functi
     }));
 
 
+
     it('soilSampleMangementZones paddocksInManagementZone should be defined', inject(function () {
       var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
       expect(loadedFarmData).toBeDefined();
-
-      var paddocksInZone = mangementZones.paddocksInManagementZone(loadedFarmData,"Zone One");
+     var paddocksInZone = mangementZones.paddocksInManagementZone(loadedFarmData,"Zone One");
       expect(paddocksInZone).toBeDefined();
-
       expect(paddocksInZone.length).toBeGreaterThan(0);
+    }));
 
+
+
+    it('soilSampleMangementZones averageForManagementZone', inject(function () {
+      var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
+      expect(loadedFarmData).toBeDefined();
+      var zoneAverage = mangementZones.averageForManagementZone(loadedFarmData,"Zone One");
+      expect(zoneAverage).toBeDefined();
 
     }));
+
 
   });
 

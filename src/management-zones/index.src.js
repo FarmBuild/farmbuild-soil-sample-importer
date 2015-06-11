@@ -36,8 +36,19 @@ angular.module('farmbuild.soilSampleImporter')
       $log.info('paddockList '+paddockList);
       return paddockList;
     }
-
     mangementZones.paddocksInManagementZone = paddocksInManagementZone ;
+
+
+    var averageForManagementZone = function(farmData, managementZoneName){
+      var zonePaddocks =  mangementZones.paddocksInManagementZone(farmData, managementZoneName);
+      if(!_isDefined(zonePaddocks) || !(zonePaddocks.length>0)){
+        return undefined;
+      }
+
+//      return {};
+
+    }
+    mangementZones.averageForManagementZone=averageForManagementZone;
 
     return mangementZones;
   });
