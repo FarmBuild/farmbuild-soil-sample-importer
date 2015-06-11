@@ -18,10 +18,9 @@ module.exports = function(config){
         'src/soil-classification/index.src.js',
         'src/import-field-selector/index.src.js',
         'src/import-field-selector/validator.src.js',
-        'src/import-field-definition/types.src.js',
         'src/import-field-definition/defaults.conf.src.js',
-
-
+        'src/import-field-definition/types.src.js',
+        'src/import-field-definition/index.src.js',
 
       'src/index.src.js',
 //      'src/collections/index.spec.js',
