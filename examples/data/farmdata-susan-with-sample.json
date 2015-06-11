@@ -52,12 +52,14 @@
          "sampleResults" :{	
                	"dateLastUpdated": "2015-05-25T02:23:51",
                	 "importFieldNames": [
-   						  "Farm Paddock Name",
    						  "Sample Id", 
    						  "Sample Name",
-   						  "pH (1:5 Water)",
-   						  "pH (1:5 CaCl2)",
-   						  "Phosphorus (Olsen) - mg/kg"
+   						  "pH H2O (Water)",
+   						  "Olsen Phosphorus (mg/kg)",
+   						  "PBI",
+                          "KCl 40 Sulphur (mg/kg)",
+                          "Colwell Phosphorus (mg/kg)",
+                          "Colwell Potassium (mg/kg)"
 				    ]
          }
     },
@@ -113,19 +115,17 @@
                     }
                 ],
                  "sampleResults":[
-	               			  [	{"pH (1:5 Water)": 0.3 },
-				               	{"pH (1:5 CaCl2)": 22 },
-    				           	{"Phosphorus (Olsen) - mg/kg":12.12 },
+	               			  [	{"pH H2O (Water)": 0.3 },
+				               	{"PBI": 22 },
+    				           	{"Olsen Phosphorus (mg/kg)":12.12 },
     				           	{"Sample Id":20}, 
-   						  		{"Sample Name":"p3 sample1"},
-   						  		{"Farm Paddock Name":"P3"}
+   						  		{"Sample Name":"p3 sample1"}
     			        	  ],
-    				          [		{"pH (1:5 Water)": 2.3 },
-			    	           		{"pH (1:5 CaCl2)": 12.8 },
-    			    	       		{"Phosphorus (Olsen) - mg/kg":12.12 },
+    				          [		{"pH H2O (Water)": 2.3 },
+			    	           		{"PBI": 34 },
+    			    	       		{"Olsen Phosphorus (mg/kg)":12.12 },
     			    	       		{"Sample Id":23}, 
-   						  			{"Sample Name":"p3 sample2"},
-   						  			{"Farm Paddock Name":"P3"}
+   						  			{"Sample Name":"p3 sample2"}
     			        	   ]
     	        	    	]
                	
@@ -179,12 +179,11 @@
                     }
                 ],
                 "sampleResults":[
-               			  	{"pH (1:5 Water)":5.3},
-			               	{"pH (1:5 CaCl2)":82},
-    			           	{"Phosphorus (Olsen) - mg/kg":99.12},
-    			           	{"Sample Id":23}, 
-   						  	{"Sample Name":"p3 sample2"},
-   						  	{"Farm Paddock Name":"P3"}
+                              {"pH H2O (Water)": 0.3 },
+                              {"PBI": 22 },
+                              {"Olsen Phosphorus (mg/kg)":12.12 },
+                              {"Sample Id":20},
+                              {"Sample Name":"p1 sample1"}
     	        	    	]
                	
                 
@@ -192,7 +191,7 @@
             
         },
         {
-            "name": "P1",
+            "name": "P4",
             "geometry": {
                 "type": "Polygon",
                 "crs": "EPSG:4283",
