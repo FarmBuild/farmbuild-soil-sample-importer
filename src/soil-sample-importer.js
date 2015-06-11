@@ -16,6 +16,8 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 	.factory('soilSampleImporter',
   function (soilSampleImporterSession,
             soilSampleConverter,
+            importFieldTypes,
+            soilClassification,
             farmdata,
             validations,
             googleAnalyticsImporter,
@@ -42,7 +44,23 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
      */
     soilSampleImporter.find = function () {
       return soilSampleImporterSession.find();
-    }
+    };
+
+    soilSampleImporter.hasClassification = function (inputFieldName) {
+        var fieldType = importFieldTypes.byName(inputFieldName);
+        if (fieldType && fieldType.soilClassificationName) {
+            return true;
+        }
+        return false;
+    };
+
+    soilSampleImporter.hasAverage = function (inputFieldName) {
+          var fieldType = importFieldTypes.byName(inputFieldName);
+          if (fieldType && fieldType.hasAverage) {
+              return true;
+          }
+          return false;
+    };
 
 		/**
 		 * Loads the farmData into the session.
@@ -74,9 +92,9 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 
 
     soilSampleImporter.export = soilSampleImporterSession.export;
-//    soilSampleImporter.toSoilSampleResult = soilSampleConverter.toSoilSampleResults;
     soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
     soilSampleImporter.createDefault = soilSampleConverter.createDefault;
+    soilSampleImporter.classifyResult = soilClassification.classifyResult;
 
 
 		if (typeof window.farmbuild === 'undefined') {
