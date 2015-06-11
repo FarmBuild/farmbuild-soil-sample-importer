@@ -11,24 +11,27 @@ module.exports = function(config){
       'src/session/index.src.js',
       'src/converter/index.src.js',
       'src/converter/validator.src.js',
-      'src/**/*.src.js',
+      //'src/**/*.src.js',
       'src/ga/index.src.js',
+        'src/soil-classification/types.src.js',
+        'src/soil-classification/defaults.conf.src.js',
+        'src/soil-classification/index.src.js',
+        'src/import-field-selector/index.src.js',
+        'src/import-field-selector/validator.src.js',
+        'src/import-field-definition/types.src.js',
+        'src/import-field-definition/defaults.conf.src.js',
+
+
+
       'src/index.src.js',
-      'src/soil-classification/types.src.js',
-      'src/soil-classification/defaults.conf.src.js',
-      'src/soil-classification/index.src.js',
-      'src/import-field-selector/index.src.js',
-      'src/import-field-selector/validator.src.js',
-      'src/blank.spec.js',//use this as a basis of creating your module test
-      'src/session/index.spec.js',
-      'src/import-field-definition/types.src.js',
-      'src/import-field-definition/defaults.conf.src.js',
 //      'src/collections/index.spec.js',
 //      'src/ga/index.spec.js',
 //      'src/converter/index.spec.js',
 //      'src/converter/validator.spec.js',
 //      'src/soil-classification/index.spec.js',
 //      'src/soil-classification/types.spec.js',
+        'src/blank.spec.js',//use this as a basis of creating your module test
+        'src/session/index.spec.js',
       'src/**/*.spec.js',
       {pattern: 'examples/data/*.json'}
     ],
