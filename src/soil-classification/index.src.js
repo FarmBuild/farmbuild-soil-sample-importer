@@ -113,5 +113,22 @@ angular.module('farmbuild.soilSampleImporter')
             return undefined;
         }
 
+        soilClassification.classifyResult = function (sampleResult, key) {
+
+            var type = soilClassificationTypes.byName(key);
+
+            if (!type) {
+                return undefined;
+            }
+
+            if (type.dependencyRange) {
+                return soilClassification.findRangeWithDependency(type, sampleResult[key],
+                    sampleResult[type.dependencyRange.name]);
+            }
+            else {
+                return soilClassification.findRange(type, sampleResult[key]);
+            }
+        }
+
         return soilClassification;
     });
