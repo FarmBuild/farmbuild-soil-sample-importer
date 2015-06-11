@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, farmdata, validations, googleAnalyticsImporter, $log) {
+angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, soilSampleValidator, farmdata, validations, googleAnalyticsImporter, $log) {
     var soilSampleImporter = {
         farmdata: farmdata
     }, _isPositiveNumber = validations.isPositiveNumber, _isDefined = validations.isDefined;
@@ -29,6 +29,7 @@ angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.fa
     soilSampleImporter.export = soilSampleImporterSession.export;
     soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
     soilSampleImporter.createDefault = soilSampleConverter.createDefault;
+    soilSampleImporter.isValidFarmDataWithSoilSample = soilSampleValidator.isValidFarmDataWithSoilSample;
     if (typeof window.farmbuild === "undefined") {
         window.farmbuild = {
             soilSampleImporter: soilSampleImporter
@@ -289,9 +290,24 @@ angular.module("farmbuild.soilSampleImporter").factory("importFieldTypes", funct
 angular.module("farmbuild.soilSampleImporter").factory("importFieldSelector", function($log, farmdata, soilSampleImporter, importFieldTypes, collections, importFieldSelectionValidator) {
     $log.info("importFieldSelector ");
     var importFieldSelector = {}, _paddocks = [], _types = importFieldTypes.toArray();
+    function _findPaddockWithName(paddocks, name) {
+        for (var i = 0; i < paddocks.length; i++) {
+            if (name.trim().toUpperCase() == paddocks[i].name.toUpperCase()) {
+                return paddocks[i];
+            }
+        }
+        return undefined;
+    }
     importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
         if (!importFieldSelectionValidator.validateCreateNew(columnHeaders, rows)) {
             return undefined;
+        }
+        if (paddockColumnIndex < 0 || paddockColumnIndex >= columnHeaders.length) {
+            return undefined;
+        }
+        collections.add(columnHeaders, "Farm Paddock Name", paddockColumnIndex);
+        for (var i = 0; i < rows.length; i++) {
+            collections.add(rows[i], "", paddockColumnIndex);
         }
         _paddocks = myFarmData.paddocks;
         importFieldSelector.paddocks = _paddocks;
@@ -321,6 +337,27 @@ angular.module("farmbuild.soilSampleImporter").factory("importFieldSelector", fu
         }
         $log.info(JSON.stringify(importFieldsDefinition));
         return soilSampleImporter.toFarmData(myFarmData, importFieldsDefinition);
+    };
+    importFieldSelector.autoLinkPaddock = function(importFieldsDefinition, linkColumnIndex) {
+        var linkedCount = 0;
+        if (linkColumnIndex == importFieldsDefinition.paddockNameColumn) {
+            return;
+        }
+        var mappedPaddock = Object.keys(importFieldsDefinition.paddockRowDictionary);
+        var mappedRowIndex = [];
+        for (var i = 0; i < mappedPaddock.length; i++) {
+            mappedRowIndex = mappedRowIndex.concat(importFieldsDefinition.paddockRowDictionary[mappedPaddock[i]]);
+        }
+        for (var i = 0; i < importFieldsDefinition.results.rows.length; i++) {
+            if (mappedRowIndex.indexOf(i) < 0) {
+                var paddock = _findPaddockWithName(_paddocks, importFieldsDefinition.results.rows[i][linkColumnIndex]);
+                if (paddock) {
+                    this.connectRow(importFieldsDefinition, paddock, i);
+                    linkedCount++;
+                }
+            }
+        }
+        return linkedCount;
     };
     importFieldSelector.connectRow = function(paddockSelection, paddock, rowIndex) {
         if (!paddockSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
