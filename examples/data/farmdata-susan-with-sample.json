@@ -116,18 +116,24 @@
                 ],
               "sampleResults": [
                 {
-                  "pH H2O (Water)": 0.3,
-                  "PBI": 22,
-                  "Olsen Phosphorus (mg/kg)": 12.12,
                   "Sample Id": 20,
-                  "Sample Name": "p3 sample1"
+                  "Sample Name": "p3 sample1",
+                  "pH H2O (Water)": 0.3,
+                  "Olsen Phosphorus (mg/kg)": 12.12,
+                  "PBI": 22,
+                  "KCl 40 Sulphur (mg/kg)": null,
+                  "Colwell Phosphorus (mg/kg)": 10,
+                  "Colwell Potassium (mg/kg)": 10
                 },
                 {
-                  "pH H2O (Water)": 2.3,
-                  "PBI": 34,
-                  "Olsen Phosphorus (mg/kg)": 12.12,
                   "Sample Id": 23,
-                  "Sample Name": "p3 sample2"
+                  "Sample Name": "p3 sample2",
+                  "pH H2O (Water)": 2.3,
+                  "Olsen Phosphorus (mg/kg)": 12.12,
+                  "PBI": 34,
+                  "KCl 40 Sulphur (mg/kg)": 3,
+                  "Colwell Phosphorus (mg/kg)": 10,
+                  "Colwell Potassium (mg/kg)": 10
                 }
               ]
                	
@@ -181,11 +187,14 @@
             ],
             "sampleResults": [
               {
+                "Sample Id": 25,
+                "Sample Name": "p1 sample1",
                 "pH H2O (Water)": 0.3,
-                "PBI": 22,
                 "Olsen Phosphorus (mg/kg)": 12.12,
-                "Sample Id": 20,
-                "Sample Name": "p1 sample1"
+                "PBI": 76,
+                "KCl 40 Sulphur (mg/kg)": 53,
+                "Colwell Phosphorus (mg/kg)": 10,
+                "Colwell Potassium (mg/kg)": 10
               }
             ]
           }
