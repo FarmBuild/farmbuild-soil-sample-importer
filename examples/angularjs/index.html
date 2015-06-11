@@ -18,19 +18,13 @@
     <small>(angularJS)</small>
   </h3>
   <hr/>
-  <h4>
-  </h4>
-  <p>
-
-
-  </p>
   <br/>
   <hr/>
   <h4>
-    Load FarmData to start mapping with the soil sample result in csv.
+    Load FarmData to start linking with the soil sample result in csv.
   </h4>
   <p>
-    You must have a farmData for paddock info
+    You must have a farmData for paddock file.
     Please use the example farmData files in ../data/.
   </p>
   <form-item class="form-group col-sm-12">
@@ -54,32 +48,41 @@
 
     <legend>Paddock Soil Information</legend>
 
-    <paddocks ng-repeat="paddock in farmData.paddocks">
+    <paddocks ng-repeat="paddock in paddocks">
         <div>
-            Paddock Name: {{paddock.name}}
+            <span>Paddock Name</span>: <span class="h4">{{paddock.name}}</span>
         </div>
         <table class="table table-striped" ng-show="paddock.soils.sampleResults">
             <tr>
                 <th>&nbsp;
                 </th>
-                <th ng-repeat="field in farmData.soils.sampleResults.importFieldNames">{{field}}
+                <th ng-repeat="field in paddockFieldNames">{{field}}
                 </th>
             </tr>
             <tr ng-repeat="sampleResult in paddock.soils.sampleResults">
                 <td>
                     &nbsp;
                 </td>
-                <td ng-repeat="fieldName in farmData.soils.sampleResults.importFieldNames">
-                    {{sampleResult[fieldName]}}
+                <td ng-repeat="fieldName in paddockFieldNames">
+                    <span>{{sampleResult[fieldName]}}</span>
+                </td>
+            </tr>
+            <tfoot>
+            <tr>
+                <td>Average:</td>
+                <td ng-repeat="fieldName in paddockFieldNames">
+                    {{getPaddockAverage(paddock.name, fieldName)}}
                 </td>
             </tr>
             <tr>
-                <td>Average:</td>
-                <td ng-repeat="fieldName in farmData.soils.sampleResults.importFieldNames">
-                    &nbsp;
+                <td>Classification:</td>
+                <td ng-repeat="fieldName in paddockFieldNames" ng-init="cls = getPaddockClassification(paddock.name, fieldName)">
+                    <span style="background-color:{{cls.defaultColor}}">
+                        {{cls.name ? cls.name : 'N/A'}}
+                    </span>
                 </td>
             </tr>
-
+            </tfoot>
         </table>
         <div ng-show="!paddock.soils.sampleResults">
             This paddock contains no soil sample results.
@@ -88,10 +91,12 @@
 
     <hr/>
 
-    <legend>Paddock Soil Information</legend>
+    <legend>Management Groups Soil Information</legend>
 
-    <management-zones>
-
+    <management-zones ng-repeat="zone in managementZones">
+        <div>
+            <span>Zone Name</span>: <span class="h4">{{zone.name}}</span>
+        </div>
 
     </management-zones>
 
@@ -100,7 +105,6 @@
 
     <p>Uploaded farm data raw content:</p>
     <pre> {{prettyContent}}  </pre>
-
 
 </summary>
 <version>
