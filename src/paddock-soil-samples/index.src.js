@@ -9,7 +9,7 @@
 
 
 angular.module('farmbuild.soilSampleImporter')
-  .factory('paddockSoilSampleRetriever', function ($log, farmdata, validations) {
+  .factory('paddockSoilSampleRetriever', function ($log, validations) {
 
     var _isDefined = validations.isDefined,
       _isArray = validations.isArray,
@@ -17,7 +17,29 @@ angular.module('farmbuild.soilSampleImporter')
       paddockSoilSampleRetriever = {};
 
 
-    var soilSamplesInPaddock = function(){
+    var soilSamplesInPaddock = function(farmData, paddockName){
+
+
+      if (!_isDefined(farmData)) {
+        return undefined;
+      }
+      if (!_isDefined(farmData.managementZones)) {
+        return undefined;
+      }
+
+      var paddock = farmData.paddocks;
+      for(var i=0;i<paddock.length;i++){
+        var singlePaddock = paddock[i];
+        if(singlePaddock.name == paddockName){
+          break;
+        }
+      }
+      var paddockSoil = singlePaddock.soils;
+      $log.info('paddockSoil '+paddockSoil);
+      if(!_isDefined(paddockSoil) || !_isDefined(paddockSoil.sampleResults)){
+        return undefined;
+      }
+      return paddockSoil.sampleResults;
 
     }
     paddockSoilSampleRetriever.soilSamplesInPaddock = soilSamplesInPaddock;

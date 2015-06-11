@@ -11,9 +11,7 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
 
   //define soil sample result converter
   var $log, paddockSoilSampleRetriever,
-    fileFarmData ='farmdata-susan.json',
-    fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
-    fileSoilImports = 'soil-sample-import-result.json';
+    fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json';
 
   // inject farmbuild.soilSampleImporter module
   beforeEach(module('farmbuild.soilSampleImporter', function($provide) {
@@ -31,6 +29,18 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
     it('paddockSoilSampleRetriever factory should be defined', inject(function () {
       expect(paddockSoilSampleRetriever).toBeDefined();
     }));
+
+
+    it('paddockSoilSampleRetriever farmdata has soilSamplesInPaddock', inject(function () {
+      var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
+      expect(loadedFarmData).toBeDefined();
+      var paddockSoilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(loadedFarmData,"P3");
+      expect(paddockSoilSamples).toBeDefined();
+
+    }));
+
+
+
 
   });
 
