@@ -21,9 +21,10 @@ angular.module('farmbuild.soilSampleImporter')
       if (!_isDefined(farmData)) {
         return false;
       }
-      if (!_isDefined(farmData)) {
+      if (!_isDefined(farmData.managementZones)) {
         return false;
       }
+      return true;
     }
 
     return mangementZoneValidator;
