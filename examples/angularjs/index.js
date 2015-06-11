@@ -37,9 +37,9 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
     function getSampleResultsTable(farmData){
       $log.info('FarmCtrl>>getSampleResultsTable');
-//      var soilSampleResults = soilSampleImporter.toSoilSampleResult(farmData);
+      //var soilSampleResults = soilSampleImporter.toSoilSampleResult(farmData);
 
-//      $scope.paddockSoilSamples = soilSampleResults;
+      //$scope.paddockSoilSamples = soilSampleResults;
 
     };
 
@@ -63,13 +63,13 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
       var path = location.href.toString(),
         path = path.substring(0, path.indexOf('?'));
       location.href = path;
-    };
+    }
 
     if (soilSampleImporter.session.isLoadFlagSet(location)) {
       var farmData = soilSampleImporter.find();
 
       updateFarmData($scope, farmData);
-    };
+    }
 
     function updateFarmData($scope, farmData) {
       if(!farmData) {
@@ -84,15 +84,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 //      $scope.milkProduction = farmData.soilSampleImporter.milkProduction;
 //      $scope.stockingRate = farmData.soilSampleImporter.stockingRate;
 
-    };
-
-    $scope.soilImportValues = function(farmData){
-//      if(!soilSampleImporter.isValidFarmDataWithSoilSample(farmData)){
-//
-//      }
-
-    };
-
+    }
 //    $scope.file;
 //
 //    $scope.loadFile =  function (file) {

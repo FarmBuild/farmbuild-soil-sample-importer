@@ -1,0 +1,9 @@
+PdkId,Sample Name,Alias Name,pH (1:5 Water),pH (1:5 CaCl2),Aluminium Saturation - %,Phosphorus (Olsen) - mg/kg,Phosphorus (Colwell) - mg/kg,Phosphorus Buffer Index (PBI-Col),Available Potassium - mg/kg,Sulfate Sulfur (KCl40) - mg/kg,Electrical Conductivity - dS/m,Cation Exchange Capacity - meq/100g,Aluminium (KCl) - mg/kg,Aluminium (KCl) - meq/100g,Calcium (Amm-acet.) - meq/100g,Calcium (Amm-acet.) - %,Magnesium (Amm-acet.) - meq/100g,Magnesium (Amm-acet.) - %,Sodium (Amm-acet.) - meq/100g,Sodium % of Cations (ESP) - %,Potassium (Amm-acet.) - meq/100g,Potassium (Amm-acet.) - %,Calcium/Magnesium Ratio,Potassium to Magnesium Ratio
+2,P1,Corner,5.6,5,1.2,25,130,410,530,15,0.18,16.3,17,0.19,11,67,3.5,21,0.24,1.5,1.4,8.6,3.1,0.4
+3,P1,Front,5.6,5,1.2,25,130,410,530,15,0.18,16.3,17,0.19,11,67,3.5,21,0.24,1.5,1.4,8.6,3.1,0.4
+4,tank back,Tank,5.7,4.9,1.6,20,100,360,500,11,0.15,15.2,22,0.24,10,66,3.4,22,0.27,1.8,1.3,8.6,2.9,0.4
+5,noels corner,Pad,5.4,4.7,3.1,20,98,400,200,35,0.16,13.7,39,0.43,9.5,69,3,22,0.25,1.8,0.51,3.7,3.2,0.2
+9,P2,Dairy,5.5,4.8,2.3,23,110,330,590,14,0.18,13.3,28,0.31,9,68,2.3,17,0.2,1.5,1.5,11,3.9,0.7
+10,Farm,P3,5.6,4.7,5,42,110,440,460,9.1,0.1,11.3,50,0.56,7.5,66,1.9,17,0.16,1.4,1.2,11,3.9,0.6
+12,hay shed front,Shed,5.4,4.9,7.2,20,100,450,480,15,0.11,9.32,60,0.67,6,64,1.3,14,0.15,1.6,1.2,13,4.6,0.9
+13,hay shed back,Shed,,4.8,3,16,88,480,430,19,0.16,12.8,34,0.38,9,70,2.1,16,0.2,1.6,1.1,8.6,4.3,0.5
