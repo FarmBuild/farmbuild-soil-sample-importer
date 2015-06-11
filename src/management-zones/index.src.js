@@ -50,6 +50,9 @@ angular.module('farmbuild.soilSampleImporter')
       for(var i=0;i<zonePaddocks.length;i++){
         var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData,zonePaddocks[i]);
 
+        if(!_isDefined(soilsSamples)){
+          continue;
+        }
         $log.info('soils samples for ' +zonePaddocks[i] +' is below \n'+soilsSamples);
         allPaddockSoils = allPaddockSoils.concat(soilsSamples);
         $log.info('paddocks in zony '+allPaddockSoils);

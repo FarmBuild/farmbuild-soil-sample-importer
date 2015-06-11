@@ -50,6 +50,58 @@ angular.module('farmbuild.soilSampleImporter')
 
     }
 
+    paddockSoilSampleRetriever.averagesForSoilSamples = function(importFieldNames, soilSamples){
+      if (!_isDefined(importFieldNames) || !(importFieldNames.length>0)) {
+        return undefined;
+      }
+      if (!_isDefined(soilSamples) || !(soilSamples.length>0)) {
+        return undefined;
+      }
+
+      /*
+      * columnValues {
+      *  "ph":{ sum: , count}
+      *  "pb":{ sum: , count}
+      * }
+      * */
+      var columnValues = {};
+      for(var i=0;i<soilSamples.length;i++){
+        var singelSoilSample = soilSamples[i];
+        $log.info('singelSoilSample '+JSON.stringify(singelSoilSample,null,"  "));
+
+        for(var j=0;j<importFieldNames.length;j++){
+
+          var fieldValue = singelSoilSample[importFieldNames[j]];
+
+          if(_isEmpty(fieldValue ) || (isNaN(fieldValue))){
+            $log.info("_isEmpty");
+            continue;
+          }
+          $log.info('fieldValue[j] '+fieldValue +" [importFieldNames[j] "+importFieldNames[j]);
+
+          var singleColumn = columnValues[importFieldNames[j]];
+          $log.info("");
+          if(!_isDefined(singleColumn)){
+            singleColumn = {"sum": 0 , "count":0};
+          }
+          singleColumn.sum=singleColumn.sum+fieldValue;
+          singleColumn.count=singleColumn.count+1;
+          $log.info("singleColumns.sum "+singleColumn.sum+" singleColumns.count "+singleColumn.count);
+          columnValues[importFieldNames[j]]=singleColumn;
+
+        }
+      }
+      var averageValues = {};
+      for(var j=0;j<importFieldNames.length;j++){
+          var singleColumn = columnValues[importFieldNames[j]];
+          if(!_isDefined(singleColumn)){
+            continue;
+          }
+          averageValues[importFieldNames[j]]=singleColumn.sum/singleColumn.count;
+        $log.info("averageValues "+averageValues[importFieldNames[j]]);
+        }
+
+      }
 
     return paddockSoilSampleRetriever;
   });

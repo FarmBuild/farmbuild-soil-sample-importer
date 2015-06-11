@@ -38,6 +38,13 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
       expect(paddockSoilSamples).toBeDefined();
       expect(paddockSoilSamples.length).toBeGreaterThan(0);
       $log.info(paddockSoilSamples[0]);
+
+      var soils= loadedFarmData.soils;
+      var sampleResults=soils.sampleResults;
+      var importFields =sampleResults.importFieldNames;
+
+
+      paddockSoilSampleRetriever.averagesForSoilSamples(importFields,paddockSoilSamples);
     }));
 
 
