@@ -186,7 +186,6 @@ angular.module('farmbuild.soilSampleImporter')
             var temp = { } ;
             $log.info('importFieldNames[j] '+importFieldNames[j]);
             sampleValue[importFieldNames[j]] = rowValues[j];
-//            sampleValue.push(temp);
 
           }
 
@@ -194,7 +193,7 @@ angular.module('farmbuild.soilSampleImporter')
           singlePaddockSoils.push(sampleValue);
 
         }
-//        $log.info('AAAAAAAa singlePaddock '+JSON.stringify(singlePaddock,null,'    '));
+//        $log.info('singlePaddock '+JSON.stringify(singlePaddock,null,'    '));
         var singlePaddockSoil ={};
         if(_isDefined(singlePaddock.soils)){
           singlePaddockSoil=singlePaddock.soils;

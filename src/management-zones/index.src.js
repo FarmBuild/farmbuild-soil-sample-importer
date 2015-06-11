@@ -5,3 +5,19 @@
  * @author Spatial Vision
  * @version 0.1.0
  */
+'use strict';
+
+
+angular.module('farmbuild.soilSampleImporter')
+  .factory('mangementZones', function ($log, farmdata, validations) {
+
+    var _isDefined = validations.isDefined,
+      _isArray = validations.isArray,
+      _isEmpty = validations.isEmpty,
+      mangementZones = {};
+
+
+
+
+    return mangementZones;
+  });
