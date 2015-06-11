@@ -157,31 +157,11 @@ angular.module('farmbuild.soilSampleImporter')
 
 
 
-
-
-
-
-
-
-
-
-
-
-
       farmDataSampleResults.dateLastUpdated = newSampleResults.dateLastUpdated;
       farmDataSampleResults.importFieldNames = importFieldNames;
 
-
-//      farmDataSampleResults.importFieldNames = newResults.columnHeaders;
-//      currentSampleResults.classificationColumnDictionary = newSampleResults.classificationColumnDictionary;
-//      currentSampleResults.selected = newSampleResults.selected;
-//      currentSampleResults.paddockNameColumn = newSampleResults.paddockNameColumn;
       currentSoils.sampleResults = farmDataSampleResults;
 //      $log.info('modifiedSoils ',JSON.stringify(currentSoils,null,'   '));
-
-
-
-
 
 
       //Set up data for the info for each paddock

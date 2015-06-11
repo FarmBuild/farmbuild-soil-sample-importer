@@ -14,7 +14,8 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
     soilImportResults,
     fileFarmData ='farmdata-susan.json',
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
-    fileSoilImports = 'soil-sample-import-result.json' ;
+    fileSoilImports = 'soil-sample-import-result.json',
+    fileFarmDataWithNewSoilSamples = 'farmdata-susan-with-sample-import.json';
 
   // inject farmbuild.soilSampleImporter module
   beforeEach(module('farmbuild.soilSampleImporter', function($provide) {
@@ -63,8 +64,8 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
     }));
 
 
- /*   it('soilSampleConverter toSoilSampleResults should have specific structure with valid values', inject(function () {
-      var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
+/*    it('soilSampleConverter toSoilSampleResults(): should have specific structure with valid values', inject(function () {
+      var loadedFarmData = fixture.load(fileFarmDataWithNewSoilSamples);
       expect(loadedFarmData).toBeDefined();
 
 
@@ -83,8 +84,8 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
       expect(soilImportResults.paddockRowDictionary).toBeDefined();
       $log.info('soilImportResults.paddocks '+soilImportResults);
     }));
-
 */
+
     it('soilSampleConverter resulting toFarmData(farmData,soilSampleResults) output, farmdata, should have the soil sample values included', inject(function () {
       var farmDataWithoutSoilSample = fixture.load(fileFarmData);
       expect(farmDataWithoutSoilSample).toBeDefined();

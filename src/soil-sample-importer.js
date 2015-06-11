@@ -12,10 +12,11 @@
  * soilSampleImporter
  * @module soilSampleImporter
  */
-angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farmdata',])
+angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farmdata'])
 	.factory('soilSampleImporter',
   function (soilSampleImporterSession,
             soilSampleConverter,
+            soilSampleValidator,
             farmdata,
             validations,
             googleAnalyticsImporter,
@@ -77,6 +78,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 //    soilSampleImporter.toSoilSampleResult = soilSampleConverter.toSoilSampleResults;
     soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
     soilSampleImporter.createDefault = soilSampleConverter.createDefault;
+    soilSampleImporter.isValidFarmDataWithSoilSample = soilSampleValidator.isValidFarmDataWithSoilSample;
 
 
 		if (typeof window.farmbuild === 'undefined') {
