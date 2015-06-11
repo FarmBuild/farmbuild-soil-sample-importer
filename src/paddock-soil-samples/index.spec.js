@@ -36,7 +36,8 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
       expect(loadedFarmData).toBeDefined();
       var paddockSoilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(loadedFarmData,"P3");
       expect(paddockSoilSamples).toBeDefined();
-
+      expect(paddockSoilSamples.length).toBeGreaterThan(0);
+      $log.info(paddockSoilSamples[0]);
     }));
 
 

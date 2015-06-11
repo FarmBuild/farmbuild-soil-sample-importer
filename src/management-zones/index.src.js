@@ -9,7 +9,7 @@
 
 
 angular.module('farmbuild.soilSampleImporter')
-  .factory('mangementZones', function ($log, farmdata, validations, mangementZoneValidator) {
+  .factory('mangementZones', function ($log, farmdata, validations, mangementZoneValidator, paddockSoilSampleRetriever) {
 
     var _isDefined = validations.isDefined,
       _isArray = validations.isArray,
@@ -40,13 +40,21 @@ angular.module('farmbuild.soilSampleImporter')
 
 
     var averageForManagementZone = function(farmData, managementZoneName){
+      $log.info("averageForManagementZone");
       var zonePaddocks =  mangementZones.paddocksInManagementZone(farmData, managementZoneName);
       if(!_isDefined(zonePaddocks) || !(zonePaddocks.length>0)){
         return undefined;
       }
+      $log.info(" zonePaddocks "+zonePaddocks);
+      var allPaddockSoils = [];
+      for(var i=0;i<zonePaddocks.length;i++){
+        var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData,zonePaddocks[i]);
 
-//      return {};
-
+        $log.info('soils samples for ' +zonePaddocks[i] +' is below \n'+soilsSamples);
+        allPaddockSoils = allPaddockSoils.concat(soilsSamples);
+        $log.info('paddocks in zony '+allPaddockSoils);
+      }
+      return allPaddockSoils;
     }
     mangementZones.averageForManagementZone=averageForManagementZone;
 

@@ -17,8 +17,8 @@ angular.module('farmbuild.soilSampleImporter')
       paddockSoilSampleRetriever = {};
 
 
-    var soilSamplesInPaddock = function(farmData, paddockName){
-
+    paddockSoilSampleRetriever.soilSamplesInPaddock = function(farmData, paddockName){
+      $log.info('paddockSoilSampleRetriever.soilSamplesInPaddock');
 
       if (!_isDefined(farmData)) {
         return undefined;
@@ -27,22 +27,29 @@ angular.module('farmbuild.soilSampleImporter')
         return undefined;
       }
 
+
       var paddock = farmData.paddocks;
+      $log.info('soilSamplesInPaddock main  '+paddock.length);
+      var singlePaddock,  paddockSoil;
       for(var i=0;i<paddock.length;i++){
-        var singlePaddock = paddock[i];
+        singlePaddock = paddock[i];
+        $log.info('singlePaddock name '+singlePaddock.name);
         if(singlePaddock.name == paddockName){
           break;
         }
       }
-      var paddockSoil = singlePaddock.soils;
+      paddockSoil = singlePaddock.soils;
       $log.info('paddockSoil '+paddockSoil);
       if(!_isDefined(paddockSoil) || !_isDefined(paddockSoil.sampleResults)){
         return undefined;
       }
+//      $log.info('paddockSoil after '+paddockSoil.sampleResults[0]);
+//      var singlesamples = paddockSoil.sampleResults[0];
+//      $log.info('singlesamples '+singlesamples['Sample Id']);
       return paddockSoil.sampleResults;
 
     }
-    paddockSoilSampleRetriever.soilSamplesInPaddock = soilSamplesInPaddock;
+
 
     return paddockSoilSampleRetriever;
   });

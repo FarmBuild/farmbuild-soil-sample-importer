@@ -25,7 +25,7 @@ angular.module('farmbuild.soilSampleImporter')
         return false;
       }
       var managementZones = farmData.managementZones;
-      $log.info('managementZones '+managementZones);
+      $log.info('managementZones length '+managementZones.length);
       if (!(managementZones.length>0)) {
         return false;
       }
