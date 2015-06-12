@@ -48,7 +48,7 @@
 
     <legend>Paddock Soil Information</legend>
 
-    <paddocks ng-repeat="paddock in paddocks">
+    <paddocks ng-repeat="paddock in paddocks" >
         <div>
             <span>Paddock Name</span>: <span class="h4">{{paddock.name}}</span>
         </div>
@@ -84,7 +84,7 @@
                 </tr>
             </tfoot>
         </table>
-        <div ng-show="!paddock.soils.sampleResults">
+        <div ng-show="!paddock.soils.sampleResults" style="margin-bottom: 10px;">
             This paddock contains no soil sample results.
         </div>
     </paddocks>
@@ -120,9 +120,12 @@
                     </tr>
                 </tbody>
             </table>
-            <div ng-show="!zoneAvg">This management zone contains no sample result</div>
+            <div ng-show="!zoneAvg" style="margin-bottom: 10px;">This management zone contains no sample result</div>
         </div>
     </management-zones>
+
+    <div ng-show="!managementZones || managementZones.length ==0">This farm data contains no management zone</div>
+
 
     <hr/>
 
