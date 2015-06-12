@@ -491,10 +491,10 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockGroups", function
     var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, paddockGroups = {};
     var paddocksInPaddockGroup = function(farmData, paddockGroupName) {
         var paddockList = [];
-        if (!paddockGoupValidator.farmDataHasManagementZones(farmData)) {
+        if (!paddockGoupValidator.farmDataHasPaddockGroups(farmData)) {
             return undefined;
         }
-        var paddockGroups = farmData.managementZones;
+        var paddockGroups = farmData.paddockGroups;
         for (var i = 0; i < paddockGroups.length; i++) {
             var singleGroup = paddockGroups[i];
             if (singleGroup.name == paddockGroupName) {
@@ -511,7 +511,6 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockGroups", function
         if (!_isDefined(groupPaddocks) || !(groupPaddocks.length > 0)) {
             return undefined;
         }
-        $log.info(" zonePaddocks " + groupPaddocks);
         var allPaddockSoils = [];
         for (var i = 0; i < groupPaddocks.length; i++) {
             var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData, groupPaddocks[i]);
@@ -546,15 +545,15 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockGroups", function
 
 angular.module("farmbuild.soilSampleImporter").factory("paddockGoupValidator", function($log, farmdata, validations) {
     var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, paddockGoupValidator = {};
-    paddockGoupValidator.farmDataHasManagementZones = function(farmData) {
+    paddockGoupValidator.farmDataHasPaddockGroups = function(farmData) {
         if (!_isDefined(farmData)) {
             return false;
         }
-        if (!_isDefined(farmData.managementZones)) {
+        if (!_isDefined(farmData.paddockGroups)) {
             return false;
         }
-        var paddockGoups = farmData.managementZones;
-        $log.info("managementZones length " + paddockGoups.length);
+        var paddockGoups = farmData.paddockGroups;
+        $log.info("paddockGroups length " + paddockGoups.length);
         if (!(paddockGoups.length > 0)) {
             return false;
         }
