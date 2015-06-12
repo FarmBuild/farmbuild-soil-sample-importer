@@ -16,7 +16,9 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 	.factory('soilSampleImporter',
   function (soilSampleImporterSession,
             soilSampleConverter,
+            importField,
             soilSampleValidator,
+            soilClassification,
             farmdata,
             validations,
             googleAnalyticsImporter,
@@ -43,7 +45,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
      */
     soilSampleImporter.find = function () {
       return soilSampleImporterSession.find();
-    }
+    };
 
 		/**
 		 * Loads the farmData into the session.
@@ -75,10 +77,12 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 
 
     soilSampleImporter.export = soilSampleImporterSession.export;
-//    soilSampleImporter.toSoilSampleResult = soilSampleConverter.toSoilSampleResults;
     soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
     soilSampleImporter.createDefault = soilSampleConverter.createDefault;
     soilSampleImporter.isValidFarmDataWithSoilSample = soilSampleValidator.isValidFarmDataWithSoilSample;
+    soilSampleImporter.classifyResult = soilClassification.classifyResult;
+    soilSampleImporter.hasAverage = importField.hasAverage;
+    soilSampleImporter.hasClassification = importField.hasClassification;
 
 
 		if (typeof window.farmbuild === 'undefined') {
