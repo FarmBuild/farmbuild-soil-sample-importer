@@ -63,7 +63,7 @@
 				    ]
          }
     },
-    "managementZones": [
+    "paddockGroups": [
       {
         "name": "Zone One",
         "paddocks": ["P3", "P1"]
