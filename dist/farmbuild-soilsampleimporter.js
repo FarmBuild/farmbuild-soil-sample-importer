@@ -48,7 +48,7 @@ angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.fa
 
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", function($log, farmdata, validations, soilSampleValidator, soilSampleImporterSession) {
+angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", function($log, farmdata, validations, soilSampleValidator, soilSampleImporterSession, importField) {
     var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, soilSampleConverter = {};
     function createDefault() {
         return {
@@ -111,8 +111,15 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
                     var temp = {};
                     var indexOfValue = newImportFieldDictionary[importFieldNames[j]];
                     $log.info("indexOfValue " + indexOfValue);
-                    $log.info("importFieldNames[j] " + importFieldNames[j]);
-                    sampleValue[importFieldNames[j]] = rowValues[indexOfValue];
+                    $log.info("importFieldNames[j] " + importFieldNames[j] + " hasAverage " + importField.hasAverage(importFieldNames[j]));
+                    var rowFieldValue = rowValues[indexOfValue];
+                    if (importField.hasAverage(importFieldNames[j])) {
+                        $log.info("hasAverage " + importFieldNames[j]);
+                        if (!_isEmpty(rowFieldValue) || !isNaN(rowFieldValue) || !(rowFieldValue == null)) {
+                            rowFieldValue = parseFloat(rowFieldValue);
+                        }
+                    }
+                    sampleValue[importFieldNames[j]] = rowFieldValue;
                 }
                 singlePaddockSoils.push(sampleValue);
             }
@@ -589,9 +596,11 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockSoilSampleRetriev
         var columnValues = {};
         for (var i = 0; i < soilSamples.length; i++) {
             var singelSoilSample = soilSamples[i];
+            $log.info("singelSoilSample " + JSON.stringify(singelSoilSample, null, "  "));
+            $log.info("importFieldNames " + JSON.stringify(importFieldNames, null, "  "));
             for (var j = 0; j < importFieldNames.length; j++) {
                 var fieldValue = singelSoilSample[importFieldNames[j]];
-                if (_isEmpty(fieldValue) || isNaN(fieldValue)) {
+                if (_isEmpty(fieldValue) || isNaN(fieldValue) || fieldValue == null) {
                     continue;
                 }
                 var singleColumn = columnValues[importFieldNames[j]];
@@ -601,11 +610,13 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockSoilSampleRetriev
                         count: 0
                     };
                 }
+                $log.info("src fieldValue[j] " + fieldValue + " [importFieldNames[j] " + importFieldNames[j] + " \n singleColumn " + JSON.stringify(singleColumn, null, "  "));
                 if (!importField.hasAverage(importFieldNames[j])) {
                     singleColumn = null;
                 } else {
                     singleColumn.sum = singleColumn.sum + fieldValue;
                     singleColumn.count = singleColumn.count + 1;
+                    $log.info("singleColumns.sum " + singleColumn.sum + " singleColumns.count " + singleColumn.count);
                 }
                 columnValues[importFieldNames[j]] = singleColumn;
             }
