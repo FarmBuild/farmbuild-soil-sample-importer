@@ -5,7 +5,7 @@
  * @author Spatial Vision
  * @version 0.1.0
  */
-describe('farmbuild.soilSampleImporter module: mangementZoneValidator', function () {
+describe('farmbuild.soilSampleImporter module: paddockGoupValidator', function () {
 
 
 
@@ -17,7 +17,7 @@ describe('farmbuild.soilSampleImporter module: mangementZoneValidator', function
 
 
   //define soil sample result converter
-  var $log, mangementZoneValidator,
+  var $log, paddockGoupValidator,
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json';
 
   // inject farmbuild.soilSampleImporter module
@@ -26,22 +26,22 @@ describe('farmbuild.soilSampleImporter module: mangementZoneValidator', function
   }));
 
   // inject soilSampleImporter service
-  beforeEach(inject(function (_$log_, _mangementZoneValidator_) {
+  beforeEach(inject(function (_$log_, _paddockGoupValidator_) {
     $log = _$log_,
-      mangementZoneValidator = _mangementZoneValidator_;
+      paddockGoupValidator = _paddockGoupValidator_;
   }));
 
-  describe('mangementZoneValidator factory', function () {
+  describe('paddockGoupValidator factory', function () {
 
-    it('mangementZoneValidator factory should be defined', inject(function () {
-      expect(mangementZoneValidator).toBeDefined();
+    it('paddockGoupValidator factory should be defined', inject(function () {
+      expect(paddockGoupValidator).toBeDefined();
     }));
 
-    it('mangementZoneValidator farmDataHasManagementZones', inject(function () {
+    it('paddockGoupValidator farmDataHasPaddockGroups', inject(function () {
       var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
       expect(loadedFarmData).toBeDefined();
-     var hasManagementZone = mangementZoneValidator.farmDataHasManagementZones(loadedFarmData)
-      expect(hasManagementZone).toBeTruthy();
+      var hasPaddockGroups = paddockGoupValidator.farmDataHasPaddockGroups(loadedFarmData);
+      expect(hasPaddockGroups).toBeTruthy();
     }));
 
   });

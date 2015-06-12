@@ -20,7 +20,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
             soilSampleValidator,
             soilClassification,
             paddockSoilSampleRetriever,
-            mangementZones,
+            paddockGroups,
             farmdata,
             validations,
             googleAnalyticsImporter,
@@ -87,7 +87,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
     soilSampleImporter.hasClassification = importField.hasClassification;
     soilSampleImporter.getManagementZoneFields = importField.getManagementZoneFields;
     soilSampleImporter.averageForPaddocks = paddockSoilSampleRetriever.averagesForPaddock;
-    soilSampleImporter.averageForManagementZone = mangementZones.averageForManagementZone;
+    soilSampleImporter.averageForManagementZone = paddockGroups.averageForPaddockGroup;
 
 
 		if (typeof window.farmbuild === 'undefined') {

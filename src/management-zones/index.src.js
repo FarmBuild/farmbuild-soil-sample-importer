@@ -9,26 +9,26 @@
 
 
 angular.module('farmbuild.soilSampleImporter')
-  .factory('mangementZones', function ($log, farmdata, validations, mangementZoneValidator, paddockSoilSampleRetriever) {
+  .factory('paddockGroups', function ($log, farmdata, validations, paddockGoupValidator, paddockSoilSampleRetriever) {
 
     var _isDefined = validations.isDefined,
       _isArray = validations.isArray,
       _isEmpty = validations.isEmpty,
-      mangementZones = {};
+      paddockGroups = {};
 
-    var paddocksInManagementZone = function(farmData, managementZoneName){
+    var paddocksInPaddockGroup = function(farmData, paddockGroupName){
       var paddockList = [];
 
-      if(!mangementZoneValidator.farmDataHasManagementZones(farmData)){
+      if(!paddockGoupValidator.farmDataHasPaddockGroups(farmData)){
         return undefined;
       }
 
-      var managementZones = farmData.managementZones;
+      var paddockGroups = farmData.paddockGroups;
 
-      for(var i=0;i<managementZones.length;i++){
-          var singleZone = managementZones[i];
-           if(singleZone.name == managementZoneName){
-             paddockList = singleZone.paddocks;
+      for(var i=0;i<paddockGroups.length;i++){
+          var singleGroup = paddockGroups[i];
+           if(singleGroup.name == paddockGroupName){
+             paddockList = singleGroup.paddocks;
              break;
            }
 
@@ -36,24 +36,23 @@ angular.module('farmbuild.soilSampleImporter')
       $log.info('paddockList '+paddockList);
       return paddockList;
     }
-    mangementZones.paddocksInManagementZone = paddocksInManagementZone ;
+    paddockGroups.paddocksInPaddockGroup = paddocksInPaddockGroup ;
 
 
-    var averageForManagementZone = function(farmData, managementZoneName){
-      $log.info("averageForManagementZone");
-      var zonePaddocks =  mangementZones.paddocksInManagementZone(farmData, managementZoneName);
-      if(!_isDefined(zonePaddocks) || !(zonePaddocks.length>0)){
+    var averageForPaddockGroup = function(farmData, paddockGroupName){
+      var groupPaddocks =  paddockGroups.paddocksInPaddockGroup(farmData, paddockGroupName);
+      if(!_isDefined(groupPaddocks) || !(groupPaddocks.length>0)){
         return undefined;
       }
-      $log.info(" zonePaddocks "+zonePaddocks);
+//      $log.info(" zonePaddocks "+groupPaddocks);
       var allPaddockSoils = [];
-      for(var i=0;i<zonePaddocks.length;i++){
-        var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData,zonePaddocks[i]);
+      for(var i=0;i<groupPaddocks.length;i++){
+        var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData,groupPaddocks[i]);
 
         if(!_isDefined(soilsSamples)){
           continue;
         }
-        $log.info('soils samples for ' +zonePaddocks[i] +' is below \n'+soilsSamples);
+        $log.info('soils samples for ' +groupPaddocks[i] +' is below \n'+soilsSamples);
         allPaddockSoils = allPaddockSoils.concat(soilsSamples);
         $log.info('paddocks in zony '+allPaddockSoils);
       }
@@ -73,11 +72,11 @@ angular.module('farmbuild.soilSampleImporter')
         return undefined;
       }
 
-      var averageZone = paddockSoilSampleRetriever.averagesForSoilSamples(importFields,allPaddockSoils);
-      $log.info('allPaddockSoils '+ +JSON.stringify(averageZone,null,"  "));
-      return averageZone;
+      var averageGroup = paddockSoilSampleRetriever.averagesForSoilSamples(importFields,allPaddockSoils);
+      $log.info('allPaddockSoils '+ +JSON.stringify(averageGroup,null,"  "));
+      return averageGroup;
     }
-    mangementZones.averageForManagementZone=averageForManagementZone;
+    paddockGroups.averageForPaddockGroup=averageForPaddockGroup;
 
-    return mangementZones;
+    return paddockGroups;
   });

@@ -23,10 +23,6 @@ angular.module('farmbuild.soilSampleImporter')
       if (!_isDefined(farmData)) {
         return undefined;
       }
-//      if (!_isDefined(farmData.managementZones)) {
-//        return undefined;
-//      }
-
 
       var paddock = farmData.paddocks;
       $log.info('soilSamplesInPaddock main  '+paddock.length+' zzzzzz paddock '+JSON.stringify(paddock,null,"  "));

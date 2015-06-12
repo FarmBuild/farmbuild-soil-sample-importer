@@ -9,29 +9,29 @@
 
 
 angular.module('farmbuild.soilSampleImporter')
-  .factory('mangementZoneValidator', function ($log, farmdata, validations) {
+  .factory('paddockGoupValidator', function ($log, farmdata, validations) {
 
     var _isDefined = validations.isDefined,
       _isArray = validations.isArray,
       _isEmpty = validations.isEmpty,
-      mangementZoneValidator = {};
+      paddockGoupValidator = {};
 
 
-    mangementZoneValidator.farmDataHasManagementZones = function(farmData){
+    paddockGoupValidator.farmDataHasPaddockGroups = function(farmData){
       if (!_isDefined(farmData)) {
         return false;
       }
-      if (!_isDefined(farmData.managementZones)) {
+      if (!_isDefined(farmData.paddockGroups)) {
         return false;
       }
-      var managementZones = farmData.managementZones;
-      $log.info('managementZones length '+managementZones.length);
-      if (!(managementZones.length>0)) {
+      var paddockGoups = farmData.paddockGroups;
+      $log.info('paddockGroups length '+paddockGoups.length);
+      if (!(paddockGoups.length>0)) {
         return false;
       }
 
       return true;
     }
 
-    return mangementZoneValidator;
+    return paddockGoupValidator;
   });

@@ -1,4 +1,4 @@
-describe('farmbuild.soilSampleImporter module: soilSampleMangementZones', function () {
+describe('farmbuild.soilSampleImporter module: paddockGroups', function () {
 
 
 
@@ -10,7 +10,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleMangementZones', functi
 
 
   //define soil sample result converter
-  var $log, mangementZones,
+  var $log, paddockGroups,
     fileFarmData ='farmdata-susan.json',
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
     fileSoilImports = 'soil-sample-import-result.json';
@@ -21,33 +21,33 @@ describe('farmbuild.soilSampleImporter module: soilSampleMangementZones', functi
   }));
 
   // inject soilSampleImporter service
-  beforeEach(inject(function (_$log_, _mangementZones_) {
+  beforeEach(inject(function (_$log_, _paddockGroups_) {
       $log = _$log_,
-      mangementZones = _mangementZones_;
+        paddockGroups = _paddockGroups_;
   }));
 
-  describe('soilSampleMangementZones factory', function () {
+  describe('paddockGroups factory', function () {
 
-    it('soilSampleMangementZones factory should be defined', inject(function () {
-      expect(mangementZones).toBeDefined();
+    it('paddockGroups factory should be defined', inject(function () {
+      expect(paddockGroups).toBeDefined();
     }));
 
 
 
-    it('soilSampleMangementZones paddocksInManagementZone should be defined', inject(function () {
+    it('paddockGroups paddocksInPaddockGroup should be defined', inject(function () {
       var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
       expect(loadedFarmData).toBeDefined();
-     var paddocksInZone = mangementZones.paddocksInManagementZone(loadedFarmData,"Zone One");
-      expect(paddocksInZone).toBeDefined();
-      expect(paddocksInZone.length).toBeGreaterThan(0);
+     var paddocksInGroup = paddockGroups.paddocksInPaddockGroup(loadedFarmData,"Zone One");
+      expect(paddocksInGroup).toBeDefined();
+      expect(paddocksInGroup.length).toBeGreaterThan(0);
     }));
 
 
 
-    it('soilSampleMangementZones averageForManagementZone', inject(function () {
+    it('paddockGroups averageForPaddockGroup', inject(function () {
       var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
       expect(loadedFarmData).toBeDefined();
-      var zoneAverage = mangementZones.averageForManagementZone(loadedFarmData,"Zone One");
+      var zoneAverage = paddockGroups.averageForPaddockGroup(loadedFarmData,"Zone One");
       expect(zoneAverage).toBeDefined();
 
     }));
