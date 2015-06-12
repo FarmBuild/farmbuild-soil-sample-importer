@@ -29,6 +29,16 @@ angular.module('farmbuild.soilSampleImporter')
             return false;
         };
 
+        importField.getManagementZoneFields = function() {
+            var result = [];
+            var allImportFields = importFieldTypes.toArray();
+            for(var i=0; i<allImportFields.length; i++) {
+                if (allImportFields[i].hasAverage) {
+                    result.push(allImportFields[i]);
+                }
+            }
+            return result;
+        }
 
         return importField;
     });

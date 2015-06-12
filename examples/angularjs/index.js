@@ -11,6 +11,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
         $scope.paddocks = [];
         $scope.paddockFieldNames = [];
         $scope.managementZones = [];
+        $scope.managementZoneFieldNames = [];
 
         $scope.loadFarmData = function ($fileContent) {
             $log.info('FarmCtrl>>loadFarmData>>start');
@@ -38,32 +39,24 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             window.focus();
         };
 
-        $scope.getPaddockClassification = function(paddockName, key) {
+        $scope.getPaddockClassification = function(paddockAverageResult, key) {
+            if (!paddockAverageResult) {
+                $log.info('avg result is undefined');
+                return undefined;
+            }
             if (soilSampleImporter.hasClassification(key)) {
-                //TODO: retrieve average result for a paddock
-                var paddockAverage = {
-                    "Sample Id": 20,
-                    "Sample Name": "p3 sample1",
-                    "pH H2O (Water)": 0.3,
-                    "Olsen Phosphorus (mg/kg)": 12.12,
-                    "PBI": 22,
-                    "KCl 40 Sulphur (mg/kg)": null,
-                    "Colwell Phosphorus (mg/kg)": 10,
-                    "Colwell Potassium (mg/kg)": 10
-                };
-
-                var range = soilSampleImporter.classifyResult(paddockAverage, key);
+                var range = soilSampleImporter.classifyResult(paddockAverageResult, key);
                 return range;
             }
             return "N/A";
         }
 
-        $scope.getPaddockAverage = function(paddockName, key) {
-            if (soilSampleImporter.hasAverage(key)) {
-                var result = 1.1;
-                return result;
-            }
-            return "N/A";
+        $scope.getPaddockAverage = function(farmData, paddockName) {
+            return soilSampleImporter.averageForPaddocks(farmData, paddockName);
+        }
+
+        $scope.getManagementZoneAverage = function (farmData, zoneName) {
+            return soilSampleImporter.averageForManagementZone(farmData, zoneName);
         }
 
         $scope.calculate = function () {
@@ -98,6 +91,13 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             $scope.paddocks = farmData.paddocks;
             $scope.paddockFieldNames = farmData.soils.sampleResults.importFieldNames;
             $scope.managementZones = farmData.managementZones;
+
+            $scope.managementZoneFieldNames = [];
+            var managementZoneFields = soilSampleImporter.getManagementZoneFields();
+            for(var i=0; i<managementZoneFields.length; i++) {
+                $scope.managementZoneFieldNames.push(managementZoneFields[i].name);
+            }
+
         }
 
     })

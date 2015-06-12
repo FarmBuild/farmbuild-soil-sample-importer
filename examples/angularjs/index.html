@@ -67,21 +67,21 @@
                     <span>{{sampleResult[fieldName]}}</span>
                 </td>
             </tr>
-            <tfoot>
-            <tr>
-                <td>Average:</td>
-                <td ng-repeat="fieldName in paddockFieldNames">
-                    {{getPaddockAverage(paddock.name, fieldName)}}
-                </td>
-            </tr>
-            <tr>
-                <td>Classification:</td>
-                <td ng-repeat="fieldName in paddockFieldNames" ng-init="cls = getPaddockClassification(paddock.name, fieldName)">
-                    <span style="background-color:{{cls.defaultColor}}">
-                        {{cls.name ? cls.name : 'N/A'}}
-                    </span>
-                </td>
-            </tr>
+            <tfoot ng-init="avg = getPaddockAverage(farmData, paddock.name)">
+                <tr >
+                    <td>Average:</td>
+                    <td ng-repeat="fieldName in paddockFieldNames" >
+                        {{avg[fieldName] ? (avg[fieldName] | number:2) : 'N/A'}}
+                    </td>
+                </tr>
+                <tr >
+                    <td>Classification:</td>
+                    <td ng-repeat="fieldName in paddockFieldNames" ng-init="cls = getPaddockClassification(avg, fieldName)">
+                        <span style="background-color:{{cls.defaultColor}}">
+                            {{cls.name ? cls.name : 'N/A'}}
+                        </span>
+                    </td>
+                </tr>
             </tfoot>
         </table>
         <div ng-show="!paddock.soils.sampleResults">
@@ -94,10 +94,35 @@
     <legend>Management Groups Soil Information</legend>
 
     <management-zones ng-repeat="zone in managementZones">
-        <div>
-            <span>Zone Name</span>: <span class="h4">{{zone.name}}</span>
+        <div ng-init="zoneAvg = getManagementZoneAverage(farmData, zone.name)">
+            <div><span>Zone Name</span>: <span class="h4">{{zone.name}}</span></div>
+            <table class="table table-striped" ng-show="zoneAvg">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th ng-repeat="fieldName in managementZoneFieldNames">
+                        {{fieldName}}
+                    </th>
+                </tr>
+                <tbody ng-init="avg = getManagementZoneAverage(farmData, zone.name)">
+                    <tr>
+                        <td>Average:</td>
+                        <td ng-repeat="fieldName in managementZoneFieldNames" >
+                            {{avg}}
+                            {{avg[fieldName] ? avg[fieldName] : 'N/A'}}
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>Classification:</td>
+                        <td ng-repeat="fieldName in managementZoneFieldNames" ng-init="">
+                        <!--<span style="background-color:{{cls.defaultColor}}">
+                            {{cls.name ? cls.name : 'N/A'}}
+                        </span>-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-show="!zoneAvg">This management zone contains no sample result</div>
         </div>
-
     </management-zones>
 
     <hr/>
