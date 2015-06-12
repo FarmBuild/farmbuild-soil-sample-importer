@@ -1,7 +1,7 @@
- {
+{
     "version": 1,
     "dateCreated": "2015-03-30T21:19:00",
-    "dateLastUpdated": "2015-05-25T02:23:51",
+    "dateLastUpdated": "2015-05-18T23:40:28.764Z",
     "name": "Susan's Farm",
     "geometry": {
         "type": "Polygon",
@@ -31,48 +31,8 @@
             ]
         ]
     },
-    "area": 28.09,
-    "areaUnit":"hectare",
-    "soils": {
-        "dateLastUpdated": "2015-05-25T02:23:51",
-        "types": [
-            {
-                "area": 27.3458,
-                "description": "Katamatite loam - yellow phase",
-                "soilGroup": "2",
-                "soilClass": "Light"
-            },
-            {
-                "area": 0.7433,
-                "description": "Type M",
-                "soilGroup": "0",
-                "soilClass": "Light"
-            }
-        ],
-         "sampleResults" :{	
-               	"dateLastUpdated": "2015-05-25T02:23:51",
-               	 "importFieldNames": [
-   						  "Sample Id", 
-   						  "Sample Name",
-   						  "pH H2O (Water)",
-   						  "Olsen Phosphorus (mg/kg)",
-   						  "PBI",
-                          "KCl 40 Sulphur (mg/kg)",
-                          "Colwell Phosphorus (mg/kg)",
-                          "Colwell Potassium (mg/kg)"
-				    ]
-         }
-    },
-    "managementZones": [
-      {
-        "name": "Zone One",
-        "paddocks": ["P3", "P1"]
-      },
-      {
-        "name": "Zone Two",
-        "paddocks": ["P4"]
-      }
-    ],
+    "area": 89.95,
+    "areaUnit": "hectare",
     "paddocks": [
         {
             "name": "P3",
@@ -114,41 +74,17 @@
             },
             "area": 0.72,
             "soils": {
-                "dateLastUpdated": "2015-05-25T02:23:51",
-                "types": [
+                "sampleResults": [
                     {
-                        "area": 0.7229,
-                        "description": "Katamatite loam - yellow phase",
-                        "soilGroup": "2",
-                        "soilClass": "Light"
-                     
+                        "Farm Paddock Name": null,
+                        "Sample Id": "123",
+                        "Sample Name": "Front barn",
+                        "pH H2O (Water)": 1,
+                        "PBI": null,
+                        "KCl 40 Sulphur (mg/kg)": 3
                     }
-                ],
-              "sampleResults": [
-                {
-                  "Sample Id": 20,
-                  "Sample Name": "p3 sample1",
-                  "pH H2O (Water)": 0.3,
-                  "Olsen Phosphorus (mg/kg)": 12.12,
-                  "PBI": 22,
-                  "KCl 40 Sulphur (mg/kg)": null,
-                  "Colwell Phosphorus (mg/kg)": 10,
-                  "Colwell Potassium (mg/kg)": 10
-                },
-                {
-                  "Sample Id": 23,
-                  "Sample Name": "p3 sample2",
-                  "pH H2O (Water)": 2.3,
-                  "Olsen Phosphorus (mg/kg)": 12.12,
-                  "PBI": 34,
-                  "KCl 40 Sulphur (mg/kg)": 3,
-                  "Colwell Phosphorus (mg/kg)": 10,
-                  "Colwell Potassium (mg/kg)": 10
-                }
-              ]
-               	
-        	}
- 
+                ]
+            }
         },
         {
             "name": "P1",
@@ -185,80 +121,50 @@
                 ]
             },
             "area": 0.87,
-          "soils": {
-            "dateLastUpdated": "2015-05-25T02:23:51",
-            "types": [
-              {
-                "area": 0.8707,
-                "description": "Katamatite loam - yellow phase",
-                "soilGroup": "2",
-                "soilClass": "Light"
-              }
-            ],
-            "sampleResults": [
-              {
-                "Sample Id": 25,
-                "Sample Name": "p1 sample1",
-                "pH H2O (Water)": 0.3,
-                "Olsen Phosphorus (mg/kg)": 12.12,
-                "PBI": 76,
-                "KCl 40 Sulphur (mg/kg)": 53,
-                "Colwell Phosphorus (mg/kg)": 10,
-                "Colwell Potassium (mg/kg)": 10
-              }
-            ]
-          }
-            
-        },
-        {
-            "name": "P4",
-            "geometry": {
-                "type": "Polygon",
-                "crs": "EPSG:4283",
-                "coordinates": [
-                    [
-                        [
-                            145.5820357180293,
-                            -36.224883050102875
-                        ],
-                        [
-                            145.58072609426455,
-                            -36.22488253784964
-                        ],
-                        [
-                            145.58070132605394,
-                            -36.225512331175615
-                        ],
-                        [
-                            145.58218018756546,
-                            -36.22550501283936
-                        ],
-                        [
-                            145.58211312173296,
-                            -36.225216285770216
-                        ],
-                        [
-                            145.5820357180293,
-                            -36.224883050102875
-                        ]
-                    ]
-                ]
-            },
-            "area": 0.87,
             "soils": {
-                "dateLastUpdated": "2015-05-25T02:23:51",
-                "types": [
+                "sampleResults": [
                     {
-                        "area": 0.8707,
-                        "description": "Katamatite loam - yellow phase",
-                        "soilGroup": "2",
-                        "soilClass": "Light"
-                
+                        "Farm Paddock Name": "P1",
+                        "Sample Id": "345",
+                        "Sample Name": "Back barn",
+                        "pH H2O (Water)": 9.0,
+                        "PBI": 8,
+                        "KCl 40 Sulphur (mg/kg)": 2.9
+                    },
+                    {
+                        "Farm Paddock Name": null,
+                        "Sample Id": "231",
+                        "Sample Name": "4",
+                        "pH H2O (Water)": 5,
+                        "PBI": 16,
+                        "KCl 40 Sulphur (mg/kg)": null
                     }
                 ]
-                
             }
-            
         }
+    ],
+    "soils": {
+        "sampleResults": {
+            "dateLastUpdated": "2015-05-25T02:23:51",
+            "importFieldNames": [
+                "Farm Paddock Name",
+                "Sample Id",
+                "Sample Name",
+                "pH H2O (Water)",
+                "PBI",
+                "KCl 40 Sulphur (mg/kg)"
+            ]
+        }
+    },
+    "managementZones": [
+      {
+        "name": "Zone One",
+        "paddocks": ["P3", "P1"]
+      },
+      {
+        "name": "Zone Two",
+        "paddocks": ["P4"]
+      }
     ]
+
 }

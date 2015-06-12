@@ -34,7 +34,7 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
     it('paddockSoilSampleRetriever farmdata has soilSamplesInPaddock', inject(function () {
       var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
       expect(loadedFarmData).toBeDefined();
-      var paddockSoilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(loadedFarmData,"P3");
+      var paddockSoilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(loadedFarmData,"P1");
       expect(paddockSoilSamples).toBeDefined();
       $log.info('paddockSoilSamples qqq'+JSON.stringify(paddockSoilSamples,null,"  "));
       expect(paddockSoilSamples.length).toBeGreaterThan(0);
@@ -56,18 +56,18 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
 
       var pbiAverage = averages['PBI'];
       $log.info('pbiAverage '+pbiAverage);
-//      expect((pbiAverage==440)).toBeTruthy();
+      expect((pbiAverage==12)).toBeTruthy();
 
     }));
 
 
-    it('paddockSoilSampleRetriever farmdata has soilSamplesInPaddock', inject(function () {
-      var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
-      expect(loadedFarmData).toBeDefined();
-      var averagesForPaddockName = paddockSoilSampleRetriever.averagesForPaddock(loadedFarmData,"P3");
-      expect(averagesForPaddockName).toBeDefined();
-
-    }));
+//    it('paddockSoilSampleRetriever farmdata has soilSamplesInPaddock', inject(function () {
+//      var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
+//      expect(loadedFarmData).toBeDefined();
+//      var averagesForPaddockName = paddockSoilSampleRetriever.averagesForPaddock(loadedFarmData,"P3");
+//      expect(averagesForPaddockName).toBeDefined();
+//
+//    }));
 
   });
 

@@ -8,7 +8,7 @@
 'use strict';
 
 angular.module('farmbuild.soilSampleImporter')
-  .factory('soilSampleConverter', function ($log, farmdata, validations, soilSampleValidator, soilSampleImporterSession) {
+  .factory('soilSampleConverter', function ($log, farmdata, validations, soilSampleValidator, soilSampleImporterSession,importField ) {
 
     var _isDefined = validations.isDefined,
       _isArray = validations.isArray,
@@ -188,8 +188,17 @@ angular.module('farmbuild.soilSampleImporter')
             var indexOfValue =newImportFieldDictionary[importFieldNames[j]];
             $log.info('indexOfValue '+indexOfValue);
 
-            $log.info('importFieldNames[j] '+importFieldNames[j]);
-            sampleValue[importFieldNames[j]] = rowValues[indexOfValue];
+            $log.info('importFieldNames[j] '+importFieldNames[j] +" hasAverage "+importField.hasAverage(importFieldNames[j]));
+            var rowFieldValue =rowValues[indexOfValue];
+
+            if(importField.hasAverage(importFieldNames[j])){
+              $log.info('hasAverage '+importFieldNames[j]);
+              if(!(_isEmpty(rowFieldValue) ) || !(isNaN(rowFieldValue)) || !(rowFieldValue==null)){
+                rowFieldValue=parseFloat(rowFieldValue);
+              }
+
+            }
+            sampleValue[importFieldNames[j]] = rowFieldValue;
 
           }
 

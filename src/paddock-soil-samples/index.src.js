@@ -67,28 +67,32 @@ angular.module('farmbuild.soilSampleImporter')
       var columnValues = {};
       for(var i=0;i<soilSamples.length;i++){
         var singelSoilSample = soilSamples[i];
-//        $log.info('singelSoilSample '+JSON.stringify(singelSoilSample,null,"  "));
+        $log.info('singelSoilSample '+JSON.stringify(singelSoilSample,null,"  "));
+        $log.info('importFieldNames '+JSON.stringify(importFieldNames,null,"  "));
 
         for(var j=0;j<importFieldNames.length;j++){
 
           var fieldValue = singelSoilSample[importFieldNames[j]];
 
-          if(_isEmpty(fieldValue ) || (isNaN(fieldValue))){
+          if(_isEmpty(fieldValue ) || (isNaN(fieldValue)) || (fieldValue==null)){
             continue;
           }
-//          $log.info('fieldValue[j] '+fieldValue +" [importFieldNames[j] "+importFieldNames[j]);
+
 
           var singleColumn = columnValues[importFieldNames[j]];
           if(!_isDefined(singleColumn)){
             singleColumn = {"sum": 0 , "count":0};
           }
+          $log.info('src fieldValue[j] '+fieldValue +" [importFieldNames[j] "+importFieldNames[j] +" \n singleColumn "+JSON.stringify(singleColumn,null,"  "));
+
           if(!importField.hasAverage(importFieldNames[j])){
             singleColumn = null
           }else{
             singleColumn.sum=singleColumn.sum+fieldValue;
             singleColumn.count=singleColumn.count+1;
+            $log.info("singleColumns.sum "+singleColumn.sum+" singleColumns.count "+singleColumn.count);
           }
-//          $log.info("singleColumns.sum "+singleColumn.sum+" singleColumns.count "+singleColumn.count);
+
           columnValues[importFieldNames[j]]=singleColumn;
 
         }
