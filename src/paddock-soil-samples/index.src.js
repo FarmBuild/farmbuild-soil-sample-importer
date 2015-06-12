@@ -82,12 +82,12 @@ angular.module('farmbuild.soilSampleImporter')
           if(!_isDefined(singleColumn)){
             singleColumn = {"sum": 0 , "count":0};
           }
-//          if(!importField.hasAverage(importFieldNames[j])){
-//            singleColumn = null
-//          }else{
+          if(!importField.hasAverage(importFieldNames[j])){
+            singleColumn = null
+          }else{
             singleColumn.sum=singleColumn.sum+fieldValue;
             singleColumn.count=singleColumn.count+1;
-//          }
+          }
 //          $log.info("singleColumns.sum "+singleColumn.sum+" singleColumns.count "+singleColumn.count);
           columnValues[importFieldNames[j]]=singleColumn;
 
@@ -99,10 +99,12 @@ angular.module('farmbuild.soilSampleImporter')
           if(!_isDefined(singleColumn)){
             continue;
           }
-//        if(singleColumn==null){
-//
-//        }
+        if(singleColumn==null){
+          averageValues[importFieldNames[j]]=null;
+
+        }else{
           averageValues[importFieldNames[j]]=singleColumn.sum/singleColumn.count;
+        }
 //        $log.info("averageValues "+averageValues[importFieldNames[j]]);
         }
 
