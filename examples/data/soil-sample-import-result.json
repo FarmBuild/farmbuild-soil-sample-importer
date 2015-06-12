@@ -9,12 +9,12 @@
       			[null, "231","4","5","6",null]]
 	},
     "importFieldDictionary": {
-		    "Farm Paddock Name":1,
-		    "Sample Id":2,
-		    "Sample Name":3,
-	        "pH (1:5 Water)":4,
-      		"pH (1:5 CaCl2)":5,
-	        "Phosphorus (Olsen) - mg/kg":6
+		    "Farm Paddock Name":0,
+		    "Sample Id":1,
+		    "Sample Name":2,
+	        "pH (1:5 Water)":3,
+      		"pH (1:5 CaCl2)":4,
+	        "Phosphorus (Olsen) - mg/kg":5
     },
 	"paddockRowDictionary" : {
       "P3": [0],
