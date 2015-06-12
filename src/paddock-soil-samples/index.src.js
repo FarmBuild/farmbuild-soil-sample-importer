@@ -9,7 +9,7 @@
 
 
 angular.module('farmbuild.soilSampleImporter')
-  .factory('paddockSoilSampleRetriever', function ($log, validations) {
+  .factory('paddockSoilSampleRetriever', function ($log, validations,importField) {
 
     var _isDefined = validations.isDefined,
       _isArray = validations.isArray,
@@ -82,8 +82,12 @@ angular.module('farmbuild.soilSampleImporter')
           if(!_isDefined(singleColumn)){
             singleColumn = {"sum": 0 , "count":0};
           }
-          singleColumn.sum=singleColumn.sum+fieldValue;
-          singleColumn.count=singleColumn.count+1;
+//          if(!importField.hasAverage(importFieldNames[j])){
+//            singleColumn = null
+//          }else{
+            singleColumn.sum=singleColumn.sum+fieldValue;
+            singleColumn.count=singleColumn.count+1;
+//          }
 //          $log.info("singleColumns.sum "+singleColumn.sum+" singleColumns.count "+singleColumn.count);
           columnValues[importFieldNames[j]]=singleColumn;
 
@@ -95,13 +99,38 @@ angular.module('farmbuild.soilSampleImporter')
           if(!_isDefined(singleColumn)){
             continue;
           }
+//        if(singleColumn==null){
+//
+//        }
           averageValues[importFieldNames[j]]=singleColumn.sum/singleColumn.count;
 //        $log.info("averageValues "+averageValues[importFieldNames[j]]);
         }
 
+      $log.info("averageValues " +JSON.stringify(averageValues,null,"  "));
       return averageValues;
 
       }
+
+
+    paddockSoilSampleRetriever.averagesForPaddock = function(farmData, paddockName){
+      $log.info("averagesForPaddock");
+      var soilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData, paddockName);
+      $log.info("soilSamples "+soilSamples);
+      var soils= farmData.soils;
+      if(!_isDefined(soils)){
+        return undefined;
+      }
+      var sampleResults=soils.sampleResults;
+      if(!_isDefined(sampleResults)){
+        return undefined;
+      }
+      var importFields =sampleResults.importFieldNames;
+      if(!_isDefined(importFields)){
+          return undefined;
+      }
+      $log.info("b4 ret");
+       return paddockSoilSampleRetriever.averagesForSoilSamples(importFields,soilSamples);
+    }
 
     return paddockSoilSampleRetriever;
   });
