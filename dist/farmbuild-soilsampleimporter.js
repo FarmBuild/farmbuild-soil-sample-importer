@@ -562,11 +562,8 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockSoilSampleRetriev
         if (!_isDefined(farmData)) {
             return undefined;
         }
-        if (!_isDefined(farmData.managementZones)) {
-            return undefined;
-        }
         var paddock = farmData.paddocks;
-        $log.info("soilSamplesInPaddock main  " + paddock.length);
+        $log.info("soilSamplesInPaddock main  " + paddock.length + " zzzzzz paddock " + JSON.stringify(paddock, null, "  "));
         var singlePaddock, paddockSoil;
         for (var i = 0; i < paddock.length; i++) {
             singlePaddock = paddock[i];
