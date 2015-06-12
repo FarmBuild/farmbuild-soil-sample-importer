@@ -36,7 +36,7 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
       expect(loadedFarmData).toBeDefined();
       var paddockSoilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(loadedFarmData,"P3");
       expect(paddockSoilSamples).toBeDefined();
-      $log.info('paddockSoilSamples '+JSON.stringify(paddockSoilSamples,null,"  "));
+      $log.info('paddockSoilSamples qqq'+JSON.stringify(paddockSoilSamples,null,"  "));
       expect(paddockSoilSamples.length).toBeGreaterThan(0);
       $log.info(paddockSoilSamples[0]);
 
@@ -56,7 +56,7 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
 
       var pbiAverage = averages['PBI'];
       $log.info('pbiAverage '+pbiAverage);
-      expect((pbiAverage==28)).toBeTruthy();
+      expect((pbiAverage==440)).toBeTruthy();
 
     }));
 
