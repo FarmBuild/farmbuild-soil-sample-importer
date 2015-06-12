@@ -85,9 +85,9 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
     soilSampleImporter.classifyResult = soilClassification.classifyResult;
     soilSampleImporter.hasAverage = importField.hasAverage;
     soilSampleImporter.hasClassification = importField.hasClassification;
-    soilSampleImporter.getManagementZoneFields = importField.getManagementZoneFields;
+    soilSampleImporter.getPaddockGroupFields = importField.getPaddockGroupFields;
     soilSampleImporter.averageForPaddocks = paddockSoilSampleRetriever.averagesForPaddock;
-    soilSampleImporter.averageForManagementZone = paddockGroups.averageForPaddockGroup;
+    soilSampleImporter.averageForPaddockGroups = paddockGroups.averageForPaddockGroup;
 
 
 		if (typeof window.farmbuild === 'undefined') {
