@@ -21,6 +21,10 @@ module.exports = function(config){
         'src/import-field-definition/defaults.conf.src.js',
         'src/import-field-definition/types.src.js',
         'src/import-field-definition/index.src.js',
+      'src/paddock-soil-samples/index.src.js',
+      'src/management-zones/validator.src.js',
+      'src/management-zones/index.src.js',
+
 
       'src/index.src.js',
 //      'src/collections/index.spec.js',
