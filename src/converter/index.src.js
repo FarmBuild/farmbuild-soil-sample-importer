@@ -172,6 +172,7 @@ angular.module('farmbuild.soilSampleImporter')
         var singlePaddock = currentPaddocks[i];
 
 
+
         var paddockRows = paddockRowDictionary[singlePaddock.name];
         if(!_isDefined(paddockRows) || !(_isArray(paddockRows))){continue;}
 
@@ -184,8 +185,11 @@ angular.module('farmbuild.soilSampleImporter')
           var sampleValue = {};
           for(var j=0;j<importFieldNames.length;j++){
             var temp = { } ;
+            var indexOfValue =newImportFieldDictionary[importFieldNames[j]];
+            $log.info('indexOfValue '+indexOfValue);
+
             $log.info('importFieldNames[j] '+importFieldNames[j]);
-            sampleValue[importFieldNames[j]] = rowValues[j];
+            sampleValue[importFieldNames[j]] = rowValues[indexOfValue];
 
           }
 
