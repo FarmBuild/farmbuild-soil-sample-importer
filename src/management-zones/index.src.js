@@ -57,7 +57,25 @@ angular.module('farmbuild.soilSampleImporter')
         allPaddockSoils = allPaddockSoils.concat(soilsSamples);
         $log.info('paddocks in zony '+allPaddockSoils);
       }
-      return allPaddockSoils;
+
+
+
+      var soils= farmData.soils;
+      if(!_isDefined(soils)){
+        return undefined;
+      }
+      var sampleResults=soils.sampleResults;
+      if(!_isDefined(sampleResults)){
+        return undefined;
+      }
+      var importFields =sampleResults.importFieldNames;
+      if(!_isDefined(importFields)){
+        return undefined;
+      }
+
+      var averageZone = paddockSoilSampleRetriever.averagesForSoilSamples(importFields,allPaddockSoils);
+      $log.info('allPaddockSoils '+ +JSON.stringify(averageZone,null,"  "));
+      return averageZone;
     }
     mangementZones.averageForManagementZone=averageForManagementZone;
 
