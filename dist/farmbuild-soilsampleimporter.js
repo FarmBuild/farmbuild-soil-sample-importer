@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, importField, soilSampleValidator, soilClassification, paddockSoilSampleRetriever, mangementZones, farmdata, validations, googleAnalyticsImporter, $log) {
+angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, importField, soilSampleValidator, soilClassification, paddockSoilSampleRetriever, paddockGroups, farmdata, validations, googleAnalyticsImporter, $log) {
     var soilSampleImporter = {
         farmdata: farmdata
     }, _isPositiveNumber = validations.isPositiveNumber, _isDefined = validations.isDefined;
@@ -35,7 +35,7 @@ angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.fa
     soilSampleImporter.hasClassification = importField.hasClassification;
     soilSampleImporter.getManagementZoneFields = importField.getManagementZoneFields;
     soilSampleImporter.averageForPaddocks = paddockSoilSampleRetriever.averagesForPaddock;
-    soilSampleImporter.averageForManagementZone = mangementZones.averageForManagementZone;
+    soilSampleImporter.averageForManagementZone = paddockGroups.averageForPaddockGroup;
     if (typeof window.farmbuild === "undefined") {
         window.farmbuild = {
             soilSampleImporter: soilSampleImporter
@@ -251,6 +251,10 @@ angular.module("farmbuild.soilSampleImporter").constant("importFieldDefaults", {
     }, {
         name: "Colwell Potassium (mg/kg)",
         soilClassificationName: "Colwell Potassium (mg/kg)",
+        hasAverage: true
+    }, {
+        name: "Exch Potassium (meq/100g)",
+        soilClassificationName: "Exch Potassium (meq/100g)",
         hasAverage: true
     } ]
 });
@@ -483,39 +487,38 @@ angular.module("farmbuild.soilSampleImporter").factory("importFieldSelectionVali
 
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter").factory("mangementZones", function($log, farmdata, validations, mangementZoneValidator, paddockSoilSampleRetriever) {
-    var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, mangementZones = {};
-    var paddocksInManagementZone = function(farmData, managementZoneName) {
+angular.module("farmbuild.soilSampleImporter").factory("paddockGroups", function($log, farmdata, validations, paddockGoupValidator, paddockSoilSampleRetriever) {
+    var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, paddockGroups = {};
+    var paddocksInPaddockGroup = function(farmData, paddockGroupName) {
         var paddockList = [];
-        if (!mangementZoneValidator.farmDataHasManagementZones(farmData)) {
+        if (!paddockGoupValidator.farmDataHasManagementZones(farmData)) {
             return undefined;
         }
-        var managementZones = farmData.managementZones;
-        for (var i = 0; i < managementZones.length; i++) {
-            var singleZone = managementZones[i];
-            if (singleZone.name == managementZoneName) {
-                paddockList = singleZone.paddocks;
+        var paddockGroups = farmData.managementZones;
+        for (var i = 0; i < paddockGroups.length; i++) {
+            var singleGroup = paddockGroups[i];
+            if (singleGroup.name == paddockGroupName) {
+                paddockList = singleGroup.paddocks;
                 break;
             }
         }
         $log.info("paddockList " + paddockList);
         return paddockList;
     };
-    mangementZones.paddocksInManagementZone = paddocksInManagementZone;
-    var averageForManagementZone = function(farmData, managementZoneName) {
-        $log.info("averageForManagementZone");
-        var zonePaddocks = mangementZones.paddocksInManagementZone(farmData, managementZoneName);
-        if (!_isDefined(zonePaddocks) || !(zonePaddocks.length > 0)) {
+    paddockGroups.paddocksInPaddockGroup = paddocksInPaddockGroup;
+    var averageForPaddockGroup = function(farmData, paddockGroupName) {
+        var groupPaddocks = paddockGroups.paddocksInPaddockGroup(farmData, paddockGroupName);
+        if (!_isDefined(groupPaddocks) || !(groupPaddocks.length > 0)) {
             return undefined;
         }
-        $log.info(" zonePaddocks " + zonePaddocks);
+        $log.info(" zonePaddocks " + groupPaddocks);
         var allPaddockSoils = [];
-        for (var i = 0; i < zonePaddocks.length; i++) {
-            var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData, zonePaddocks[i]);
+        for (var i = 0; i < groupPaddocks.length; i++) {
+            var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData, groupPaddocks[i]);
             if (!_isDefined(soilsSamples)) {
                 continue;
             }
-            $log.info("soils samples for " + zonePaddocks[i] + " is below \n" + soilsSamples);
+            $log.info("soils samples for " + groupPaddocks[i] + " is below \n" + soilsSamples);
             allPaddockSoils = allPaddockSoils.concat(soilsSamples);
             $log.info("paddocks in zony " + allPaddockSoils);
         }
@@ -531,33 +534,33 @@ angular.module("farmbuild.soilSampleImporter").factory("mangementZones", functio
         if (!_isDefined(importFields)) {
             return undefined;
         }
-        var averageZone = paddockSoilSampleRetriever.averagesForSoilSamples(importFields, allPaddockSoils);
-        $log.info("allPaddockSoils " + +JSON.stringify(averageZone, null, "  "));
-        return averageZone;
+        var averageGroup = paddockSoilSampleRetriever.averagesForSoilSamples(importFields, allPaddockSoils);
+        $log.info("allPaddockSoils " + +JSON.stringify(averageGroup, null, "  "));
+        return averageGroup;
     };
-    mangementZones.averageForManagementZone = averageForManagementZone;
-    return mangementZones;
+    paddockGroups.averageForPaddockGroup = averageForPaddockGroup;
+    return paddockGroups;
 });
 
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter").factory("mangementZoneValidator", function($log, farmdata, validations) {
-    var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, mangementZoneValidator = {};
-    mangementZoneValidator.farmDataHasManagementZones = function(farmData) {
+angular.module("farmbuild.soilSampleImporter").factory("paddockGoupValidator", function($log, farmdata, validations) {
+    var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, paddockGoupValidator = {};
+    paddockGoupValidator.farmDataHasManagementZones = function(farmData) {
         if (!_isDefined(farmData)) {
             return false;
         }
         if (!_isDefined(farmData.managementZones)) {
             return false;
         }
-        var managementZones = farmData.managementZones;
-        $log.info("managementZones length " + managementZones.length);
-        if (!(managementZones.length > 0)) {
+        var paddockGoups = farmData.managementZones;
+        $log.info("managementZones length " + paddockGoups.length);
+        if (!(paddockGoups.length > 0)) {
             return false;
         }
         return true;
     };
-    return mangementZoneValidator;
+    return paddockGoupValidator;
 });
 
 "use strict";

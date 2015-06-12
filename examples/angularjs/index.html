@@ -91,11 +91,11 @@
 
     <hr/>
 
-    <legend>Management Groups Soil Information</legend>
+    <legend>Paddock Groups Soil Information</legend>
 
-    <management-zones ng-repeat="zone in managementZones">
+    <paddock-groups ng-repeat="zone in managementZones">
         <div ng-init="zoneAvg = getManagementZoneAverage(farmData, zone.name)">
-            <div><span>Zone Name</span>: <span class="h4">{{zone.name}}</span></div>
+            <div><span>Group Name</span>: <span class="h4">{{zone.name}}</span></div>
             <table class="table table-striped" ng-show="zoneAvg">
                 <tr>
                     <th>&nbsp;</th>
@@ -110,7 +110,7 @@
                             {{avg[fieldName] ? (avg[fieldName] | number:2) : 'N/A'}}
                         </td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>Classification:</td>
                         <td ng-repeat="fieldName in managementZoneFieldNames" ng-init="cls = getSampleResultClassification(avg, fieldName)">
                         <span style="background-color:{{cls.defaultColor}}">
@@ -120,9 +120,9 @@
                     </tr>
                 </tbody>
             </table>
-            <div ng-show="!zoneAvg" style="margin-bottom: 10px;">This management zone contains no sample result</div>
+            <div ng-show="!zoneAvg" style="margin-bottom: 10px;">This paddock group contains no sample result</div>
         </div>
-    </management-zones>
+    </paddock-groups>
 
     <div ng-show="!managementZones || managementZones.length ==0">This farm data contains no paddock group</div>
 
