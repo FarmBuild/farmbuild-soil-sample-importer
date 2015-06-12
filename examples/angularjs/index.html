@@ -76,7 +76,7 @@
                 </tr>
                 <tr >
                     <td>Classification:</td>
-                    <td ng-repeat="fieldName in paddockFieldNames" ng-init="cls = getPaddockClassification(avg, fieldName)">
+                    <td ng-repeat="fieldName in paddockFieldNames" ng-init="cls = getSampleResultClassification(avg, fieldName)">
                         <span style="background-color:{{cls.defaultColor}}">
                             {{cls.name ? cls.name : 'N/A'}}
                         </span>
@@ -107,16 +107,15 @@
                     <tr>
                         <td>Average:</td>
                         <td ng-repeat="fieldName in managementZoneFieldNames" >
-                            {{avg}}
-                            {{avg[fieldName] ? avg[fieldName] : 'N/A'}}
+                            {{avg[fieldName] ? (avg[fieldName] | number:2) : 'N/A'}}
                         </td>
                     </tr>
                     <tr >
                         <td>Classification:</td>
-                        <td ng-repeat="fieldName in managementZoneFieldNames" ng-init="">
-                        <!--<span style="background-color:{{cls.defaultColor}}">
+                        <td ng-repeat="fieldName in managementZoneFieldNames" ng-init="cls = getSampleResultClassification(avg, fieldName)">
+                        <span style="background-color:{{cls.defaultColor}}">
                             {{cls.name ? cls.name : 'N/A'}}
-                        </span>-->
+                        </span>
                         </td>
                     </tr>
                 </tbody>

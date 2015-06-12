@@ -39,13 +39,13 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             window.focus();
         };
 
-        $scope.getPaddockClassification = function(paddockAverageResult, key) {
-            if (!paddockAverageResult) {
+        $scope.getSampleResultClassification = function(sampleResult, key) {
+            if (!sampleResult) {
                 $log.info('avg result is undefined');
                 return undefined;
             }
             if (soilSampleImporter.hasClassification(key)) {
-                var range = soilSampleImporter.classifyResult(paddockAverageResult, key);
+                var range = soilSampleImporter.classifyResult(sampleResult, key);
                 return range;
             }
             return "N/A";
