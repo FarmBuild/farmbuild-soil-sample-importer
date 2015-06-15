@@ -59,6 +59,10 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             return soilSampleImporter.averageForPaddockGroups(farmData, zoneName);
         }
 
+        $scope.joinedPaddockNames = function(paddockNameArray){
+          return paddockNameArray.join(", ");
+        }
+
         $scope.calculate = function () {
             $log.info('calculate...');
 

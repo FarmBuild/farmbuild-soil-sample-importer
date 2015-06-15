@@ -95,8 +95,9 @@
 
     <paddock-groups ng-repeat="group in paddockGroups">
         <div ng-init="groupAvg = getPaddockGroupAverage(farmData, group.name)">
-            <div><span>Group Name</span>: <span class="h4">{{group.name}}</span></div>
-            <table class="table table-striped" ng-show="groupAvg">
+           <div><span>Group Name</span>: <span class="h4">{{group.name}}</span></div>
+           <div><span>Paddocks in Group</span>: <span ng-init="paddock =joinedPaddockNames(group.paddocks)">{{paddock}} </span></div>
+          <table class="table table-striped" ng-show="groupAvg">
                 <tr>
                     <th>&nbsp;</th>
                     <th ng-repeat="fieldName in paddockGroupFieldNames">
