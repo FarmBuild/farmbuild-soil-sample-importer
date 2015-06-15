@@ -16,6 +16,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
     fileSoilImports = 'soil-sample-import-result.json';
 
+
   // inject farmbuild.soilSampleImporter module
   beforeEach(module('farmbuild.soilSampleImporter', function($provide) {
     $provide.value('$log', console)
@@ -82,7 +83,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
 
       var farmDataWithSoilSamples = soilSampleConverter.toFarmData(farmDataWithoutSoilSample,soilSampleResults);
       $log.info('farmDataWithSoilSamples after conversion '+JSON.stringify(farmDataWithSoilSamples,null,'    '));
-      expect(farmDataWithSoilSamples).toBeDefined();
+     expect(farmDataWithSoilSamples).toBeDefined();
 
       var soils = farmDataWithSoilSamples.soils;
       expect(soils).toBeDefined();
@@ -105,7 +106,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
         singlePaddock = paddocks[0];
 
         singlePaddockName = singlePaddock.name;
-        if(singlePaddockName == 'P3'){
+        if(singlePaddockName == 'P1'){
           break;
         }
       }

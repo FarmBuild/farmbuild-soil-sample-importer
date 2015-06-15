@@ -152,7 +152,7 @@ angular.module('farmbuild.soilSampleImporter')
       var newImportFieldDictionary = newSampleResults.importFieldDictionary;
       var importFieldNames =[];
       importFieldNames = Object.keys(newImportFieldDictionary);
-      $log.info('importFields  '+importFieldNames.length);
+//      $log.info('importFields  '+importFieldNames.length);
 
 
 
@@ -177,8 +177,12 @@ angular.module('farmbuild.soilSampleImporter')
         if(!_isDefined(paddockRows) || !(_isArray(paddockRows))){continue;}
 
         var singlePaddockSoils=[];
-        $log.info('singlePaddockSoils '+paddockRows);
-        if(paddockRows.length==0){continue;}
+        //If no paddockRows delete existing in sampleresults in paddock (ie: nothing new is there for the paddock)
+        if(paddockRows.length==0){
+          singlePaddock.soils=setSoilSamplResult(singlePaddock.soils,undefined);
+          currentPaddocks[i]=singlePaddock;
+          continue;
+        }
         for(var k=0;k<paddockRows.length;k++){
 
           var rowValues = rows[paddockRows[k]];
@@ -186,13 +190,13 @@ angular.module('farmbuild.soilSampleImporter')
           for(var j=0;j<importFieldNames.length;j++){
             var temp = { } ;
             var indexOfValue =newImportFieldDictionary[importFieldNames[j]];
-            $log.info('indexOfValue '+indexOfValue);
+//            $log.info('indexOfValue '+indexOfValue);
 
-            $log.info('importFieldNames[j] '+importFieldNames[j] +" hasAverage "+importField.hasAverage(importFieldNames[j]));
+//            $log.info('importFieldNames[j] '+importFieldNames[j] +" hasAverage "+importField.hasAverage(importFieldNames[j]));
             var rowFieldValue =rowValues[indexOfValue];
 
             if(importField.hasAverage(importFieldNames[j])){
-              $log.info('hasAverage '+importFieldNames[j]);
+//              $log.info('hasAverage '+importFieldNames[j]);
               if(!(_isEmpty(rowFieldValue) ) || !(isNaN(rowFieldValue)) || !(rowFieldValue==null)){
                 rowFieldValue=parseFloat(rowFieldValue);
               }
@@ -206,28 +210,32 @@ angular.module('farmbuild.soilSampleImporter')
           singlePaddockSoils.push(sampleValue);
 
         }
-//        $log.info('singlePaddock '+JSON.stringify(singlePaddock,null,'    '));
         var singlePaddockSoil ={};
-        if(_isDefined(singlePaddock.soils)){
-          singlePaddockSoil=singlePaddock.soils;
-        }
-        singlePaddockSoil.sampleResults = singlePaddockSoils;
-        singlePaddock.soils = singlePaddockSoil;
 
+        singlePaddock.soils=setSoilSamplResult(singlePaddock.soils,singlePaddockSoils);
         currentPaddocks[i]=singlePaddock;
-//         $log.info('singlePaddock ',JSON.stringify(singlePaddock,null,'   '));
       }
 
 
 
 
       farmData.soils = currentSoils;
-      $log.info(' farmData.soils ',JSON.stringify( farmData.soils,null,'   '));
       farmData.paddocks = currentPaddocks;
-//      $log.info('farmData ',JSON.stringify(farmData,null,'   '));
+      $log.info('farmData ',JSON.stringify(farmData,null,'   '));
       return farmData;
     };
     soilSampleConverter.toFarmData = toFarmData;
 
+
+    var setSoilSamplResult = function(currentPaddockSoil,singlePaddockSoilValue){
+      $log.info("setSoilSamplResult");
+      var paddockSoil ={};
+      if(_isDefined(currentPaddockSoil)){
+        paddockSoil=currentPaddockSoil;
+      }
+      paddockSoil.sampleResults = singlePaddockSoilValue;
+      $log.info("paddockSoil last"+paddockSoil);
+      return paddockSoil;
+    }
     return soilSampleConverter;
   });
