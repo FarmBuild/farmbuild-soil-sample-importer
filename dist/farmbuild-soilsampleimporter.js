@@ -64,6 +64,7 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
     }
     soilSampleConverter.createDefault = createDefault;
     function toFarmData(farmData, newSampleResults) {
+        $log.info("newSampleResults " + JSON.stringify(newSampleResults, null, "  "));
         if (!_isDefined(farmData)) {
             return undefined;
         }
@@ -95,15 +96,14 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
         for (var i = 0; i < currentPaddocks.length; i++) {
             var singlePaddock = currentPaddocks[i];
             var paddockRows = paddockRowDictionary[singlePaddock.name];
-            if (!_isDefined(paddockRows) || !_isArray(paddockRows)) {
-                continue;
-            }
-            var singlePaddockSoils = [];
-            if (paddockRows.length == 0) {
+            $log.info("paddockRows " + JSON.stringify(paddockRows, null, "  "));
+            if (!_isDefined(paddockRows) || paddockRows.length == 0) {
+                $log.info("paddock rows is empty");
                 singlePaddock.soils = setSoilSamplResult(singlePaddock.soils, undefined);
                 currentPaddocks[i] = singlePaddock;
                 continue;
             }
+            var singlePaddockSoils = [];
             for (var k = 0; k < paddockRows.length; k++) {
                 var rowValues = rows[paddockRows[k]];
                 var sampleValue = {};
