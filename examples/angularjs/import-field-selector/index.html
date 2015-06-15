@@ -15,7 +15,8 @@
     <h3><a href="../index.html">FarmBuild Soil Importer</a> - Import Data Matching
     </h3>
     <form role="form" name="form" ng-submit="export(paddockSelection)"  novalidate>
-        <span>Please select a soil sample CSV to import</span>
+        <span>Please select a soil sample CSV to import.</span>
+      <p>Ensure the first row in the CSV file contains the column headers. If not please update the file before uploading.</p>
         <input id="loadFile" name="soilData" type="file" on-read-file="loadSoilSample($fileContent)" class="form-control" style="width: 50%">
 
         <div ng-show="paddockSelection.results" style="margin-top: 40px; margin-bottom: 10px;">
