@@ -32,14 +32,16 @@ describe('farmbuild.soilSampleImporter module: paddockGroups', function () {
       expect(paddockGroups).toBeDefined();
     }));
 
-
-
     it('paddockGroups paddocksInPaddockGroup should be defined', inject(function () {
       var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
       expect(loadedFarmData).toBeDefined();
      var paddocksInGroup = paddockGroups.paddocksInPaddockGroup(loadedFarmData,"Zone One");
       expect(paddocksInGroup).toBeDefined();
       expect(paddocksInGroup.length).toBeGreaterThan(0);
+
+      var paddocksInGroup2 = paddockGroups.paddocksInPaddockGroup(loadedFarmData,"Zone Two");
+      expect(paddocksInGroup2).toBeDefined();
+      expect(paddocksInGroup2.length).toBe(1);
     }));
 
 

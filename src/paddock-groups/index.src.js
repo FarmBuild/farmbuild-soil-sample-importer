@@ -34,6 +34,7 @@ angular.module('farmbuild.soilSampleImporter')
 
       }
       $log.info('paddockList '+paddockList);
+      if(paddockList.length==0){return undefined;}
       return paddockList;
     }
     paddockGroups.paddocksInPaddockGroup = paddocksInPaddockGroup ;

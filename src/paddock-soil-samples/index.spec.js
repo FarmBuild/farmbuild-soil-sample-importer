@@ -69,6 +69,17 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
 
     }));
 
+
+
+
+    it('paddockSoilSampleRetriever ', inject(function () {
+      var loadedFarmData = fixture.load(fileFarmDataWithSoilSamples);
+      expect(loadedFarmData).toBeDefined();
+      var paddockSoilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(loadedFarmData,"P4");
+      $log.info('paddockSoilSamples for p4 '+paddockSoilSamples);
+      expect(paddockSoilSamples).toBeUndefined();
+    }));
+
   });
 
 

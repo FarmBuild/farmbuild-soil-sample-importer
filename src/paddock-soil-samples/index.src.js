@@ -31,10 +31,11 @@ angular.module('farmbuild.soilSampleImporter')
         singlePaddock = paddock[i];
         $log.info('singlePaddock name '+singlePaddock.name);
         if(singlePaddock.name == paddockName){
-          break;
+          paddockSoil = singlePaddock.soils;
+          return paddockSoil.sampleResults;
         }
       }
-      paddockSoil = singlePaddock.soils;
+
       $log.info('paddockSoil '+paddockSoil);
       if(!_isDefined(paddockSoil) || !_isDefined(paddockSoil.sampleResults)){
         return undefined;
@@ -42,7 +43,7 @@ angular.module('farmbuild.soilSampleImporter')
 //      $log.info('paddockSoil after '+paddockSoil.sampleResults[0]);
 //      var singlesamples = paddockSoil.sampleResults[0];
 //      $log.info('singlesamples '+singlesamples['Sample Id']);
-      return paddockSoil.sampleResults;
+//      return paddockSoil.sampleResults;
 
     }
 
