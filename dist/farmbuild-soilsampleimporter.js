@@ -503,6 +503,9 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockGroups", function
             }
         }
         $log.info("paddockList " + paddockList);
+        if (paddockList.length == 0) {
+            return undefined;
+        }
         return paddockList;
     };
     paddockGroups.paddocksInPaddockGroup = paddocksInPaddockGroup;
@@ -578,15 +581,14 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockSoilSampleRetriev
             singlePaddock = paddock[i];
             $log.info("singlePaddock name " + singlePaddock.name);
             if (singlePaddock.name == paddockName) {
-                break;
+                paddockSoil = singlePaddock.soils;
+                return paddockSoil.sampleResults;
             }
         }
-        paddockSoil = singlePaddock.soils;
         $log.info("paddockSoil " + paddockSoil);
         if (!_isDefined(paddockSoil) || !_isDefined(paddockSoil.sampleResults)) {
             return undefined;
         }
-        return paddockSoil.sampleResults;
     };
     paddockSoilSampleRetriever.averagesForSoilSamples = function(importFieldNames, soilSamples) {
         if (!_isDefined(importFieldNames) || !(importFieldNames.length > 0)) {
