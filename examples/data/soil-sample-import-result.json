@@ -18,8 +18,7 @@
     },
 	"paddockRowDictionary" : {
       "P3": [0],
-      "P1": [1,2],
-      "P4": []
+      "P1": [1,2]
     },
 	"paddockNameColumn":0
 }
