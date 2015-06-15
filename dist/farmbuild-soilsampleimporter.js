@@ -1,11 +1,11 @@
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, importField, soilSampleValidator, soilClassification, paddockSoilSampleRetriever, paddockGroups, farmdata, validations, googleAnalyticsImporter, $log) {
+angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, importField, soilSampleValidator, soilClassification, paddockSoilSampleRetriever, paddockGroups, farmdata, validations, googleAnalyticsSoilSampleImporter, $log) {
     var soilSampleImporter = {
         farmdata: farmdata
     }, _isPositiveNumber = validations.isPositiveNumber, _isDefined = validations.isDefined;
     soilSampleImporter.version = "0.1.0";
-    soilSampleImporter.ga = googleAnalyticsImporter;
+    soilSampleImporter.ga = googleAnalyticsSoilSampleImporter;
     soilSampleImporter.session = soilSampleImporterSession;
     $log.info("Welcome to Soil Sample Importer... " + "this should only be initialised once! why we see twice in the example?");
     soilSampleImporter.find = function() {
@@ -210,13 +210,13 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleValidator", fu
 
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter").factory("googleAnalyticsImporter", function($log, validations, googleAnalytics) {
-    var googleAnalyticsImporter = {}, api = "farmbuild-dairy-nutrient-calculator", _isDefined = validations.isDefined;
-    googleAnalyticsImporter.track = function(clientName) {
+angular.module("farmbuild.soilSampleImporter").factory("googleAnalyticsSoilSampleImporter", function($log, validations, googleAnalytics) {
+    var googleAnalyticsSoilSampleImporter = {}, api = "farmbuild-soil-sample-importer", _isDefined = validations.isDefined;
+    googleAnalyticsSoilSampleImporter.trackSoilSampleImporter = function(clientName) {
         $log.info("googleAnalyticsImporter.track clientName: %s", clientName);
         googleAnalytics.track(api, clientName);
     };
-    return googleAnalyticsImporter;
+    return googleAnalyticsSoilSampleImporter;
 });
 
 angular.module("farmbuild.soilSampleImporter").constant("importFieldDefaults", {
