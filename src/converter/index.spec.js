@@ -82,7 +82,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
       expect(soilSampleResults).toBeDefined();
 
       var farmDataWithSoilSamples = soilSampleConverter.toFarmData(farmDataWithoutSoilSample,soilSampleResults);
-      $log.info('farmDataWithSoilSamples after conversion '+JSON.stringify(farmDataWithSoilSamples,null,'    '));
+     $log.info('farmDataWithSoilSamples after conversion '+JSON.stringify(farmDataWithSoilSamples,null,'    '));
      expect(farmDataWithSoilSamples).toBeDefined();
 
       var soils = farmDataWithSoilSamples.soils;
@@ -102,19 +102,27 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
 
       expect(paddocks.length).toBeGreaterThan(0);
       var singlePaddock, singlePaddockSoil ;
+      var paddockP4,paddockP1;
       for(var i=0;i<paddocks.length;i++){
-        singlePaddock = paddocks[0];
+        singlePaddock = paddocks[i];
 
         singlePaddockName = singlePaddock.name;
         if(singlePaddockName == 'P1'){
-          break;
+          paddockP1=singlePaddock;
+        }
+        if(singlePaddockName == 'P4'){
+          paddockP4=singlePaddock;
         }
       }
 
-      var singleSoil = singlePaddock.soils;
-      expect(singleSoil).toBeDefined();
-      expect(singleSoil.sampleResults).toBeDefined();
+      var singleSoilP1 = paddockP1.soils;
+      expect(singleSoilP1).toBeDefined();
+      expect(singleSoilP1.sampleResults).toBeDefined();
+      expect(singleSoilP1.sampleResults.length).toBe(2);
 
+      var singleSoilP4 = paddockP4.soils;
+      expect(singleSoilP4).toBeDefined();
+      expect(singleSoilP4.sampleResults).toBeUndefined();
 
 
 //      var resultsFromConvert =  soilSampleConverter.toSoilSampleResults(farmDataWithSoilSamples);

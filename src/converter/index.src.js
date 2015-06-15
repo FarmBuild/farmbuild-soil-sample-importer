@@ -122,6 +122,8 @@ angular.module('farmbuild.soilSampleImporter')
      * @returns {*}
      */
     function toFarmData(farmData , newSampleResults){
+      $log.info('newSampleResults '+JSON.stringify(newSampleResults,null,"  "));
+
         if(!_isDefined(farmData)){
           return undefined;
         };
@@ -152,8 +154,6 @@ angular.module('farmbuild.soilSampleImporter')
       var newImportFieldDictionary = newSampleResults.importFieldDictionary;
       var importFieldNames =[];
       importFieldNames = Object.keys(newImportFieldDictionary);
-//      $log.info('importFields  '+importFieldNames.length);
-
 
 
 
@@ -161,7 +161,6 @@ angular.module('farmbuild.soilSampleImporter')
       farmDataSampleResults.importFieldNames = importFieldNames;
 
       currentSoils.sampleResults = farmDataSampleResults;
-//      $log.info('modifiedSoils ',JSON.stringify(currentSoils,null,'   '));
 
 
       //Set up data for the info for each paddock
@@ -174,15 +173,18 @@ angular.module('farmbuild.soilSampleImporter')
 
 
         var paddockRows = paddockRowDictionary[singlePaddock.name];
-        if(!_isDefined(paddockRows) || !(_isArray(paddockRows))){continue;}
+        $log.info('paddockRows '+JSON.stringify(paddockRows,null,"  "));
 
-        var singlePaddockSoils=[];
+
         //If no paddockRows delete existing in sampleresults in paddock (ie: nothing new is there for the paddock)
-        if(paddockRows.length==0){
+        if(!_isDefined(paddockRows) || paddockRows.length==0){
+          $log.info('paddock rows is empty');
           singlePaddock.soils=setSoilSamplResult(singlePaddock.soils,undefined);
           currentPaddocks[i]=singlePaddock;
           continue;
         }
+
+        var singlePaddockSoils=[];
         for(var k=0;k<paddockRows.length;k++){
 
           var rowValues = rows[paddockRows[k]];
@@ -190,13 +192,9 @@ angular.module('farmbuild.soilSampleImporter')
           for(var j=0;j<importFieldNames.length;j++){
             var temp = { } ;
             var indexOfValue =newImportFieldDictionary[importFieldNames[j]];
-//            $log.info('indexOfValue '+indexOfValue);
-
-//            $log.info('importFieldNames[j] '+importFieldNames[j] +" hasAverage "+importField.hasAverage(importFieldNames[j]));
             var rowFieldValue =rowValues[indexOfValue];
 
             if(importField.hasAverage(importFieldNames[j])){
-//              $log.info('hasAverage '+importFieldNames[j]);
               if(!(_isEmpty(rowFieldValue) ) || !(isNaN(rowFieldValue)) || !(rowFieldValue==null)){
                 rowFieldValue=parseFloat(rowFieldValue);
               }
