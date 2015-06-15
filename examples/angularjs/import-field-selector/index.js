@@ -130,6 +130,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             else {
                 $scope.noResult = true;
             }
+          soilSampleImporter.ga.trackSoilSampleImporter('AgSmart');
 
         };
     })

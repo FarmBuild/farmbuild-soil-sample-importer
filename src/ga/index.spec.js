@@ -6,7 +6,7 @@
 describe('farmbuild.soilSampleImporter module', function() {
 
     // instantiate service
-    var googleAnalyticsImporter, $log;
+    var googleAnalyticsSoilSampleImporter, $log;
 
     beforeEach(module('farmbuild.soilSampleImporter', function($provide) {
         $provide.value('$log', console);
@@ -14,18 +14,18 @@ describe('farmbuild.soilSampleImporter module', function() {
 
     beforeEach(module('farmbuild.soilSampleImporter'));
 
-    beforeEach(inject(function (_googleAnalyticsImporter_,_$log_) {
-        googleAnalyticsImporter = _googleAnalyticsImporter_;
+    beforeEach(inject(function (_googleAnalyticsSoilSampleImporter_,_$log_) {
+      googleAnalyticsSoilSampleImporter = _googleAnalyticsSoilSampleImporter_;
         $log = _$log_;
     }));
 
-    describe('Track the calculate ', function(){
+    describe('Track the soil sample import ', function(){
         it('googleAnalyticsImporter should be defined', inject(function() {
-            expect(googleAnalyticsImporter).toBeDefined();
+            expect(googleAnalyticsSoilSampleImporter).toBeDefined();
         }));
 
         it('googleAnalyticsImporter.track should create a track', inject(function() {
-            googleAnalyticsImporter.track('AgSmart')
+          googleAnalyticsSoilSampleImporter.trackSoilSampleImporter('AgSmart')
         }));
     });
 

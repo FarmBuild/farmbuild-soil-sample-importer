@@ -13,19 +13,19 @@
  * @private-module soilSampleImporter/googleAnalyticsImporter
  */
 angular.module('farmbuild.soilSampleImporter')
-    .factory('googleAnalyticsImporter',
+    .factory('googleAnalyticsSoilSampleImporter',
     function ($log, validations, googleAnalytics) {
 
-        var googleAnalyticsImporter = {}, api = 'farmbuild-dairy-nutrient-calculator',
+        var googleAnalyticsSoilSampleImporter = {}, api = 'farmbuild-soil-sample-importer',
             _isDefined = validations.isDefined;
 
-        googleAnalyticsImporter.track = function(clientName) {
+      googleAnalyticsSoilSampleImporter.trackSoilSampleImporter = function(clientName) {
             $log.info('googleAnalyticsImporter.track clientName: %s', clientName);
             googleAnalytics.track(api, clientName)
         }
 
 
 
-        return googleAnalyticsImporter;
+        return googleAnalyticsSoilSampleImporter;
 
     });

@@ -23,7 +23,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
             paddockGroups,
             farmdata,
             validations,
-            googleAnalyticsImporter,
+            googleAnalyticsSoilSampleImporter,
             $log) {
 		var soilSampleImporter = {
         farmdata:farmdata
@@ -32,7 +32,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 			_isDefined = validations.isDefined;
 
     soilSampleImporter.version = '0.1.0';
-    soilSampleImporter.ga = googleAnalyticsImporter;
+    soilSampleImporter.ga = googleAnalyticsSoilSampleImporter;
     soilSampleImporter.session = soilSampleImporterSession;
 
 		$log.info('Welcome to Soil Sample Importer... ' +
