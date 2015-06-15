@@ -93,26 +93,26 @@
 
     <legend>Paddock Groups Soil Information</legend>
 
-    <paddock-groups ng-repeat="zone in managementZones">
-        <div ng-init="zoneAvg = getManagementZoneAverage(farmData, zone.name)">
-            <div><span>Group Name</span>: <span class="h4">{{zone.name}}</span></div>
-            <table class="table table-striped" ng-show="zoneAvg">
+    <paddock-groups ng-repeat="group in paddockGroups">
+        <div ng-init="groupAvg = getPaddockGroupAverage(farmData, group.name)">
+            <div><span>Group Name</span>: <span class="h4">{{group.name}}</span></div>
+            <table class="table table-striped" ng-show="groupAvg">
                 <tr>
                     <th>&nbsp;</th>
-                    <th ng-repeat="fieldName in managementZoneFieldNames">
+                    <th ng-repeat="fieldName in paddockGroupFieldNames">
                         {{fieldName}}
                     </th>
                 </tr>
-                <tbody ng-init="avg = getManagementZoneAverage(farmData, zone.name)">
+                <tbody ng-init="avg = getPaddockGroupAverage(farmData, group.name)">
                     <tr>
                         <td>Average:</td>
-                        <td ng-repeat="fieldName in managementZoneFieldNames" >
+                        <td ng-repeat="fieldName in paddockGroupFieldNames" >
                             {{avg[fieldName] ? (avg[fieldName] | number:2) : 'N/A'}}
                         </td>
                     </tr>
                     <tr>
                         <td>Classification:</td>
-                        <td ng-repeat="fieldName in managementZoneFieldNames" ng-init="cls = getSampleResultClassification(avg, fieldName)">
+                        <td ng-repeat="fieldName in paddockGroupFieldNames" ng-init="cls = getSampleResultClassification(avg, fieldName)">
                         <span style="background-color:{{cls.defaultColor}}">
                             {{cls.name ? cls.name : 'N/A'}}
                         </span>
@@ -120,11 +120,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div ng-show="!zoneAvg" style="margin-bottom: 10px;">This paddock group contains no sample result</div>
+            <div ng-show="!groupAvg" style="margin-bottom: 10px;">This paddock group contains no sample result</div>
         </div>
     </paddock-groups>
 
-    <div ng-show="!managementZones || managementZones.length ==0">This farm data contains no paddock group</div>
+    <div ng-show="!paddockGroups || paddockGroups.length ==0">This farm data contains no paddock group</div>
 
 
     <hr/>

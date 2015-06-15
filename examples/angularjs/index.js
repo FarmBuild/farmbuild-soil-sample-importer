@@ -10,8 +10,8 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
         $scope.farmData = {};
         $scope.paddocks = [];
         $scope.paddockFieldNames = [];
-        $scope.managementZones = [];
-        $scope.managementZoneFieldNames = [];
+        $scope.paddockGroups = [];
+        $scope.paddockGroupFieldNames = [];
 
         $scope.loadFarmData = function ($fileContent) {
             $log.info('FarmCtrl>>loadFarmData>>start');
@@ -55,7 +55,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             return soilSampleImporter.averageForPaddocks(farmData, paddockName);
         }
 
-        $scope.getManagementZoneAverage = function (farmData, zoneName) {
+        $scope.getPaddockGroupAverage = function (farmData, zoneName) {
             return soilSampleImporter.averageForPaddockGroups(farmData, zoneName);
         }
 
@@ -90,12 +90,12 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             $scope.farmData = farmData;
             $scope.paddocks = farmData.paddocks;
             $scope.paddockFieldNames = farmData.soils.sampleResults.importFieldNames;
-            $scope.managementZones = farmData.managementZones;
+            $scope.paddockGroups = farmData.paddockGroups;
 
-            $scope.managementZoneFieldNames = [];
+            $scope.paddockGroupFieldNames = [];
             var managementZoneFields = soilSampleImporter.getPaddockGroupFields();
             for(var i=0; i<managementZoneFields.length; i++) {
-                $scope.managementZoneFieldNames.push(managementZoneFields[i].name);
+                $scope.paddockGroupFieldNames.push(managementZoneFields[i].name);
             }
 
         }
