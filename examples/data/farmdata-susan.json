@@ -33,7 +33,7 @@
   },
   "area": 89.95,
   "areaUnit": "hectare",
-        "managementZones": [
+        "paddockGroups": [
       {
         "name": "Zone One",
         "paddocks": ["P3", "P1"]
