@@ -9,7 +9,7 @@ To get you started simply download this repository using <a href="https://github
 Unzip the downloaded folder and go to "examples" and open one of the html files in a browser.
 
 
-<a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/docs/farmbuild-soil-sample-importer/0.1.2/index.html" target="_blank">API documentation</a>
+<a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/docs/farmbuild-soil-sample-importer/0.1.3/index.html" target="_blank">API documentation</a>
 
 ### AngularJS example
 * <a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/examples/angularjs/index.html" target="_blank">Soil Sample - angularJS example</a>
