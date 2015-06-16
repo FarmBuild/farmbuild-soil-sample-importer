@@ -994,11 +994,7 @@ angular.module("farmbuild.soilSampleImporter").factory("soilClassification", fun
         if (!type) {
             return undefined;
         }
-        if (type.dependencyRange) {
-            return soilClassification.findRangeWithDependency(type, sampleResult[key], sampleResult[type.dependencyRange.name]);
-        } else {
-            return soilClassification.findRange(type, sampleResult[key]);
-        }
+        return soilClassification.findRange(type, sampleResult[key]);
     };
     return soilClassification;
 });
