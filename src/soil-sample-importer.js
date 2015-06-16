@@ -54,8 +54,8 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 		 * Loads the farmData into the session.
      * If the farmData has no soilSampleImporter section, then append one
 		 * @method load
-		 * @param {!object} farmData -
-		 * @returns {object} the farmData stored in session, undefined if the farmData is invalid
+		 * @param {!object} FarmData -
+		 * @returns {object} the FarmData stored in session, undefined if the farmData is invalid
 		 * @public
 		 * @static
 		 */
@@ -79,20 +79,13 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
 		};
 
     /**
-     * Export FarmData
+     * Export FarmData contained in the session
      * @method export
      * @type {export}
      */
     soilSampleImporter.export = soilSampleImporterSession.export;
 
-    /**
-     * {@link https://github.com GitHub}
-     *  @method toFarmData
-     * @type {Function|toFarmData}
-     * @see {@link soilSampleImporter#export toexp}
-     *@see {@link module:soilSampleConverter~createDefault|createDefault}
-     * @see {@link module:~createDefault|createDefault}
-     */
+
     soilSampleImporter.soilSampleConverter  = soilSampleConverter;
     soilSampleImporter.soilSampleValidator = soilSampleValidator;
     soilSampleImporter.soilClassification = soilClassification;

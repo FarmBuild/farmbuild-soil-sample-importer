@@ -6,12 +6,13 @@
  * @version 0.1.0
  */
 'use strict';
-
+/**
+ * soilSampleImporter/soilSampleConverter
+ * @module soilSampleImporter/soilSampleConverter
+ */
 angular.module('farmbuild.soilSampleImporter')
   .factory('soilSampleConverter', function ($log, farmdata, validations, soilSampleValidator, soilSampleImporterSession,importField ) {
-//    /**
-//     * @exports soilSampleConverter
-//     */
+
     var _isDefined = validations.isDefined,
       _isArray = validations.isArray,
       _isEmpty = validations.isEmpty,
@@ -22,7 +23,6 @@ angular.module('farmbuild.soilSampleImporter')
      * @method createDefault
      * @returns {{dateLastUpdated: Date, results: {columnHeaders: Array, rows: Array}, importFieldDictionary: {}, paddockRowDictionary: {}, paddockNameColumn: undefined}}
      * @public
-     * @exports createDefault
      */
     function createDefault(){
       return{
@@ -49,8 +49,8 @@ angular.module('farmbuild.soilSampleImporter')
      * Will remove any previously loaded soil sampleResults blocks in FarmData and add new soil sampleResults.
      * @method toFarmData
      * @param FarmData Valid FarmData with paddocks (need not contain soil sampleResults)
-     * @param newSampleResults predefined intermediate object,
-     * @see {@link createDefault})
+     * @param {} newSampleResults predefined intermediate object,
+     * @see {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault}
      * @returns FarmData block with soil sampleResults
      * @public
      */
