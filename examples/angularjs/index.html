@@ -77,7 +77,7 @@
                 <tr >
                     <td>Classification:</td>
                     <td ng-repeat="fieldName in paddockFieldNames" ng-init="cls = getSampleResultClassification(avg, fieldName)">
-                        <span style="background-color:{{cls.defaultColor}}">
+                        <span ng-style="{'background-color': cls.defaultColor}">
                             {{cls.name ? cls.name : 'N/A'}}
                         </span>
                     </td>
