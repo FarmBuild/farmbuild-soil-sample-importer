@@ -44,7 +44,7 @@ angular.module('farmbuild.soilSampleImporter')
 
 
     /**
-     * Using the predefined intermediate object, {@link createDefault},
+     * Using the predefined intermediate object, {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault},
      * which has the loaded CSV information convert to FarmData block.
      * Will remove any previously loaded soil sampleResults blocks in FarmData and add new soil sampleResults.
      * @method toFarmData
