@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, importField, soilSampleValidator, soilClassification, paddockSoilSampleRetriever, paddockGroups, farmdata, validations, googleAnalyticsSoilSampleImporter, $log) {
+angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("soilSampleImporter", function(soilSampleImporterSession, soilSampleConverter, importField, soilSampleValidator, soilClassification, paddockSoilSampleRetriever, paddockGroups, importFieldSelector, farmdata, validations, googleAnalyticsSoilSampleImporter, $log) {
     var soilSampleImporter = {
         farmdata: farmdata
     }, _isPositiveNumber = validations.isPositiveNumber, _isDefined = validations.isDefined;
@@ -21,19 +21,17 @@ angular.module("farmbuild.soilSampleImporter", [ "farmbuild.core", "farmbuild.fa
             loaded.soils = {};
         }
         if (!loaded.soils.hasOwnProperty("sampleResults")) {
-            loaded.soils.sampleResults = soilSampleImporter.createDefault();
+            loaded.soils.sampleResults = soilSampleImporter.soilSampleConverter.createDefault();
             loaded = farmdata.update(loaded);
         }
         return loaded;
     };
     soilSampleImporter.export = soilSampleImporterSession.export;
-    soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
-    soilSampleImporter.createDefault = soilSampleConverter.createDefault;
+    soilSampleImporter.soilSampleConverter = soilSampleConverter;
     soilSampleImporter.isValidFarmDataWithSoilSample = soilSampleValidator.isValidFarmDataWithSoilSample;
-    soilSampleImporter.classifyResult = soilClassification.classifyResult;
-    soilSampleImporter.hasAverage = importField.hasAverage;
-    soilSampleImporter.hasClassification = importField.hasClassification;
-    soilSampleImporter.getPaddockGroupFields = importField.getPaddockGroupFields;
+    soilSampleImporter.soilClassification = soilClassification;
+    soilSampleImporter.importField = importField;
+    soilSampleImporter.importFieldSelector = importFieldSelector;
     soilSampleImporter.averageForPaddocks = paddockSoilSampleRetriever.averagesForPaddock;
     soilSampleImporter.averageForPaddockGroups = paddockGroups.averageForPaddockGroup;
     if (typeof window.farmbuild === "undefined") {
@@ -64,14 +62,16 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
     }
     soilSampleConverter.createDefault = createDefault;
     function toFarmData(farmData, newSampleResults) {
-        $log.info("newSampleResults " + JSON.stringify(newSampleResults, null, "  "));
         if (!_isDefined(farmData)) {
+            $log.error("Invalid farmdata for soilSamplConverter.toFarmData");
             return undefined;
         }
         if (!_isDefined(newSampleResults)) {
+            $log.error("Invalid newSampleResults for soilSamplConverter.toFarmData");
             return undefined;
         }
         if (!soilSampleValidator.isValidSoilSampleResult(newSampleResults)) {
+            $log.error("Invalid newSampleResults for soilSamplConverter.toFarmData");
             return undefined;
         }
         var currentSoils = {};
@@ -80,9 +80,9 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
         }
         var currentPaddocks = farmData.paddocks;
         if (!_isDefined(currentPaddocks)) {
+            $log.error("Invalid FarmData for soilSamplConverter.toFarmData");
             return undefined;
         }
-        $log.info("before loop");
         var farmDataSampleResults = {};
         var newResults = newSampleResults.results;
         var newImportFieldDictionary = newSampleResults.importFieldDictionary;
@@ -96,9 +96,7 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
         for (var i = 0; i < currentPaddocks.length; i++) {
             var singlePaddock = currentPaddocks[i];
             var paddockRows = paddockRowDictionary[singlePaddock.name];
-            $log.info("paddockRows " + JSON.stringify(paddockRows, null, "  "));
             if (!_isDefined(paddockRows) || paddockRows.length == 0) {
-                $log.info("paddock rows is empty");
                 singlePaddock.soils = setSoilSamplResult(singlePaddock.soils, undefined);
                 currentPaddocks[i] = singlePaddock;
                 continue;
@@ -126,18 +124,15 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
         }
         farmData.soils = currentSoils;
         farmData.paddocks = currentPaddocks;
-        $log.info("farmData ", JSON.stringify(farmData, null, "   "));
         return farmData;
     }
     soilSampleConverter.toFarmData = toFarmData;
     var setSoilSamplResult = function(currentPaddockSoil, singlePaddockSoilValue) {
-        $log.info("setSoilSamplResult");
         var paddockSoil = {};
         if (_isDefined(currentPaddockSoil)) {
             paddockSoil = currentPaddockSoil;
         }
         paddockSoil.sampleResults = singlePaddockSoilValue;
-        $log.info("paddockSoil last" + paddockSoil);
         return paddockSoil;
     };
     return soilSampleConverter;
@@ -216,6 +211,10 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleValidator", fu
 angular.module("farmbuild.soilSampleImporter").factory("googleAnalyticsSoilSampleImporter", function($log, validations, googleAnalytics) {
     var googleAnalyticsSoilSampleImporter = {}, api = "farmbuild-soil-sample-importer", _isDefined = validations.isDefined;
     googleAnalyticsSoilSampleImporter.trackSoilSampleImporter = function(clientName) {
+        if (!_isDefined(clientName)) {
+            $log.error("client name is not specified");
+            return;
+        }
         $log.info("googleAnalyticsImporter.track clientName: %s", clientName);
         googleAnalytics.track(api, clientName);
     };
@@ -348,7 +347,7 @@ angular.module("farmbuild.soilSampleImporter").factory("importFieldTypes", funct
 
 "use strict";
 
-angular.module("farmbuild.soilSampleImporter").factory("importFieldSelector", function($log, farmdata, soilSampleImporter, importFieldTypes, collections, importFieldSelectionValidator) {
+angular.module("farmbuild.soilSampleImporter").factory("importFieldSelector", function($log, farmdata, soilSampleConverter, importFieldTypes, collections, importFieldSelectionValidator) {
     $log.info("importFieldSelector ");
     var importFieldSelector = {}, _paddocks = [], _types = importFieldTypes.toArray();
     function _findPaddockWithName(paddocks, name) {
@@ -397,7 +396,7 @@ angular.module("farmbuild.soilSampleImporter").factory("importFieldSelector", fu
             }
         }
         $log.info(JSON.stringify(importFieldsDefinition));
-        return soilSampleImporter.toFarmData(myFarmData, importFieldsDefinition);
+        return soilSampleConverter.toFarmData(myFarmData, importFieldsDefinition);
     };
     importFieldSelector.autoLinkPaddock = function(importFieldsDefinition, linkColumnIndex) {
         var linkedCount = 0;
@@ -573,8 +572,8 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockGoupValidator", f
 angular.module("farmbuild.soilSampleImporter").factory("paddockSoilSampleRetriever", function($log, validations, importField) {
     var _isDefined = validations.isDefined, _isArray = validations.isArray, _isEmpty = validations.isEmpty, paddockSoilSampleRetriever = {};
     paddockSoilSampleRetriever.soilSamplesInPaddock = function(farmData, paddockName) {
-        $log.info("paddockSoilSampleRetriever.soilSamplesInPaddock");
         if (!_isDefined(farmData)) {
+            $log.error("FarmData for soilSamplesInPaddock is invalid");
             return undefined;
         }
         var paddock = farmData.paddocks;
@@ -617,13 +616,11 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockSoilSampleRetriev
                         count: 0
                     };
                 }
-                $log.info("src fieldValue[j] " + fieldValue + " [importFieldNames[j] " + importFieldNames[j] + " \n singleColumn " + JSON.stringify(singleColumn, null, "  "));
                 if (!importField.hasAverage(importFieldNames[j])) {
                     singleColumn = null;
                 } else {
                     singleColumn.sum = singleColumn.sum + fieldValue;
                     singleColumn.count = singleColumn.count + 1;
-                    $log.info("singleColumns.sum " + singleColumn.sum + " singleColumns.count " + singleColumn.count);
                 }
                 columnValues[importFieldNames[j]] = singleColumn;
             }
@@ -640,7 +637,6 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockSoilSampleRetriev
                 averageValues[importFieldNames[j]] = singleColumn.sum / singleColumn.count;
             }
         }
-        $log.info("averageValues " + JSON.stringify(averageValues, null, "  "));
         return averageValues;
     };
     paddockSoilSampleRetriever.averagesForPaddock = function(farmData, paddockName) {
