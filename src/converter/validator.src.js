@@ -14,9 +14,12 @@ angular.module('farmbuild.soilSampleImporter')
       _isArray = validations.isArray;
 
     /**
-     *
-     * @param farmData
+     * Validate if FarmData has valid soil sampleResult data in it
+     * @method isValidFarmDataWithSoilSample
+     * @param FarmData
      * @returns {boolean}
+     * @public
+     * @static
      */
     soilSampleValidator.isValidFarmDataWithSoilSample = function(farmData){
       var soils = farmData.soils;
@@ -49,9 +52,12 @@ angular.module('farmbuild.soilSampleImporter')
 
 
     /**
-     *
-     * @param soilSampleResult
+     * Validate if the intermediate object containing the CSV data is or valid format
+     * @method isValidSoilSampleResult
+     * @param predefined intermediate object, (@see {@link soilSampleConverter.createDefault})
      * @returns {boolean}
+     * @public
+     * @static
      */
     soilSampleValidator.isValidSoilSampleResult = function(soilSampleResult){
 

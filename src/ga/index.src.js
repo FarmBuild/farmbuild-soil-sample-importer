@@ -13,19 +13,31 @@
  * @private-module soilSampleImporter/googleAnalyticsImporter
  */
 angular.module('farmbuild.soilSampleImporter')
-    .factory('googleAnalyticsSoilSampleImporter',
-    function ($log, validations, googleAnalytics) {
+  .factory('googleAnalyticsSoilSampleImporter',
+  function ($log, validations, googleAnalytics) {
 
-        var googleAnalyticsSoilSampleImporter = {}, api = 'farmbuild-soil-sample-importer',
-            _isDefined = validations.isDefined;
+    var googleAnalyticsSoilSampleImporter = {},
+      api = 'farmbuild-soil-sample-importer',
+      _isDefined = validations.isDefined;
 
-      googleAnalyticsSoilSampleImporter.trackSoilSampleImporter = function(clientName) {
-            $log.info('googleAnalyticsImporter.track clientName: %s', clientName);
-            googleAnalytics.track(api, clientName)
-        }
+    /**
+     * Sends API usage statistics to Google analytics
+     * @method trackSoilSampleImporter
+     * @param clientName
+     * @public
+     * @static
+     */
+    googleAnalyticsSoilSampleImporter.trackSoilSampleImporter = function(clientName) {
+      if (!_isDefined(clientName)) {
+        $log.error('client name is not specified');
+        return;
+      }
+      $log.info('googleAnalyticsImporter.track clientName: %s', clientName);
+      googleAnalytics.track(api, clientName)
+    }
 
 
 
-        return googleAnalyticsSoilSampleImporter;
+    return googleAnalyticsSoilSampleImporter;
 
-    });
+  });

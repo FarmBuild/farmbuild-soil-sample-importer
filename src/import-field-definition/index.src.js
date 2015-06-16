@@ -13,6 +13,13 @@ angular.module('farmbuild.soilSampleImporter')
         $log.info("importField ");
         var importField = {};
 
+      /**
+       * Returns true if the given import field has a soilClassificationName value to it,
+       * based on the
+       * @method hasClassification
+       * @param importFieldName
+       * @returns {boolean}
+       */
         importField.hasClassification = function (importFieldName) {
             var fieldType = importFieldTypes.byName(importFieldName);
             if (fieldType && fieldType.soilClassificationName) {
@@ -21,6 +28,11 @@ angular.module('farmbuild.soilSampleImporter')
             return false;
         };
 
+      /**
+       *
+       * @param importFieldName
+       * @returns {boolean}
+       */
         importField.hasAverage = function (importFieldName) {
             var fieldType = importFieldTypes.byName(importFieldName);
             if (fieldType && fieldType.hasAverage) {

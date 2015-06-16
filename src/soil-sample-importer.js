@@ -21,6 +21,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
             soilClassification,
             paddockSoilSampleRetriever,
             paddockGroups,
+            importFieldSelector,
             farmdata,
             validations,
             googleAnalyticsSoilSampleImporter,
@@ -70,22 +71,33 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
         loaded.soils = {};
       }
       if(!loaded.soils.hasOwnProperty('sampleResults')){
-          loaded.soils.sampleResults =  soilSampleImporter.createDefault();
+          loaded.soils.sampleResults =  soilSampleImporter.soilSampleConverter.createDefault();
           loaded = farmdata.update(loaded);
 
       }
 			return loaded;
 		};
 
-
+    /**
+     * Export FarmData
+     * @method export
+     * @type {export}
+     */
     soilSampleImporter.export = soilSampleImporterSession.export;
-    soilSampleImporter.toFarmData = soilSampleConverter.toFarmData;
-    soilSampleImporter.createDefault = soilSampleConverter.createDefault;
+
+    /**
+     * {@link https://github.com GitHub}
+     *  @method toFarmData
+     * @type {Function|toFarmData}
+     * @see {@link soilSampleImporter#export toexp}
+     *@see {@link module:soilSampleConverter~createDefault|createDefault}
+     * @see {@link module:~createDefault|createDefault}
+     */
+    soilSampleImporter.soilSampleConverter  = soilSampleConverter;
     soilSampleImporter.isValidFarmDataWithSoilSample = soilSampleValidator.isValidFarmDataWithSoilSample;
-    soilSampleImporter.classifyResult = soilClassification.classifyResult;
-    soilSampleImporter.hasAverage = importField.hasAverage;
-    soilSampleImporter.hasClassification = importField.hasClassification;
-    soilSampleImporter.getPaddockGroupFields = importField.getPaddockGroupFields;
+    soilSampleImporter.soilClassification = soilClassification.classifyResult;
+    soilSampleImporter.importField = importField;
+    soilSampleImporter.importFieldSelector = importFieldSelector;
     soilSampleImporter.averageForPaddocks = paddockSoilSampleRetriever.averagesForPaddock;
     soilSampleImporter.averageForPaddockGroups = paddockGroups.averageForPaddockGroup;
 

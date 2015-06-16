@@ -10,7 +10,7 @@
 
 angular.module('farmbuild.soilSampleImporter')
     .factory('importFieldSelector',
-    function ($log, farmdata, soilSampleImporter, importFieldTypes,
+    function ($log, farmdata, soilSampleConverter, importFieldTypes,
               collections, importFieldSelectionValidator) {
         $log.info("importFieldSelector ");
 
@@ -84,7 +84,7 @@ angular.module('farmbuild.soilSampleImporter')
                 }
             }
             $log.info(JSON.stringify(importFieldsDefinition));
-            return soilSampleImporter.toFarmData(myFarmData, importFieldsDefinition);
+            return soilSampleConverter.toFarmData(myFarmData, importFieldsDefinition);
 
         }
 

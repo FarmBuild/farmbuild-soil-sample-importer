@@ -16,11 +16,17 @@ angular.module('farmbuild.soilSampleImporter')
       _isEmpty = validations.isEmpty,
       paddockSoilSampleRetriever = {};
 
-
+    /**
+     * Get all soil sampleResults for a given paddock name from the FarmData
+     * @method soilSamplesInPaddock
+     * @param FarmData
+     * @param paddockName
+     * @returns soil sampleResults array
+     */
     paddockSoilSampleRetriever.soilSamplesInPaddock = function(farmData, paddockName){
-      $log.info('paddockSoilSampleRetriever.soilSamplesInPaddock');
 
       if (!_isDefined(farmData)) {
+        $log.error('FarmData for soilSamplesInPaddock is invalid');
         return undefined;
       }
 
@@ -47,6 +53,13 @@ angular.module('farmbuild.soilSampleImporter')
 
     }
 
+    /**
+     *
+     * @method averagesForSoilSamples
+     * @param importFieldNames
+     * @param soilSamples
+     * @returns {*}
+     */
     paddockSoilSampleRetriever.averagesForSoilSamples = function(importFieldNames, soilSamples){
       if (!_isDefined(importFieldNames) || !(importFieldNames.length>0)) {
         return undefined;
@@ -56,11 +69,11 @@ angular.module('farmbuild.soilSampleImporter')
       }
 
       /*
-      * data structure of columnValues {
-      *  "ph":{ sum: , count}
-      *  "pb":{ sum: , count}
-      * }
-      * */
+       * data structure of columnValues {
+       *  "ph":{ sum: , count}
+       *  "pb":{ sum: , count}
+       * }
+       * */
       var columnValues = {};
       for(var i=0;i<soilSamples.length;i++){
         var singelSoilSample = soilSamples[i];
@@ -80,14 +93,11 @@ angular.module('farmbuild.soilSampleImporter')
           if(!_isDefined(singleColumn)){
             singleColumn = {"sum": 0 , "count":0};
           }
-          $log.info('src fieldValue[j] '+fieldValue +" [importFieldNames[j] "+importFieldNames[j] +" \n singleColumn "+JSON.stringify(singleColumn,null,"  "));
-
           if(!importField.hasAverage(importFieldNames[j])){
             singleColumn = null
           }else{
             singleColumn.sum=singleColumn.sum+fieldValue;
             singleColumn.count=singleColumn.count+1;
-            $log.info("singleColumns.sum "+singleColumn.sum+" singleColumns.count "+singleColumn.count);
           }
 
           columnValues[importFieldNames[j]]=singleColumn;
@@ -96,23 +106,21 @@ angular.module('farmbuild.soilSampleImporter')
       }
       var averageValues = {};
       for(var j=0;j<importFieldNames.length;j++){
-          var singleColumn = columnValues[importFieldNames[j]];
-          if(!_isDefined(singleColumn)){
-            continue;
-          }
+        var singleColumn = columnValues[importFieldNames[j]];
+        if(!_isDefined(singleColumn)){
+          continue;
+        }
         if(singleColumn==null){
           averageValues[importFieldNames[j]]=null;
 
         }else{
           averageValues[importFieldNames[j]]=singleColumn.sum/singleColumn.count;
         }
-//        $log.info("averageValues "+averageValues[importFieldNames[j]]);
-        }
+      }
 
-      $log.info("averageValues " +JSON.stringify(averageValues,null,"  "));
       return averageValues;
 
-      }
+    }
 
 
     paddockSoilSampleRetriever.averagesForPaddock = function(farmData, paddockName){
@@ -129,10 +137,10 @@ angular.module('farmbuild.soilSampleImporter')
       }
       var importFields =sampleResults.importFieldNames;
       if(!_isDefined(importFields)){
-          return undefined;
+        return undefined;
       }
       $log.info("b4 ret");
-       return paddockSoilSampleRetriever.averagesForSoilSamples(importFields,soilSamples);
+      return paddockSoilSampleRetriever.averagesForSoilSamples(importFields,soilSamples);
     }
 
     return paddockSoilSampleRetriever;
