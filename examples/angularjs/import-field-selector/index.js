@@ -95,6 +95,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 importFieldSelector.connectRow(paddockSelection, paddock, rowIndex);
                 $scope.connectedRows[rowIndex]=paddock;
             }
+            $scope.valid = importFieldSelector.validate(paddockSelection);
         }
 
         $scope.loadSoilSample = function ($fileContent) {
