@@ -6,7 +6,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
         $rootScope.appVersion = farmbuild.examples.soilsampleimporter.version;
     })
 
-    .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, importFieldSelector, validations,
+    .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, importFieldSelector,validations,
             collections) {
 
         $scope.paddockSelection = {};
@@ -20,6 +20,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
         $scope.selectedColumn = '';
         $scope.connectedRows = [];
+        var importFieldSelector= soilSampleImporter.importFieldSelector;
 
         for(var i=0; i<importFieldSelector.types.length;i++) {
             var newClassificication = {};

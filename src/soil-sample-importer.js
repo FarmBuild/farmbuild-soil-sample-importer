@@ -95,7 +95,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
      */
     soilSampleImporter.soilSampleConverter  = soilSampleConverter;
     soilSampleImporter.isValidFarmDataWithSoilSample = soilSampleValidator.isValidFarmDataWithSoilSample;
-    soilSampleImporter.soilClassification = soilClassification.classifyResult;
+    soilSampleImporter.soilClassification = soilClassification;
     soilSampleImporter.importField = importField;
     soilSampleImporter.importFieldSelector = importFieldSelector;
     soilSampleImporter.averageForPaddocks = paddockSoilSampleRetriever.averagesForPaddock;
