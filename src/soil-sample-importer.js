@@ -94,12 +94,12 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core','farmbuild.farm
      * @see {@link module:~createDefault|createDefault}
      */
     soilSampleImporter.soilSampleConverter  = soilSampleConverter;
-    soilSampleImporter.isValidFarmDataWithSoilSample = soilSampleValidator.isValidFarmDataWithSoilSample;
+    soilSampleImporter.soilSampleValidator = soilSampleValidator;
     soilSampleImporter.soilClassification = soilClassification;
     soilSampleImporter.importField = importField;
     soilSampleImporter.importFieldSelector = importFieldSelector;
-    soilSampleImporter.averageForPaddocks = paddockSoilSampleRetriever.averagesForPaddock;
-    soilSampleImporter.averageForPaddockGroups = paddockGroups.averageForPaddockGroup;
+    soilSampleImporter.paddockSoilSampleRetriever = paddockSoilSampleRetriever;
+    soilSampleImporter.paddockGroups = paddockGroups;
 
 
 		if (typeof window.farmbuild === 'undefined') {
