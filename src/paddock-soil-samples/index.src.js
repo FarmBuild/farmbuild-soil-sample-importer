@@ -6,8 +6,10 @@
  * @version 0.1.0
  */
 'use strict';
-
-
+/**
+ * soilSampleImporter/paddockSoilSampleRetriever
+ * @module soilSampleImporter/paddockSoilSampleRetriever
+ */
 angular.module('farmbuild.soilSampleImporter')
   .factory('paddockSoilSampleRetriever', function ($log, validations,importField) {
 
@@ -22,6 +24,7 @@ angular.module('farmbuild.soilSampleImporter')
      * @param FarmData
      * @param paddockName
      * @returns soil sampleResults array
+     * @public
      */
     paddockSoilSampleRetriever.soilSamplesInPaddock = function(farmData, paddockName){
 
@@ -54,11 +57,12 @@ angular.module('farmbuild.soilSampleImporter')
     }
 
     /**
-     *
+     * Average given soil sampleResult array values
      * @method averagesForSoilSamples
      * @param importFieldNames
      * @param soilSamples
-     * @returns {*}
+     * @returns averaged
+     * @private
      */
     paddockSoilSampleRetriever.averagesForSoilSamples = function(importFieldNames, soilSamples){
       if (!_isDefined(importFieldNames) || !(importFieldNames.length>0)) {
@@ -123,6 +127,14 @@ angular.module('farmbuild.soilSampleImporter')
     }
 
 
+    /**
+     * Get average sampleResult values for a given paddock name
+     * @method averagesForPaddock
+     * @param farmData
+     * @param paddockName
+     * @returns {*}
+     * @public
+     */
     paddockSoilSampleRetriever.averagesForPaddock = function(farmData, paddockName){
       $log.info("averagesForPaddock");
       var soilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData, paddockName);

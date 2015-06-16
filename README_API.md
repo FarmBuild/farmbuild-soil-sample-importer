@@ -5,13 +5,11 @@ This is the soil sample importer module of farm build JavaScript library.
 
 ## Getting Started
 
-To get you started use the navigation on the left side of this page to explore different function of nutrient calculator.
+To get you started use the navigation on the left side of this page to explore different function of soil sample importer.
 
 
 ## Units
 In all calculations we are using metric units.
-
-* Weight unit is Kg. If you need other units, like tonnes, you need to convert it in your application.
 
 ## Exception handling
 All functions return undefined in case that there is an error related to wrong input values.
@@ -27,6 +25,6 @@ Example
 farmbuild.soilSampleImporter.calculate(farmData);
 var organisationName = 'Spatial Vision';
 //Calling the track API for the usage
-farmbuild.soilSampleImporter.ga.trackCalculate(organisationName);
+farmbuild.soilSampleImporter.ga.trackSoilSampleImporter(organisationName);
 ```
 

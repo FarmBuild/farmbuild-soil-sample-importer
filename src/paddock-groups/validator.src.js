@@ -7,7 +7,10 @@
  */
 'use strict';
 
-
+/**
+ * soilSampleImporter/paddockGoupValidator
+ * @module soilSampleImporter/paddockGoupValidator
+ */
 angular.module('farmbuild.soilSampleImporter')
   .factory('paddockGoupValidator', function ($log, farmdata, validations) {
 
@@ -16,7 +19,12 @@ angular.module('farmbuild.soilSampleImporter')
       _isEmpty = validations.isEmpty,
       paddockGoupValidator = {};
 
-
+    /**
+     * Returns true if the given FarmData block has paddockGroups defined in it
+     * @method farmDataHasPaddockGroups
+     * @param FarmData
+     * @returns {boolean}
+     */
     paddockGoupValidator.farmDataHasPaddockGroups = function(farmData){
       if (!_isDefined(farmData)) {
         return false;

@@ -7,6 +7,10 @@
  */
 
 'use strict';
+/**
+ * soilSampleImporter/soilClassification
+ * @module soilSampleImporter/soilClassification
+ */
 angular.module('farmbuild.soilSampleImporter')
     .factory('soilClassification',
     function ($log, soilClassificationTypes, validations) {
@@ -62,7 +66,7 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Find the range for a given classification type and value
-         *
+         * @method findRange
          * @param classificationType
          * @param classificationValue
          */
@@ -86,7 +90,7 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Find the range for a given classification type, value, and type dependency value
-         *
+         * @method findRangeWithDependency
          * @param classificationType
          * @param classificationValue
          * @param dependencyValue

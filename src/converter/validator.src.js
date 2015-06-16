@@ -6,7 +6,10 @@
  * @version 0.1.0
  */
 'use strict';
-
+/**
+ * soilSampleImporter/soilSampleConverter
+ * @module soilSampleImporter/soilSampleValidator
+ */
 angular.module('farmbuild.soilSampleImporter')
   .factory('soilSampleValidator', function ($log, farmdata, validations) {
     var soilSampleValidator={},
@@ -16,10 +19,9 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Validate if FarmData has valid soil sampleResult data in it
      * @method isValidFarmDataWithSoilSample
-     * @param FarmData
+     * @param {!object} FarmData
      * @returns {boolean}
      * @public
-     * @static
      */
     soilSampleValidator.isValidFarmDataWithSoilSample = function(farmData){
       var soils = farmData.soils;
@@ -54,10 +56,8 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Validate if the intermediate object containing the CSV data is or valid format
      * @method isValidSoilSampleResult
-     * @param predefined intermediate object, (@see {@link soilSampleConverter.createDefault})
+     * @param {!object} soilSampleResult Predefined intermediate object. Check {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault} for structure.
      * @returns {boolean}
-     * @public
-     * @static
      */
     soilSampleValidator.isValidSoilSampleResult = function(soilSampleResult){
 

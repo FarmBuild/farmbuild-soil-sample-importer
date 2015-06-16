@@ -6,7 +6,10 @@
  * @version 0.1.0
  */
 'use strict';
-
+/**
+ * soilSampleImporter/paddockGroups
+ * @module soilSampleImporter/paddockGroups
+ */
 
 angular.module('farmbuild.soilSampleImporter')
   .factory('paddockGroups', function ($log, farmdata, validations, paddockGoupValidator, paddockSoilSampleRetriever) {
@@ -16,6 +19,12 @@ angular.module('farmbuild.soilSampleImporter')
       _isEmpty = validations.isEmpty,
       paddockGroups = {};
 
+    /**
+     * Get Paddocks in a given paddockGroup name
+     * @param {!object }FarmData
+     * @param paddockGroupName
+     * @returns {*}
+     */
     var paddocksInPaddockGroup = function(farmData, paddockGroupName){
       var paddockList = [];
 
@@ -33,19 +42,24 @@ angular.module('farmbuild.soilSampleImporter')
            }
 
       }
-      $log.info('paddockList '+paddockList);
       if(paddockList.length==0){return undefined;}
       return paddockList;
     }
     paddockGroups.paddocksInPaddockGroup = paddocksInPaddockGroup ;
 
 
+    /**
+     * Average over paddock soil sampleResults for teh given paddock group name
+     * @method averageForPaddockGroup
+     * @param {!object } FarmData
+     * @param paddockGroupName
+     * @returns {*}
+     */
     var averageForPaddockGroup = function(farmData, paddockGroupName){
       var groupPaddocks =  paddockGroups.paddocksInPaddockGroup(farmData, paddockGroupName);
       if(!_isDefined(groupPaddocks) || !(groupPaddocks.length>0)){
         return undefined;
       }
-//      $log.info(" zonePaddocks "+groupPaddocks);
       var allPaddockSoils = [];
       for(var i=0;i<groupPaddocks.length;i++){
         var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData,groupPaddocks[i]);
@@ -53,9 +67,7 @@ angular.module('farmbuild.soilSampleImporter')
         if(!_isDefined(soilsSamples)){
           continue;
         }
-        $log.info('soils samples for ' +groupPaddocks[i] +' is below \n'+soilsSamples);
         allPaddockSoils = allPaddockSoils.concat(soilsSamples);
-        $log.info('paddocks in zony '+allPaddockSoils);
       }
 
 
