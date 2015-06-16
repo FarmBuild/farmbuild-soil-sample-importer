@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soilSampleImporter.html">soilSampleImporter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter.html#.find">find</a></li><li data-type='method'><a href="module-soilSampleImporter.html#.load">load</a></li><li data-type='method'><a href="module-soilSampleImporter.html#~export">export</a></li></ul></li><li><a href="module-soilSampleImporter_importField.html">soilSampleImporter/importField</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importField.html#~getPaddockGroupFields">getPaddockGroupFields</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasAverage">hasAverage</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasClassification">hasClassification</a></li></ul></li><li><a href="module-soilSampleImporter_importFieldSelector.html">soilSampleImporter/importFieldSelector</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~autoLinkPaddock">autoLinkPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~classifyColumn">classifyColumn</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~connectRow">connectRow</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~createNew">createNew</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~declassifyColumn">declassifyColumn</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGoupValidator.html">soilSampleImporter/paddockGoupValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGoupValidator.html#~farmDataHasPaddockGroups">farmDataHasPaddockGroups</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGroups.html">soilSampleImporter/paddockGroups</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGroups.html#~averageForPaddockGroup">averageForPaddockGroup</a></li></ul></li><li><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html">soilSampleImporter/paddockSoilSampleRetriever</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~averagesForPaddock">averagesForPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~soilSamplesInPaddock">soilSamplesInPaddock</a></li></ul></li><li><a href="module-soilSampleImporter_soilClassification.html">soilSampleImporter/soilClassification</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRange">findRange</a></li><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRangeWithDependency">findRangeWithDependency</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleConverter.html">soilSampleImporter/soilSampleConverter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~createDefault">createDefault</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~toFarmData">toFarmData</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleValidator.html">soilSampleImporter/soilSampleValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidFarmDataWithSoilSample">isValidFarmDataWithSoilSample</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidSoilSampleResult">isValidSoilSampleResult</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>FarmBuild Soil Sample Importer</h1><p>This is the soil sample importer module of farm build JavaScript library.</p>
+<h2>Getting Started</h2><p>To get you started use the navigation on the left side of this page to explore different function of soil sample importer.</p>
+<h2>Units</h2><p>In all calculations we are using metric units.</p>
+<h2>Exception handling</h2><p>All functions return undefined in case that there is an error related to wrong input values.</p>
+<h2>Google Analytics for tracking API usage</h2><p>DEDJTR wants to understand the usage of the API, so please include the below API when you call calculate function.
+The track API calls GA using its own tracking name so you can embedded in your application even though you already have
+GA implementation.</p>
+<p>Example</p>
+<pre class="prettyprint source"><code>//Calling the calculate API
+farmbuild.soilSampleImporter.calculate(farmData);
+var organisationName = 'Spatial Vision';
+//Calling the track API for the usage
+farmbuild.soilSampleImporter.ga.trackSoilSampleImporter(organisationName);</code></pre></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Jun 16 2015 15:20:05 GMT+1000 (AEST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

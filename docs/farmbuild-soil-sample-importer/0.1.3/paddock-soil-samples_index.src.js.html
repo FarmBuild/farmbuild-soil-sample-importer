@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>paddock-soil-samples/index.src.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soilSampleImporter.html">soilSampleImporter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter.html#.find">find</a></li><li data-type='method'><a href="module-soilSampleImporter.html#.load">load</a></li><li data-type='method'><a href="module-soilSampleImporter.html#~export">export</a></li></ul></li><li><a href="module-soilSampleImporter_importField.html">soilSampleImporter/importField</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importField.html#~getPaddockGroupFields">getPaddockGroupFields</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasAverage">hasAverage</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasClassification">hasClassification</a></li></ul></li><li><a href="module-soilSampleImporter_importFieldSelector.html">soilSampleImporter/importFieldSelector</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~autoLinkPaddock">autoLinkPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~classifyColumn">classifyColumn</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~connectRow">connectRow</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~createNew">createNew</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~declassifyColumn">declassifyColumn</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGoupValidator.html">soilSampleImporter/paddockGoupValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGoupValidator.html#~farmDataHasPaddockGroups">farmDataHasPaddockGroups</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGroups.html">soilSampleImporter/paddockGroups</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGroups.html#~averageForPaddockGroup">averageForPaddockGroup</a></li></ul></li><li><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html">soilSampleImporter/paddockSoilSampleRetriever</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~averagesForPaddock">averagesForPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~soilSamplesInPaddock">soilSamplesInPaddock</a></li></ul></li><li><a href="module-soilSampleImporter_soilClassification.html">soilSampleImporter/soilClassification</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRange">findRange</a></li><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRangeWithDependency">findRangeWithDependency</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleConverter.html">soilSampleImporter/soilSampleConverter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~createDefault">createDefault</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~toFarmData">toFarmData</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleValidator.html">soilSampleImporter/soilSampleValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidFarmDataWithSoilSample">isValidFarmDataWithSoilSample</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidSoilSampleResult">isValidSoilSampleResult</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">paddock-soil-samples/index.src.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @since 0.0.1
+ * @copyright 2015 Spatial Vision, Inc. http://spatialvision.com.au
+ * @license The MIT License
+ * @author Spatial Vision
+ * @version 0.1.0
+ */
+'use strict';
+/**
+ * soilSampleImporter/paddockSoilSampleRetriever
+ * @module soilSampleImporter/paddockSoilSampleRetriever
+ */
+angular.module('farmbuild.soilSampleImporter')
+  .factory('paddockSoilSampleRetriever', function ($log, validations,importField) {
+
+    var _isDefined = validations.isDefined,
+      _isArray = validations.isArray,
+      _isEmpty = validations.isEmpty,
+      paddockSoilSampleRetriever = {};
+
+    /**
+     * Get all soil sampleResults for a given paddock name from the FarmData
+     * @method soilSamplesInPaddock
+     * @param FarmData
+     * @param paddockName
+     * @returns soil sampleResults array
+     * @public
+     */
+    paddockSoilSampleRetriever.soilSamplesInPaddock = function(farmData, paddockName){
+
+      if (!_isDefined(farmData)) {
+        $log.error('FarmData for soilSamplesInPaddock is invalid');
+        return undefined;
+      }
+
+      var paddock = farmData.paddocks;
+      $log.info('soilSamplesInPaddock main  '+paddock.length+' zzzzzz paddock '+JSON.stringify(paddock,null,"  "));
+      var singlePaddock,  paddockSoil;
+      for(var i=0;i&lt;paddock.length;i++){
+        singlePaddock = paddock[i];
+        $log.info('singlePaddock name '+singlePaddock.name);
+        if(singlePaddock.name == paddockName){
+          paddockSoil = singlePaddock.soils;
+          return paddockSoil.sampleResults;
+        }
+      }
+
+      $log.info('paddockSoil '+paddockSoil);
+      if(!_isDefined(paddockSoil) || !_isDefined(paddockSoil.sampleResults)){
+        return undefined;
+      }
+//      $log.info('paddockSoil after '+paddockSoil.sampleResults[0]);
+//      var singlesamples = paddockSoil.sampleResults[0];
+//      $log.info('singlesamples '+singlesamples['Sample Id']);
+//      return paddockSoil.sampleResults;
+
+    }
+
+    /**
+     * Average given soil sampleResult array values
+     * @method averagesForSoilSamples
+     * @param importFieldNames
+     * @param soilSamples
+     * @returns averaged
+     * @private
+     */
+    paddockSoilSampleRetriever.averagesForSoilSamples = function(importFieldNames, soilSamples){
+      if (!_isDefined(importFieldNames) || !(importFieldNames.length>0)) {
+        return undefined;
+      }
+      if (!_isDefined(soilSamples) || !(soilSamples.length>0)) {
+        return undefined;
+      }
+
+      /*
+       * data structure of columnValues {
+       *  "ph":{ sum: , count}
+       *  "pb":{ sum: , count}
+       * }
+       * */
+      var columnValues = {};
+      for(var i=0;i&lt;soilSamples.length;i++){
+        var singelSoilSample = soilSamples[i];
+        $log.info('singelSoilSample '+JSON.stringify(singelSoilSample,null,"  "));
+        $log.info('importFieldNames '+JSON.stringify(importFieldNames,null,"  "));
+
+        for(var j=0;j&lt;importFieldNames.length;j++){
+
+          var fieldValue = singelSoilSample[importFieldNames[j]];
+
+          if(_isEmpty(fieldValue ) || (isNaN(fieldValue)) || (fieldValue==null)){
+            continue;
+          }
+
+
+          var singleColumn = columnValues[importFieldNames[j]];
+          if(!_isDefined(singleColumn)){
+            singleColumn = {"sum": 0 , "count":0};
+          }
+          if(!importField.hasAverage(importFieldNames[j])){
+            singleColumn = null
+          }else{
+            singleColumn.sum=singleColumn.sum+fieldValue;
+            singleColumn.count=singleColumn.count+1;
+          }
+
+          columnValues[importFieldNames[j]]=singleColumn;
+
+        }
+      }
+      var averageValues = {};
+      for(var j=0;j&lt;importFieldNames.length;j++){
+        var singleColumn = columnValues[importFieldNames[j]];
+        if(!_isDefined(singleColumn)){
+          continue;
+        }
+        if(singleColumn==null){
+          averageValues[importFieldNames[j]]=null;
+
+        }else{
+          averageValues[importFieldNames[j]]=singleColumn.sum/singleColumn.count;
+        }
+      }
+
+      return averageValues;
+
+    }
+
+
+    /**
+     * Get average sampleResult values for a given paddock name
+     * @method averagesForPaddock
+     * @param farmData
+     * @param paddockName
+     * @returns {*}
+     * @public
+     */
+    paddockSoilSampleRetriever.averagesForPaddock = function(farmData, paddockName){
+      $log.info("averagesForPaddock");
+      var soilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData, paddockName);
+      $log.info("soilSamples "+soilSamples);
+      var soils= farmData.soils;
+      if(!_isDefined(soils)){
+        return undefined;
+      }
+      var sampleResults=soils.sampleResults;
+      if(!_isDefined(sampleResults)){
+        return undefined;
+      }
+      var importFields =sampleResults.importFieldNames;
+      if(!_isDefined(importFields)){
+        return undefined;
+      }
+      $log.info("b4 ret");
+      return paddockSoilSampleRetriever.averagesForSoilSamples(importFields,soilSamples);
+    }
+
+    return paddockSoilSampleRetriever;
+  });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Jun 16 2015 15:20:05 GMT+1000 (AEST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

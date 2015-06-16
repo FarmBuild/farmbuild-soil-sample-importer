@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>import-field-selector/index.src.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soilSampleImporter.html">soilSampleImporter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter.html#.find">find</a></li><li data-type='method'><a href="module-soilSampleImporter.html#.load">load</a></li><li data-type='method'><a href="module-soilSampleImporter.html#~export">export</a></li></ul></li><li><a href="module-soilSampleImporter_importField.html">soilSampleImporter/importField</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importField.html#~getPaddockGroupFields">getPaddockGroupFields</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasAverage">hasAverage</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasClassification">hasClassification</a></li></ul></li><li><a href="module-soilSampleImporter_importFieldSelector.html">soilSampleImporter/importFieldSelector</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~autoLinkPaddock">autoLinkPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~classifyColumn">classifyColumn</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~connectRow">connectRow</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~createNew">createNew</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~declassifyColumn">declassifyColumn</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGoupValidator.html">soilSampleImporter/paddockGoupValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGoupValidator.html#~farmDataHasPaddockGroups">farmDataHasPaddockGroups</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGroups.html">soilSampleImporter/paddockGroups</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGroups.html#~averageForPaddockGroup">averageForPaddockGroup</a></li></ul></li><li><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html">soilSampleImporter/paddockSoilSampleRetriever</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~averagesForPaddock">averagesForPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~soilSamplesInPaddock">soilSamplesInPaddock</a></li></ul></li><li><a href="module-soilSampleImporter_soilClassification.html">soilSampleImporter/soilClassification</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRange">findRange</a></li><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRangeWithDependency">findRangeWithDependency</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleConverter.html">soilSampleImporter/soilSampleConverter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~createDefault">createDefault</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~toFarmData">toFarmData</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleValidator.html">soilSampleImporter/soilSampleValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidFarmDataWithSoilSample">isValidFarmDataWithSoilSample</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidSoilSampleResult">isValidSoilSampleResult</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">import-field-selector/index.src.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @since 0.0.1
+ * @copyright 2015 Spatial Vision, Inc. http://spatialvision.com.au
+ * @license The MIT License
+ * @author Spatial Vision
+ * @version 0.1.0
+ */
+
+'use strict';
+/**
+ * soilSampleImporter/importFieldSelector
+ * @module soilSampleImporter/importFieldSelector
+ */
+angular.module('farmbuild.soilSampleImporter')
+    .factory('importFieldSelector',
+    function ($log, farmdata, soilSampleConverter, importFieldTypes,
+              collections, importFieldSelectionValidator) {
+        $log.info("importFieldSelector ");
+
+        var importFieldSelector = {},
+            _paddocks = [],
+            _types = importFieldTypes.toArray();
+
+        function _findPaddockWithName(paddocks, name) {
+            for(var i=0; i&lt;paddocks.length; i++) {
+                if (name.trim().toUpperCase() == paddocks[i].name.toUpperCase()) {
+                    return paddocks[i];
+                }
+            }
+            return undefined;
+        }
+
+        /**
+         * With the given new values create intermediate object
+         * defined as in {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault}.
+         * @method createNew
+         * @param FarmData
+         * @param columnHeaders
+         * @param rows
+         * @param paddockColumnIndex
+         * @returns {*}
+         */
+        importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
+
+            if(!importFieldSelectionValidator.validateCreateNew(columnHeaders, rows)) {
+                return undefined;
+            }
+            if (paddockColumnIndex&lt;0 || paddockColumnIndex>=columnHeaders.length) {
+                return undefined;
+            }
+
+            // insert column for farm paddock name
+            collections.add(columnHeaders, "Farm Paddock Name", paddockColumnIndex);
+
+            for(var i=0; i&lt;rows.length; i++) {
+                collections.add(rows[i], "", paddockColumnIndex);
+            }
+
+            _paddocks = myFarmData.paddocks;
+            importFieldSelector.paddocks = _paddocks;
+
+            var result= {
+                "dateLastUpdated": new Date(),
+                "results": {
+                    "columnHeaders": columnHeaders,
+                    "rows": rows
+                },
+                "importFieldDictionary": {},
+                "paddockRowDictionary": {},
+                "paddockNameColumn":paddockColumnIndex
+            };
+            return result;
+        }
+
+        importFieldSelector.validate = importFieldSelectionValidator.validateImportFieldsDefinition;
+
+
+        importFieldSelector.save = function(myFarmData, importFieldsDefinition) {
+            $log.info(JSON.stringify(importFieldsDefinition));
+
+            if (!importFieldSelectionValidator.validateImportFieldsDefinition(importFieldsDefinition)) {
+                return undefined;
+            }
+
+            for (var key in importFieldsDefinition.paddockRowDictionary) {
+                for(var i=0; i&lt;importFieldsDefinition.paddockRowDictionary[key].length; i++) {
+                    var rowIndex = importFieldsDefinition.paddockRowDictionary[key][i];
+                    importFieldsDefinition.results.rows[rowIndex][importFieldsDefinition.paddockNameColumn] = key;
+                }
+            }
+            $log.info(JSON.stringify(importFieldsDefinition));
+            return soilSampleConverter.toFarmData(myFarmData, importFieldsDefinition);
+
+        }
+
+
+
+        /**
+         * Given the column index of the CSV file, link the paddocks with the samples
+         * @method autoLinkPaddock
+         * @param importFieldsDefinition
+         * @param linkColumnIndex
+         */
+        importFieldSelector.autoLinkPaddock = function(importFieldsDefinition, linkColumnIndex) {
+            var linkedCount = 0;
+            if (linkColumnIndex == importFieldsDefinition.paddockNameColumn) {
+                return;
+            }
+            var mappedPaddock = Object.keys(importFieldsDefinition.paddockRowDictionary);
+            var mappedRowIndex = [];
+
+            for (var i=0; i&lt;mappedPaddock.length; i++) {
+                mappedRowIndex = mappedRowIndex.concat(importFieldsDefinition.paddockRowDictionary[mappedPaddock[i]]);
+            }
+
+            for(var i=0; i&lt;importFieldsDefinition.results.rows.length; i++) {
+                // If row is not yet mapped, map it
+                if (mappedRowIndex.indexOf(i)&lt;0 ) {
+                    var paddock = _findPaddockWithName(_paddocks, importFieldsDefinition.results.rows[i][linkColumnIndex]);
+
+                    if (paddock) {
+                        this.connectRow(importFieldsDefinition, paddock, i);
+                        linkedCount++;
+                    }
+                }
+            }
+
+            return linkedCount;
+        }
+
+        /**
+         * @method connectRow
+         * @param paddockSelection
+         * @param paddock
+         * @param rowIndex
+         */
+        importFieldSelector.connectRow =  function(paddockSelection, paddock, rowIndex) {
+            if (!paddockSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
+                paddockSelection.paddockRowDictionary[paddock.name]= [];
+            }
+            collections.add(paddockSelection.paddockRowDictionary[paddock.name], rowIndex);
+
+        }
+
+        importFieldSelector.disconnectRow =  function(paddockSelection, paddock, index) {
+            if (paddockSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
+                collections.remove(paddockSelection.paddockRowDictionary[paddock.name], index);
+            }
+        }
+
+        importFieldSelector.resetPaddockRowDictionary =  function(paddockSelection) {
+            paddockSelection.paddockRowDictionary = {};
+
+            return paddockSelection;
+        }
+
+        /**
+         * Add classification for column with given index
+         * @method classifyColumn
+         * @param paddockSelection
+         * @param classificationType
+         * @param index
+         */
+        importFieldSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
+            paddockSelection.importFieldDictionary[classificationType.name] = index;
+            $log.info("paddockSelection "+JSON.stringify(paddockSelection));
+        }
+
+        /**
+         * Remove classification for column with given index
+         * @method declassifyColumn
+         * @param paddockSelection
+         * @param classificationType
+         * @param index
+         */
+        importFieldSelector.declassifyColumn =  function(paddockSelection, classificationType, index) {
+            delete paddockSelection.importFieldDictionary[classificationType.name];
+        }
+
+
+        importFieldSelector.types = _types;
+        importFieldSelector.paddocks = _paddocks;
+
+        return importFieldSelector;
+    });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Jun 16 2015 15:20:05 GMT+1000 (AEST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

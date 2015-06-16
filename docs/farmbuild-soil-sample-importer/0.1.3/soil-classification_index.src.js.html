@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soilSampleImporter.html">soilSampleImporter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter.html#.find">find</a></li><li data-type='method'><a href="module-soilSampleImporter.html#.load">load</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soilSampleImporter.html">soilSampleImporter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter.html#.find">find</a></li><li data-type='method'><a href="module-soilSampleImporter.html#.load">load</a></li><li data-type='method'><a href="module-soilSampleImporter.html#~export">export</a></li></ul></li><li><a href="module-soilSampleImporter_importField.html">soilSampleImporter/importField</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importField.html#~getPaddockGroupFields">getPaddockGroupFields</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasAverage">hasAverage</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasClassification">hasClassification</a></li></ul></li><li><a href="module-soilSampleImporter_importFieldSelector.html">soilSampleImporter/importFieldSelector</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~autoLinkPaddock">autoLinkPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~classifyColumn">classifyColumn</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~connectRow">connectRow</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~createNew">createNew</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~declassifyColumn">declassifyColumn</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGoupValidator.html">soilSampleImporter/paddockGoupValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGoupValidator.html#~farmDataHasPaddockGroups">farmDataHasPaddockGroups</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGroups.html">soilSampleImporter/paddockGroups</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGroups.html#~averageForPaddockGroup">averageForPaddockGroup</a></li></ul></li><li><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html">soilSampleImporter/paddockSoilSampleRetriever</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~averagesForPaddock">averagesForPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~soilSamplesInPaddock">soilSamplesInPaddock</a></li></ul></li><li><a href="module-soilSampleImporter_soilClassification.html">soilSampleImporter/soilClassification</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRange">findRange</a></li><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRangeWithDependency">findRangeWithDependency</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleConverter.html">soilSampleImporter/soilSampleConverter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~createDefault">createDefault</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~toFarmData">toFarmData</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleValidator.html">soilSampleImporter/soilSampleValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidFarmDataWithSoilSample">isValidFarmDataWithSoilSample</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidSoilSampleResult">isValidSoilSampleResult</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -47,6 +47,10 @@
  */
 
 'use strict';
+/**
+ * soilSampleImporter/soilClassification
+ * @module soilSampleImporter/soilClassification
+ */
 angular.module('farmbuild.soilSampleImporter')
     .factory('soilClassification',
     function ($log, soilClassificationTypes, validations) {
@@ -102,7 +106,7 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Find the range for a given classification type and value
-         *
+         * @method findRange
          * @param classificationType
          * @param classificationValue
          */
@@ -126,7 +130,7 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Find the range for a given classification type, value, and type dependency value
-         *
+         * @method findRangeWithDependency
          * @param classificationType
          * @param classificationValue
          * @param dependencyValue
@@ -153,6 +157,25 @@ angular.module('farmbuild.soilSampleImporter')
             return undefined;
         }
 
+        soilClassification.classifyResult = function (sampleResult, key) {
+
+            var type = soilClassificationTypes.byName(key);
+
+            if (!type) {
+                return undefined;
+            }
+
+            return soilClassification.findRange(type, sampleResult[key]);
+
+            /*if (type.dependencyRange) {
+                return soilClassification.findRangeWithDependency(type, sampleResult[key],
+                    sampleResult[type.dependencyRange.name]);
+            }
+            else {
+                return soilClassification.findRange(type, sampleResult[key]);
+            }*/
+        }
+
         return soilClassification;
     });
 </code></pre>
@@ -167,7 +190,7 @@ angular.module('farmbuild.soilSampleImporter')
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Jun 02 2015 16:01:09 GMT+1000 (AEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Jun 16 2015 15:20:05 GMT+1000 (AEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
