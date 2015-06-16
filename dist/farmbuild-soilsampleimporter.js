@@ -504,7 +504,6 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockGroups", function
                 break;
             }
         }
-        $log.info("paddockList " + paddockList);
         if (paddockList.length == 0) {
             return undefined;
         }
@@ -522,9 +521,7 @@ angular.module("farmbuild.soilSampleImporter").factory("paddockGroups", function
             if (!_isDefined(soilsSamples)) {
                 continue;
             }
-            $log.info("soils samples for " + groupPaddocks[i] + " is below \n" + soilsSamples);
             allPaddockSoils = allPaddockSoils.concat(soilsSamples);
-            $log.info("paddocks in zony " + allPaddockSoils);
         }
         var soils = farmData.soils;
         if (!_isDefined(soils)) {
