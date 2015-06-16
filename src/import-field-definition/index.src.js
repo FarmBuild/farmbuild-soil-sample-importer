@@ -7,6 +7,10 @@
  */
 
 'use strict';
+/**
+ * soilSampleImporter/importField
+ * @module soilSampleImporter/importField
+ */
 angular.module('farmbuild.soilSampleImporter')
     .factory('importField',
     function ($log, importFieldTypes, validations) {
@@ -15,7 +19,7 @@ angular.module('farmbuild.soilSampleImporter')
 
       /**
        * Returns true if the given import field has a soilClassificationName value to it,
-       * based on the
+       * based on the {@link importFieldDefaults}
        * @method hasClassification
        * @param importFieldName
        * @returns {boolean}
@@ -29,7 +33,8 @@ angular.module('farmbuild.soilSampleImporter')
         };
 
       /**
-       *
+       * Returns true if its possible to average the given import field
+       * @method hasAverage
        * @param importFieldName
        * @returns {boolean}
        */
@@ -41,6 +46,11 @@ angular.module('farmbuild.soilSampleImporter')
             return false;
         };
 
+      /**
+       *
+       * @method getPaddockGroupFields
+       * @returns {Array}
+       */
         importField.getPaddockGroupFields = function() {
             var result = [];
             var allImportFields = importFieldTypes.toArray();

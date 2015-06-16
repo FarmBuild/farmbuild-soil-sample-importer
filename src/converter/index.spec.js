@@ -12,7 +12,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
   //define soil sample result converter
   var $log, soilSampleConverter, farmdataWithSoilSamples,
     soilImportResults,
-    fileFarmData ='farmdata-susan.json',
+    fileFarmData ='farmdata-susan-with-sample-import.json',
     fileFarmDataWithSoilSamples = 'farmdata-susan-with-sample.json',
     fileSoilImports = 'soil-sample-import-result.json';
 

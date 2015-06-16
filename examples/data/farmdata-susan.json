@@ -82,19 +82,7 @@
           ]
         ]
       },
-      "area": 0.72,
-      "soils": {
-        "sampleResults": [
-          {
-            "Farm Paddock Name": null,
-            "Sample Id": "123",
-            "Sample Name": "Front barn",
-            "pH H2O (Water)": 1,
-            "PBI": null,
-            "KCl 40 Sulphur (mg/kg)": 3
-          }
-        ]
-      }
+      "area": 0.72
     }
     ,
     {

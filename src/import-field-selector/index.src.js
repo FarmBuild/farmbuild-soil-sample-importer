@@ -7,7 +7,10 @@
  */
 
 'use strict';
-
+/**
+ * soilSampleImporter/importFieldSelector
+ * @module soilSampleImporter/importFieldSelector
+ */
 angular.module('farmbuild.soilSampleImporter')
     .factory('importFieldSelector',
     function ($log, farmdata, soilSampleConverter, importFieldTypes,
@@ -28,8 +31,10 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         *
-         * @param myFarmData
+         * With the given new values create intermediate object
+         * defined as in {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault}.
+         * @method createNew
+         * @param FarmData
          * @param columnHeaders
          * @param rows
          * @param paddockColumnIndex
@@ -91,7 +96,8 @@ angular.module('farmbuild.soilSampleImporter')
 
 
         /**
-         *
+         * Given the column index of the CSV file, link the paddocks with the samples
+         * @method autoLinkPaddock
          * @param importFieldsDefinition
          * @param linkColumnIndex
          */
@@ -123,7 +129,7 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         *
+         * @method connectRow
          * @param paddockSelection
          * @param paddock
          * @param rowIndex
@@ -150,6 +156,7 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Add classification for column with given index
+         * @method classifyColumn
          * @param paddockSelection
          * @param classificationType
          * @param index
@@ -160,7 +167,8 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * remove classification for column with given index
+         * Remove classification for column with given index
+         * @method declassifyColumn
          * @param paddockSelection
          * @param classificationType
          * @param index
