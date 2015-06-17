@@ -122,6 +122,7 @@ angular.module("farmbuild.soilSampleImporter").factory("soilSampleConverter", fu
             singlePaddock.soils = setSoilSamplResult(singlePaddock.soils, singlePaddockSoils);
             currentPaddocks[i] = singlePaddock;
         }
+        farmData.dateLastUpdated = newSampleResults.dateLastUpdated;
         farmData.soils = currentSoils;
         farmData.paddocks = currentPaddocks;
         return farmData;
