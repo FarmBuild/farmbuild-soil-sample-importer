@@ -17,7 +17,6 @@ For more information about API and Testing see the [Wiki](https://github.com/Far
 ### AngularJS example
 * <a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/examples/angularjs/index.html" target="_blank">Soil Sample - angularJS example</a>
 
-For more information about API and Testing see the  section.
 
 [![Build Status](https://travis-ci.org/FarmBuild/farmbuild-soil-sample-importer.svg?branch=master)](https://travis-ci.org/FarmBuild/farmbuild-soil-sample-importer)
 
