@@ -1,8 +1,8 @@
 /**
  * @since 0.0.1
- * @copyright 2015 Spatial Vision, Inc. http://spatialvision.com.au
+ * @copyright State of Victoria
  * @license The MIT License
- * @author Spatial Vision
+ * @author State of Victoria
  * @version 0.1.0
  */
 describe('farmbuild.soilSampleImporter module: paddockGoupValidator', function () {
