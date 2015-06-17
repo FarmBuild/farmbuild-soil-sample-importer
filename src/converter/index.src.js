@@ -129,6 +129,7 @@ angular.module('farmbuild.soilSampleImporter')
 
 
 
+      farmData.dateLastUpdated = newSampleResults.dateLastUpdated;
 
       farmData.soils = currentSoils;
       farmData.paddocks = currentPaddocks;
