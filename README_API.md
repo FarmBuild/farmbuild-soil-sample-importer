@@ -21,9 +21,7 @@ GA implementation.
 
 Example
 ```
-//Calling the calculate API
-farmbuild.soilSampleImporter.calculate(farmData);
-var organisationName = 'your organisation name';
+//var organisationName = 'your organisation name';
 //Calling the track API for the usage
 farmbuild.soilSampleImporter.ga.trackSoilSampleImporter(organisationName);
 ```
