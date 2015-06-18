@@ -23,7 +23,7 @@ Example
 ```
 //Calling the calculate API
 farmbuild.soilSampleImporter.calculate(farmData);
-var organisationName = 'Spatial Vision';
+var organisationName = 'your organisation name';
 //Calling the track API for the usage
 farmbuild.soilSampleImporter.ga.trackSoilSampleImporter(organisationName);
 ```

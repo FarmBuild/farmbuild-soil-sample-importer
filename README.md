@@ -11,7 +11,7 @@ Unzip the downloaded folder and go to "examples" and open one of the html files 
 
 For more information about API and Testing see the [Wiki](https://github.com/FarmBuild/farmbuild-soil-sample-importer/wiki) section.
 
-<a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/docs/farmbuild-soil-sample-importer/0.1.3/index.html" target="_blank">API documentation</a>
+<a href="https://rawgit.com/FarmBuild/farmbuild-soil-sample-importer/master/docs/farmbuild-soil-sample-importer/1.0.0/index.html" target="_blank">API documentation</a>
 
 
 ### AngularJS example
