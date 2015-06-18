@@ -1,9 +1,8 @@
 /**
  * @since 0.0.1
  * @copyright State of Victoria
- * @license The MIT License
  * @author State of Victoria
- * @version 0.1.0
+ * @version 1.0.0
  */
 'use strict';
 /**
