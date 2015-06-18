@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>paddock-groups/index.src.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soilSampleImporter.html">soilSampleImporter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter.html#.find">find</a></li><li data-type='method'><a href="module-soilSampleImporter.html#.load">load</a></li><li data-type='method'><a href="module-soilSampleImporter.html#~export">export</a></li></ul></li><li><a href="module-soilSampleImporter_importField.html">soilSampleImporter/importField</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importField.html#~getPaddockGroupFields">getPaddockGroupFields</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasAverage">hasAverage</a></li><li data-type='method'><a href="module-soilSampleImporter_importField.html#~hasClassification">hasClassification</a></li></ul></li><li><a href="module-soilSampleImporter_importFieldSelectionValidator.html">soilSampleImporter/importFieldSelectionValidator</a></li><li><a href="module-soilSampleImporter_importFieldSelector.html">soilSampleImporter/importFieldSelector</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~autoLinkPaddock">autoLinkPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~classifyColumn">classifyColumn</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~connectRow">connectRow</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~createNew">createNew</a></li><li data-type='method'><a href="module-soilSampleImporter_importFieldSelector.html#~declassifyColumn">declassifyColumn</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGoupValidator.html">soilSampleImporter/paddockGoupValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGoupValidator.html#~farmDataHasPaddockGroups">farmDataHasPaddockGroups</a></li></ul></li><li><a href="module-soilSampleImporter_paddockGroups.html">soilSampleImporter/paddockGroups</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockGroups.html#~averageForPaddockGroup">averageForPaddockGroup</a></li></ul></li><li><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html">soilSampleImporter/paddockSoilSampleRetriever</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~averagesForPaddock">averagesForPaddock</a></li><li data-type='method'><a href="module-soilSampleImporter_paddockSoilSampleRetriever.html#~soilSamplesInPaddock">soilSamplesInPaddock</a></li></ul></li><li><a href="module-soilSampleImporter_soilClassification.html">soilSampleImporter/soilClassification</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRange">findRange</a></li><li data-type='method'><a href="module-soilSampleImporter_soilClassification.html#~findRangeWithDependency">findRangeWithDependency</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleConverter.html">soilSampleImporter/soilSampleConverter</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~createDefault">createDefault</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleConverter.html#~toFarmData">toFarmData</a></li></ul></li><li><a href="module-soilSampleImporter_soilSampleValidator.html">soilSampleImporter/soilSampleValidator</a><ul class='methods'><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidFarmDataWithSoilSample">isValidFarmDataWithSoilSample</a></li><li data-type='method'><a href="module-soilSampleImporter_soilSampleValidator.html#~isValidSoilSampleResult">isValidSoilSampleResult</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">paddock-groups/index.src.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @since 0.0.1
+ * @copyright State of Victoria
+ * @author State of Victoria
+ * @version 1.0.0
+ */
+'use strict';
+/**
+ * soilSampleImporter/paddockGroups
+ * @module soilSampleImporter/paddockGroups
+ */
+
+angular.module('farmbuild.soilSampleImporter')
+  .factory('paddockGroups', function ($log, farmdata, validations, paddockGoupValidator, paddockSoilSampleRetriever) {
+
+    var _isDefined = validations.isDefined,
+      _isArray = validations.isArray,
+      _isEmpty = validations.isEmpty,
+      paddockGroups = {};
+
+    /**
+     * Get Paddocks in a given paddockGroup name
+     * @param {!object }FarmData
+     * @param paddockGroupName
+     * @returns {*}
+     */
+    var paddocksInPaddockGroup = function(farmData, paddockGroupName){
+      var paddockList = [];
+
+      if(!paddockGoupValidator.farmDataHasPaddockGroups(farmData)){
+        return undefined;
+      }
+
+      var paddockGroups = farmData.paddockGroups;
+
+      for(var i=0;i&lt;paddockGroups.length;i++){
+          var singleGroup = paddockGroups[i];
+           if(singleGroup.name == paddockGroupName){
+             paddockList = singleGroup.paddocks;
+             break;
+           }
+
+      }
+      if(paddockList.length==0){return undefined;}
+      return paddockList;
+    }
+    paddockGroups.paddocksInPaddockGroup = paddocksInPaddockGroup ;
+
+
+    /**
+     * Average over paddock soil sampleResults for teh given paddock group name
+     * @method averageForPaddockGroup
+     * @param {!object } FarmData
+     * @param paddockGroupName
+     * @returns {*}
+     */
+    var averageForPaddockGroup = function(farmData, paddockGroupName){
+      var groupPaddocks =  paddockGroups.paddocksInPaddockGroup(farmData, paddockGroupName);
+      if(!_isDefined(groupPaddocks) || !(groupPaddocks.length>0)){
+        return undefined;
+      }
+      var allPaddockSoils = [];
+      for(var i=0;i&lt;groupPaddocks.length;i++){
+        var soilsSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(farmData,groupPaddocks[i]);
+
+        if(!_isDefined(soilsSamples)){
+          continue;
+        }
+        allPaddockSoils = allPaddockSoils.concat(soilsSamples);
+      }
+
+
+
+      var soils= farmData.soils;
+      if(!_isDefined(soils)){
+        return undefined;
+      }
+      var sampleResults=soils.sampleResults;
+      if(!_isDefined(sampleResults)){
+        return undefined;
+      }
+      var importFields =sampleResults.importFieldNames;
+      if(!_isDefined(importFields)){
+        return undefined;
+      }
+
+      var averageGroup = paddockSoilSampleRetriever.averagesForSoilSamples(importFields,allPaddockSoils);
+      $log.info('allPaddockSoils '+ +JSON.stringify(averageGroup,null,"  "));
+      return averageGroup;
+    }
+    paddockGroups.averageForPaddockGroup=averageForPaddockGroup;
+
+    return paddockGroups;
+  });</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Thu Jun 18 2015 16:22:02 GMT+1000 (AEST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
