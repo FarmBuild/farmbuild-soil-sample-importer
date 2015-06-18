@@ -34,11 +34,11 @@ angular.module('farmbuild.soilSampleImporter')
          * With the given new values create intermediate object
          * defined as in {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault}.
          * @method createNew
-         * @param FarmData
-         * @param columnHeaders
-         * @param rows
-         * @param paddockColumnIndex
-         * @returns {*}
+         * @param (Object) FarmData - farm data object
+         * @param (string[]) columnHeaders - array of column headers
+         * @param (Array.<string[]>>) rows - nested array of CSV data with column values as the inner array
+         * @param (number) paddockColumnIndex - column index to insert the farm paddock selection value.
+         * @returns {object} importFieldsSelection - temporary object to hold data during soil import process.
          */
         importFieldSelector.createNew = function(myFarmData, columnHeaders, rows, paddockColumnIndex) {
 
@@ -75,49 +75,54 @@ angular.module('farmbuild.soilSampleImporter')
         importFieldSelector.validate = importFieldSelectionValidator.validateImportFieldsDefinition;
 
 
-        importFieldSelector.save = function(myFarmData, importFieldsDefinition) {
+        /**
+         * Saves the soil sample data back into farm data object in session.  Internally will validate first.
+         * @param myFarmData
+         * @param importFieldsSelection
+         */
+        importFieldSelector.save = function(myFarmData, importFieldsSelection) {
 
-            if (!importFieldSelectionValidator.validateImportFieldsDefinition(importFieldsDefinition)) {
+            if (!importFieldSelectionValidator.validateImportFieldsDefinition(importFieldsSelection)) {
                 return undefined;
             }
 
-            for (var key in importFieldsDefinition.paddockRowDictionary) {
-                for(var i=0; i<importFieldsDefinition.paddockRowDictionary[key].length; i++) {
-                    var rowIndex = importFieldsDefinition.paddockRowDictionary[key][i];
-                    importFieldsDefinition.results.rows[rowIndex][importFieldsDefinition.paddockNameColumn] = key;
+            for (var key in importFieldsSelection.paddockRowDictionary) {
+                for(var i=0; i<importFieldsSelection.paddockRowDictionary[key].length; i++) {
+                    var rowIndex = importFieldsSelection.paddockRowDictionary[key][i];
+                    importFieldsSelection.results.rows[rowIndex][importFieldsSelection.paddockNameColumn] = key;
                 }
             }
-            return soilSampleConverter.toFarmData(myFarmData, importFieldsDefinition);
+            return soilSampleConverter.toFarmData(myFarmData, importFieldsSelection);
 
         }
 
 
 
         /**
-         * Given the column index of the CSV file, link the paddocks with the samples
+         * Given the column index of the CSV file, link the paddocks with the sample rows
          * @method autoLinkPaddock
-         * @param importFieldsDefinition
+         * @param importFieldsSelection
          * @param linkColumnIndex
          */
-        importFieldSelector.autoLinkPaddock = function(importFieldsDefinition, linkColumnIndex) {
+        importFieldSelector.autoLinkPaddock = function(importFieldsSelection, linkColumnIndex) {
             var linkedCount = 0;
-            if (linkColumnIndex == importFieldsDefinition.paddockNameColumn) {
+            if (linkColumnIndex == importFieldsSelection.paddockNameColumn) {
                 return;
             }
-            var mappedPaddock = Object.keys(importFieldsDefinition.paddockRowDictionary);
+            var mappedPaddock = Object.keys(importFieldsSelection.paddockRowDictionary);
             var mappedRowIndex = [];
 
             for (var i=0; i<mappedPaddock.length; i++) {
-                mappedRowIndex = mappedRowIndex.concat(importFieldsDefinition.paddockRowDictionary[mappedPaddock[i]]);
+                mappedRowIndex = mappedRowIndex.concat(importFieldsSelection.paddockRowDictionary[mappedPaddock[i]]);
             }
 
-            for(var i=0; i<importFieldsDefinition.results.rows.length; i++) {
+            for(var i=0; i<importFieldsSelection.results.rows.length; i++) {
                 // If row is not yet mapped, map it
                 if (mappedRowIndex.indexOf(i)<0 ) {
-                    var paddock = _findPaddockWithName(_paddocks, importFieldsDefinition.results.rows[i][linkColumnIndex]);
+                    var paddock = _findPaddockWithName(_paddocks, importFieldsSelection.results.rows[i][linkColumnIndex]);
 
                     if (paddock) {
-                        this.connectRow(importFieldsDefinition, paddock, i);
+                        this.connectRow(importFieldsSelection, paddock, i);
                         linkedCount++;
                     }
                 }
@@ -127,22 +132,29 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
+         * Associate the row with the given index to a farm paddock
          * @method connectRow
-         * @param paddockSelection
+         * @param importFieldsSelection
          * @param paddock
          * @param rowIndex
          */
-        importFieldSelector.connectRow =  function(paddockSelection, paddock, rowIndex) {
-            if (!paddockSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
-                paddockSelection.paddockRowDictionary[paddock.name]= [];
+        importFieldSelector.connectRow =  function(importFieldsSelection, paddock, rowIndex) {
+            if (!importFieldsSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
+                importFieldsSelection.paddockRowDictionary[paddock.name]= [];
             }
-            collections.add(paddockSelection.paddockRowDictionary[paddock.name], rowIndex);
+            collections.add(importFieldsSelection.paddockRowDictionary[paddock.name], rowIndex);
 
         }
 
-        importFieldSelector.disconnectRow =  function(paddockSelection, paddock, index) {
-            if (paddockSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
-                collections.remove(paddockSelection.paddockRowDictionary[paddock.name], index);
+        /**
+         * Remove association between the row identified by index with the paddock
+         * @param importFieldsSelection
+         * @param paddock
+         * @param index
+         */
+        importFieldSelector.disconnectRow =  function(importFieldsSelection, paddock, index) {
+            if (importFieldsSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
+                collections.remove(importFieldsSelection.paddockRowDictionary[paddock.name], index);
             }
         }
 
@@ -155,13 +167,13 @@ angular.module('farmbuild.soilSampleImporter')
         /**
          * Add classification for column with given index
          * @method classifyColumn
-         * @param paddockSelection
+         * @param importFieldsSelection
          * @param classificationType
          * @param index
          */
-        importFieldSelector.classifyColumn =  function(paddockSelection, classificationType, index) {
-            paddockSelection.importFieldDictionary[classificationType.name] = index;
-            $log.info("paddockSelection "+JSON.stringify(paddockSelection));
+        importFieldSelector.classifyColumn =  function(importFieldsSelection, classificationType, index) {
+            importFieldsSelection.importFieldDictionary[classificationType.name] = index;
+            //$log.info("paddockSelection "+JSON.stringify(importFieldsSelection));
         }
 
         /**

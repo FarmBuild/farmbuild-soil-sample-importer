@@ -7,6 +7,10 @@
  */
 'use strict';
 
+/**
+ * soilSampleImporter/importFieldSelectionValidator
+ * @module soilSampleImporter/importFieldSelectionValidator
+ */
 angular.module('farmbuild.soilSampleImporter')
     .factory('importFieldSelectionValidator', function ($log, validations, importFieldTypes) {
         var importFieldSelectionValidator = {};
@@ -19,6 +23,12 @@ angular.module('farmbuild.soilSampleImporter')
             return true;
         }
 
+        /**
+         * Check that  csv data is acceptable for the soil sample import process
+         * @param columnHeaders
+         * @param rows
+         * @returns {boolean}
+         */
         importFieldSelectionValidator.validateCreateNew = function(columnHeaders, rows) {
             if (!validations.isDefined(columnHeaders) || columnHeaders.length == 0) {
                 $log.error("Soil import column headers must be a valid array");
@@ -39,16 +49,21 @@ angular.module('farmbuild.soilSampleImporter')
             return true;
         }
 
-        importFieldSelectionValidator.validateImportFieldsDefinition = function(importFieldsDefinition) {
+        /**
+         * Check that the soil sample import process is ready to export to farm data
+         * @param importFieldsSelection
+         * @returns {boolean}
+         */
+        importFieldSelectionValidator.validateImportFieldsDefinition = function(importFieldsSelection) {
 
             //Ensure at least 1 paddock is associated to a csv row.
-            if (validations.isEmpty(importFieldsDefinition.paddockRowDictionary) ||
-                    _isEmptyObject(importFieldsDefinition.paddockRowDictionary)) {
+            if (validations.isEmpty(importFieldsSelection.paddockRowDictionary) ||
+                    _isEmptyObject(importFieldsSelection.paddockRowDictionary)) {
                 return false;
             }
 
             $log.info('importFieldTypes ', JSON.stringify(importFieldTypes.toArray()));
-            if (importFieldTypes.toArray().length != Object.keys(importFieldsDefinition.importFieldDictionary).length) {
+            if (importFieldTypes.toArray().length != Object.keys(importFieldsSelection.importFieldDictionary).length) {
                 return false;
             }
 

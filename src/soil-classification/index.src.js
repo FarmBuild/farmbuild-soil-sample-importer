@@ -46,6 +46,8 @@ angular.module('farmbuild.soilSampleImporter')
             if (index>=0 && index < classificationRange.name.length) {
                 var result = {};
                 result.name = classificationRange.name[index];
+                result.min= classificationRange.min[index];
+                result.max= classificationRange.max[index];
                 result.defaultColor = classificationRange.defaultColor[index];
                 return result;
             }
@@ -117,6 +119,13 @@ angular.module('farmbuild.soilSampleImporter')
             return undefined;
         }
 
+        /**
+         * Return the classification for the measurement (identified by the key) in the given soil sample result
+         *
+         * @param sampleResult
+         * @param key
+         * @returns {*}
+         */
         soilClassification.classifyResult = function (sampleResult, key) {
 
             var type = soilClassificationTypes.byName(key);
