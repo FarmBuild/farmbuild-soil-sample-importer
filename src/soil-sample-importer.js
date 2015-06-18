@@ -54,7 +54,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core', 'farmbuild.far
          * Loads the farmData into the session.
          * If the farmData has no soilSampleImporter section, then append one
          * @method load
-         * @param {!object} FarmData -
+         * @param {object} FarmData -
          * @returns {object} the FarmData stored in session, undefined if the farmData is invalid
          * @public
          * @static
