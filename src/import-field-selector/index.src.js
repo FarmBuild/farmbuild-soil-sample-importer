@@ -76,7 +76,6 @@ angular.module('farmbuild.soilSampleImporter')
 
 
         importFieldSelector.save = function(myFarmData, importFieldsDefinition) {
-            $log.info(JSON.stringify(importFieldsDefinition));
 
             if (!importFieldSelectionValidator.validateImportFieldsDefinition(importFieldsDefinition)) {
                 return undefined;
@@ -88,7 +87,6 @@ angular.module('farmbuild.soilSampleImporter')
                     importFieldsDefinition.results.rows[rowIndex][importFieldsDefinition.paddockNameColumn] = key;
                 }
             }
-            $log.info(JSON.stringify(importFieldsDefinition));
             return soilSampleConverter.toFarmData(myFarmData, importFieldsDefinition);
 
         }
