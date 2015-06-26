@@ -5,7 +5,7 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
 
   //access test data under data dir
   beforeEach(function () {
-    fixture.setBase('examples/data')
+    fixture.setBase('src/unit-test-data')
   });
 
 
@@ -36,7 +36,7 @@ describe('farmbuild.soilSampleImporter module: paddockSoilSampleRetriever', func
       expect(loadedFarmData).toBeDefined();
       var paddockSoilSamples = paddockSoilSampleRetriever.soilSamplesInPaddock(loadedFarmData,"P1");
       expect(paddockSoilSamples).toBeDefined();
-      $log.info('paddockSoilSamples qqq'+JSON.stringify(paddockSoilSamples,null,"  "));
+      //$log.info('paddockSoilSamples qqq'+JSON.stringify(paddockSoilSamples,null,"  "));
       expect(paddockSoilSamples.length).toBeGreaterThan(0);
       $log.info(paddockSoilSamples[0]);
 

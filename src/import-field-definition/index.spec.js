@@ -2,7 +2,7 @@
 
 describe('farmbuild.soilSampleImporter.importField module', function() {
     beforeEach(function () {
-        fixture.setBase('examples/data')
+        fixture.setBase('src/unit-test-data')
     });
 
     beforeEach(module('farmbuild.farmdata', function($provide) {

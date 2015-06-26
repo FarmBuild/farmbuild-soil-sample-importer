@@ -36,7 +36,7 @@ module.exports = function(config){
         'src/blank.spec.js',//use this as a basis of creating your module test
         'src/session/index.spec.js',
       'src/**/*.spec.js',
-      {pattern: 'examples/data/*.json'}
+      {pattern: 'src/unit-test-data/*.json'}
     ],
 
     autoWatch : true,

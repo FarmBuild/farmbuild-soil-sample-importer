@@ -11,7 +11,7 @@ describe('farmbuild.soilSampleImporter module: paddockGoupValidator', function (
 
   //access test data under data dir
   beforeEach(function () {
-    fixture.setBase('examples/data')
+    fixture.setBase('src/unit-test-data')
   });
 
 

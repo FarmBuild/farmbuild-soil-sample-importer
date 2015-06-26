@@ -2,7 +2,7 @@
 
 describe('farmbuild.soilSampleImporter module', function() {
   beforeEach(function() {
-    fixture.setBase('examples/data')
+    fixture.setBase('src/unit-test-data')
   })
 
   // instantiate service

@@ -5,7 +5,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
 
   //access test data under data dir
   beforeEach(function () {
-    fixture.setBase('examples/data')
+    fixture.setBase('src/unit-test-data')
   });
 
 
@@ -82,7 +82,7 @@ describe('farmbuild.soilSampleImporter module: soilSampleConverter', function ()
       expect(soilSampleResults).toBeDefined();
 
       var farmDataWithSoilSamples = soilSampleConverter.toFarmData(farmDataWithoutSoilSample,soilSampleResults);
-     $log.info('farmDataWithSoilSamples after conversion '+JSON.stringify(farmDataWithSoilSamples,null,'    '));
+     //$log.info('farmDataWithSoilSamples after conversion '+JSON.stringify(farmDataWithSoilSamples,null,'    '));
      expect(farmDataWithSoilSamples).toBeDefined();
 
       var soils = farmDataWithSoilSamples.soils;
