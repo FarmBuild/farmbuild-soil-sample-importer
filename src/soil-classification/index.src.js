@@ -66,10 +66,12 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Find the range for a given classification type and value
+         * Find the range for a given classification type and value. Returns undefined if classificationType is invalid or no value found.
          * @method findRange
-         * @param classificationType
-         * @param classificationValue
+         * @param {string} classificationType Should be a type existent in the <a href="https://raw.githubusercontent.com/FarmBuild/farmbuild-soil-sample-importer/master/src/soil-classification/defaults.conf.src.js">
+         *   default.conf.src.js</a> file
+         * @param {float} classificationValue Value of the given classificationType
+         * @returns {object} Object containing name,min,max,defaultColor
          */
         soilClassification.findRange = function (classificationType, classificationValue) {
             
@@ -92,10 +94,11 @@ angular.module('farmbuild.soilSampleImporter')
         /**
          * Find the range for a given classification type, value, and type dependency value
          * @method findRangeWithDependency
-         * @param classificationType
-         * @param classificationValue
-         * @param dependencyValue
-         * @returns {*}
+         * @param {string} classificationType String name of the classificationType as defined in <a href="https://raw.githubusercontent.com/FarmBuild/farmbuild-soil-sample-importer/master/src/soil-classification/defaults.conf.src.js">
+         *   default.conf.src.js</a> file
+         * @param {float} classificationValue Value of the classificationType
+         * @param {float} dependencyValue Value of the classificationType which defines the classificationType in question
+         * @returns {object} Object containing name,min,max,defaultColor ???
          */
         soilClassification.findRangeWithDependency = function (classificationType, classificationValue,
                                                  dependencyValue) {
@@ -120,7 +123,7 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Return the classification for the measurement (identified by the key) in the given soil sample result
-         *
+         * ????
          * @param sampleResult
          * @param key
          * @returns {*}
@@ -135,13 +138,6 @@ angular.module('farmbuild.soilSampleImporter')
 
             return soilClassification.findRange(type, sampleResult[key]);
 
-            /*if (type.dependencyRange) {
-                return soilClassification.findRangeWithDependency(type, sampleResult[key],
-                    sampleResult[type.dependencyRange.name]);
-            }
-            else {
-                return soilClassification.findRange(type, sampleResult[key]);
-            }*/
         }
 
         return soilClassification;

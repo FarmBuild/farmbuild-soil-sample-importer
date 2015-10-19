@@ -41,7 +41,7 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core', 'farmbuild.far
         /**
          * Finds the farmData from the session.
          * @method find
-         * @returns {object} the farmData stored in session, undefined if the farmData is found in session
+         * @returns {object} the FarmData stored in session, undefined if the FarmData is not found in session
          * @public
          * @static
          */
@@ -51,10 +51,10 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core', 'farmbuild.far
 
         /**
          * Loads the farmData into the session.
-         * If the farmData has no soilSampleImporter section, then append one
+         * If the farmData has no soilSampleImporter section, then will append one
          * @method load
          * @param {object} FarmData -
-         * @returns {object} the FarmData stored in session, undefined if the farmData is invalid
+         * @returns {object} the FarmData stored in session, undefined if the FarmData is invalid
          * @public
          * @static
          */
@@ -77,11 +77,14 @@ angular.module('farmbuild.soilSampleImporter', ['farmbuild.core', 'farmbuild.far
             return loaded;
         };
 
-        /**
-         * Export FarmData contained in the session
-         * @method export
-         * @type {export}
-         */
+      /**
+       * Saves and exports the farmData.json with a file name: farmdata-NAME_OF_FILE-yyyyMMddHHmmss.json
+       * It creates an element with 'download' attribute, the data is attached to href
+       * and invoke click() function so the user gets the file save dialogue or something equivalent.
+       * @method export
+       * @param {object} document
+       * @param {object} FarmData
+       */
         soilSampleImporter.export = soilSampleImporterSession.export;
 
 

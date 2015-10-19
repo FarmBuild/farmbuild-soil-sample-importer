@@ -19,10 +19,10 @@ angular.module('farmbuild.soilSampleImporter')
       paddockGroups = {};
 
     /**
-     * Get Paddocks in a given paddockGroup name
-     * @param {!object }FarmData
-     * @param paddockGroupName
-     * @returns {*}
+     * Check paddockGroups block and get paddocks for the given paddockGroups name. Undefined if no paddocks found of if FarmData is undefined.
+     * @param {!object } FarmData valid FardmData object
+     * @param {string} paddockGroupName name of the paddock group in the paddockGroups block in FarmData
+     * @returns {array} Array of paddock names
      */
     var paddocksInPaddockGroup = function(farmData, paddockGroupName){
       var paddockList = [];
@@ -48,11 +48,11 @@ angular.module('farmbuild.soilSampleImporter')
 
 
     /**
-     * Average over paddock soil sampleResults for teh given paddock group name
+     * Average over paddock soil sampleResults for the given paddock group name
      * @method averageForPaddockGroup
-     * @param {!object } FarmData
-     * @param paddockGroupName
-     * @returns {*}
+     * @param {!object} FarmData Valid FardmData object
+     * @param {!string} paddockGroupName Name of the paddock group in the paddockGroups block in FarmData
+     * @returns {float} Average value of soil sampleResults
      */
     var averageForPaddockGroup = function(farmData, paddockGroupName){
       var groupPaddocks =  paddockGroups.paddocksInPaddockGroup(farmData, paddockGroupName);

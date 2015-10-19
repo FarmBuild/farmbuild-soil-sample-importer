@@ -34,7 +34,7 @@ angular.module('farmbuild.soilSampleImporter')
       /**
        * Returns true if its possible to average the given import field
        * @method hasAverage
-       * @param importFieldName
+       * @param importFieldName {string}
        * @returns {boolean}
        */
         importField.hasAverage = function (importFieldName) {

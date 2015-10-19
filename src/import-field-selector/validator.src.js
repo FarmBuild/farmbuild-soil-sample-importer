@@ -23,10 +23,11 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Check that  csv data is acceptable for the soil sample import process
+         * Check if the csv data is acceptable for the soil sample import process
          * @param columnHeaders
          * @param rows
          * @returns {boolean}
+         * @private
          */
         importFieldSelectionValidator.validateCreateNew = function(columnHeaders, rows) {
             if (!validations.isDefined(columnHeaders) || columnHeaders.length == 0) {
