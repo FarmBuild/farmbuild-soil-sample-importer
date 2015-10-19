@@ -52,9 +52,9 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Average given soil sampleResult array values
      * @method averagesForSoilSamples
-     * @param {array} importFieldNames Array of string values containing the field names
-     * @param soilSamples
-     * @returns averaged
+     * @param {array} importFieldNames Array of string values containing the field names which are to be imported
+     * @param {array} soilSamples Object array containing values for each import field grouped by soil samples
+     * @returns {array} Array of float values averaged over soil samples for each import field
      * @private
      */
     paddockSoilSampleRetriever.averagesForSoilSamples = function(importFieldNames, soilSamples){
@@ -121,11 +121,11 @@ angular.module('farmbuild.soilSampleImporter')
 
 
     /**
-     * Get average sampleResult values for a given paddock name <a href="import-field-definition/defaults.conf.src.js">dist </a>
+     * Get average sampleResult values for a given paddock name
      * @method averagesForPaddock
-     * @param farmData
-     * @param paddockName
-     * @returns {*}
+     * @param {object} FarmData FarmData object
+     * @param {string} paddockName Name of the paddock which should be in the FarmData
+     * @returns  {array} Array of float values averaged over soil samples for each import field for the given paddock
      * @public
      */
     paddockSoilSampleRetriever.averagesForPaddock = function(farmData, paddockName){

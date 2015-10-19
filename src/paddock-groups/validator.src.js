@@ -21,8 +21,8 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Returns true if the given FarmData block has paddockGroups defined in it
      * @method farmDataHasPaddockGroups
-     * @param FarmData
-     * @returns {boolean}
+     * @param {object} FarmData Valid FarmData object
+     * @returns {boolean} will return false if the given FarmData is of invalid structure
      */
     paddockGoupValidator.farmDataHasPaddockGroups = function(farmData){
       if (!_isDefined(farmData)) {
