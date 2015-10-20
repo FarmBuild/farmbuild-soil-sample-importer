@@ -68,13 +68,13 @@
                 </td>
             </tr>
             <tfoot ng-init="avg = getPaddockAverage(farmData, paddock.name)">
-                <tr >
+                <tr>
                     <td>Average:</td>
-                    <td ng-repeat="fieldName in paddockFieldNames" >
+                    <td ng-repeat="fieldName in paddockFieldNames">
                         {{avg[fieldName] ? (avg[fieldName] | number:2) : 'N/A'}}
                     </td>
                 </tr>
-                <tr >
+                <tr>
                     <td>Classification:</td>
                     <td ng-repeat="fieldName in paddockFieldNames" ng-init="cls = getSampleResultClassification(avg, fieldName)">
                         <span ng-style="{'background-color': cls.defaultColor}">
