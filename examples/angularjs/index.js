@@ -13,18 +13,34 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
         $scope.paddockGroups = [];
         $scope.paddockGroupFieldNames = [];
 
+    /**
+     * This is called when a file is been uploaded through the example page "Choose File" button.
+     * will evaluate the uploaded file to see if it is a valid FarmData json.
+     * @param $fileContent
+     */
         $scope.loadFarmData = function ($fileContent) {
             $log.info('FarmCtrl>>loadFarmData>>start');
-            soilSampleImporter.ga.trackSoilSampleImporter('AgSmart');
+          /**
+           * Send API usage statistics to GoogleAnalytics. In this example the client name is 'farmbuild-test-client'
+           */
+            soilSampleImporter.ga.trackSoilSampleImporter('farmbuild-test-client');
             try {
                 $scope.farmData = {};
+              /**
+               * Load given file data in to session if it is a valid FarmData json. If invalid FarmData will return undefined.
+               */
                 var farmData = soilSampleImporter.load(angular.fromJson($fileContent));
                 $log.info('FarmCtrl>>loadFarmData');
+              /**
+               * If FarmData is invalid the returned value will be undefined.
+               */
                 if (!angular.isDefined(farmData)) {
                     $scope.noResult = true;
                     return;
                 }
-
+              /**
+               * FarmData is defined.
+               */
                 updateFarmData($scope, farmData);
                 $scope.prettyContent = JSON.stringify(farmData, null, "    ");
             } catch (e) {
@@ -33,12 +49,22 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             }
         };
 
+        /**
+         * Export the FarmData which is already in session as a json file
+         * @param farmData
+         */
         $scope.exportFarmData = function (farmData) {
             var url = 'data:application/json;charset=utf8,' + encodeURIComponent(JSON.stringify(farmData, undefined, 2));
             window.open(url, '_blank');
             window.focus();
         };
 
+        /**
+         * Get object containing name,min,max,defaultColor for the given string key value
+         * @param sampleResult
+         * @param key
+         * @return {*}
+         */
         $scope.getSampleResultClassification = function(sampleResult, key) {
             if (!sampleResult) {
                 $log.info('avg result is undefined');
@@ -51,14 +77,29 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             return "N/A";
         }
 
+        /**
+         * Get average of values for a given paddock
+         * @param FarmData
+         * @param paddockName to average over
+         * @return {array|*}
+         */
         $scope.getPaddockAverage = function(farmData, paddockName) {
             return soilSampleImporter.paddockSoilSampleRetriever.averagesForPaddock(farmData, paddockName);
         }
 
-        $scope.getPaddockGroupAverage = function (farmData, zoneName) {
-            return soilSampleImporter.paddockGroups.averageForPaddockGroup(farmData, zoneName);
+        /**
+         * Find average values for a given paddockGroup
+         * @param farmData
+         * @param paddockGroup
+         * @return {*}
+         */
+        $scope.getPaddockGroupAverage = function (farmData, paddockGroup) {
+            return soilSampleImporter.paddockGroups.averageForPaddockGroup(farmData, paddockGroup);
         }
 
+      /**
+       * Helper function to join array contents with comma
+       */
         $scope.joinedPaddockNames = function(paddockNameArray){
           return paddockNameArray.join(", ");
         }
@@ -67,10 +108,16 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             $log.info('calculate...');
 
             updateFarmData($scope, farmData);
-
-            soilSampleImporter.ga.trackSoilSampleImporter('AgSmart');
+          /**
+           * Send API usage statistics to GoogleAnalytics. In this example the client name is 'farmbuild-test-client'
+           */
+            soilSampleImporter.ga.trackSoilSampleImporter('farmbuild-test-client');
         };
 
+
+    /**
+     * Clear the currently loaded FarmData from session
+     */
         $scope.clear = function () {
             $scope.farmData = {};
             soilSampleImporter.farmdata.session.clear();
@@ -85,9 +132,14 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             updateFarmData($scope, farmData);
         }
 
+    /**
+     * Check if FarmData is valid and initialize required objects using it.
+     * @param $scope
+     * @param farmData
+     */
         function updateFarmData($scope, farmData) {
             if (!farmData) {
-                $log.error('Failed to load milkSold data...');
+                $log.error('Failed to load data...');
                 $scope.noResult = true;
                 return;
             }
@@ -96,6 +148,10 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
             $scope.paddockFieldNames = farmData.soils.sampleResults.importFieldNames;
             $scope.paddockGroups = farmData.paddockGroups;
 
+            /**
+             * Initialize array having all paddock names for each paddockGroup
+             * @type {Array}
+             */
             $scope.paddockGroupFieldNames = [];
             var managementZoneFields = soilSampleImporter.importField.getPaddockGroupFields();
             for(var i=0; i<managementZoneFields.length; i++) {
@@ -106,6 +162,9 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
     })
 
+    /**
+     * Handle file upload
+     */
     .directive('onReadFile', function ($parse, $log) {
         return {
             restrict: 'A',

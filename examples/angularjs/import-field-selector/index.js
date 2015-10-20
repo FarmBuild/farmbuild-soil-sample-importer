@@ -37,7 +37,17 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             return undefined;
         }
 
+        /**
+         * Add/Change classification type for a given column
+         * @param paddockSelection
+         * @param colIndex
+         * @param classificationType
+         * @param oldValueString
+         */
         $scope.changeClassification = function (paddockSelection, colIndex, classificationType, oldValueString) {
+          /**
+           * Remove any previous classification
+           */
             if (!(validations.isEmpty(oldValueString))) {
                 $log.info('removing previously selected classificationType '+oldValueString);
                 //oldValue is string literal of previous value
@@ -45,6 +55,10 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 importFieldSelector.declassifyColumn(paddockSelection, prevClassification, colIndex);
                 $scope.classifiedColumns[colIndex]=undefined;
             }
+
+          /**
+           * If the new classificationType is not empty classify the column in concern to the new classificationType
+           */
             if (!(validations.isEmpty(classificationType))) {
                 $log.info('adding newly selected classificationType '+classificationType + " to col "+colIndex);
                 importFieldSelector.classifyColumn(paddockSelection, classificationType, colIndex);
@@ -53,6 +67,11 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             $scope.valid = importFieldSelector.validate(paddockSelection);
         }
 
+
+        /**
+         * Auto link the columns to classificationTypes based on the text column header value
+         * @param importFieldsDefinition
+         */
         $scope.autoLink = function(importFieldsDefinition) {
 
             var colIndex = importFieldsDefinition.results.columnHeaders.indexOf($scope.selectedColumn);
@@ -82,7 +101,17 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
         }
 
+    /**
+     * Change the paddock name selection for a given row
+     * @param paddockSelection
+     * @param rowIndex
+     * @param paddock
+     * @param oldValueString
+     */
         $scope.changePaddock = function (paddockSelection, rowIndex, paddock, oldValueString) {
+          /**
+           * If a paddock name has been already selected for the row in concern remove it
+           */
             if (!(validations.isEmpty(oldValueString))) {
                 $log.info('removing previously selected paddock '+oldValueString);
                 //oldValue is string literal of previous paddock value
@@ -90,6 +119,9 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
                 importFieldSelector.disconnectRow(paddockSelection, prevPaddock, rowIndex);
                 $scope.connectedRows[rowIndex]='';
             }
+          /**
+           * Change to new paddock name for the given row index
+           */
             if (!(validations.isEmpty(paddock))) {
                 $log.info('adding newly selected paddock '+paddock + " to row "+rowIndex);
                 importFieldSelector.connectRow(paddockSelection, paddock, rowIndex);
@@ -98,13 +130,16 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             $scope.valid = importFieldSelector.validate(paddockSelection);
         }
 
+
+      /**
+         * Parse the CSV file been uploaded and get hte intermediate object which represents hte data in the CSV file
+         * @param $fileContent
+         */
         $scope.loadSoilSample = function ($fileContent) {
             try {
                 var csv = d3.csv.parseRows($fileContent);
                 var header = csv.shift();
-                $scope.paddockSelection = importFieldSelector.createNew($scope.myFarmData,
-                    header,
-                    csv, 0);
+                $scope.paddockSelection = importFieldSelector.createNew($scope.myFarmData, header, csv, 0);
                 if (!$scope.paddockSelection) {
                     $scope.noResult = true;
                     return;
@@ -123,6 +158,10 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             }
         }
 
+    /**
+     * Export the classified FarmData as a json
+     * @param paddockSelection
+     */
         $scope.export = function (paddockSelection) {
 
             $scope.result = importFieldSelector.save($scope.myFarmData, paddockSelection);
@@ -132,11 +171,17 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             else {
                 $scope.noResult = true;
             }
+          /**
+           * Send API usage statistics to GoogleAnalytics. In this example the client name is 'farmbuild-test-client'
+           */
           soilSampleImporter.ga.trackSoilSampleImporter('farmbuild-test-client');
 
         };
     })
 
+    /**
+     * Handle the CSV file import.
+     */
     .directive('onReadFile', function ($parse, $log) {
         return {
             restrict: 'A',

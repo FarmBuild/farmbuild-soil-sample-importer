@@ -98,7 +98,7 @@ angular.module('farmbuild.soilSampleImporter')
 
 
         /**
-         * Given the column index of the CSV file, link the paddocks with the sample rows
+         * Given the column header of the CSV file, link an import field with it
          * @method autoLinkPaddock
          * @param importFieldsSelection
          * @param linkColumnIndex
