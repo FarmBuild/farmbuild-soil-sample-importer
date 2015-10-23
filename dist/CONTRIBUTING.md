@@ -1,3 +1,12 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Contributing](#contributing)
+  - [How to Submit a Pull Request](#how-to-submit-a-pull-request)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Contributing
 
 **Important:** these GitHub issues are for *bug reports and feature requests only*. Please use [StackOverflow](http://stackoverflow.com/questions/tagged/d3.js) or the [d3-js Google group](https://groups.google.com/d/forum/d3-js) for general help.

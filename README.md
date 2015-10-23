@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [FarmBuild Soil Sample Importer](#farmbuild-soil-sample-importer)
+  - [Getting Started](#getting-started)
+    - [AngularJS example](#angularjs-example)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # FarmBuild Soil Sample Importer
 
 This is the soil sample importer component of FarmBuild project.

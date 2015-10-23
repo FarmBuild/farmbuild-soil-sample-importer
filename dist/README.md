@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Data-Driven Documents](#data-driven-documents)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Data-Driven Documents
 
 <a href="http://d3js.org"><img src="http://d3js.org/logo.svg" align="left" hspace="10" vspace="6"></a>
