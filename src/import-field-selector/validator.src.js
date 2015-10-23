@@ -6,10 +6,6 @@
  */
 'use strict';
 
-/**
- * soilSampleImporter/importFieldSelectionValidator
- * @module soilSampleImporter/importFieldSelectionValidator
- */
 angular.module('farmbuild.soilSampleImporter')
     .factory('importFieldSelectionValidator', function ($log, validations, importFieldTypes) {
         var importFieldSelectionValidator = {};
@@ -23,10 +19,11 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Check that  csv data is acceptable for the soil sample import process
-         * @param columnHeaders
-         * @param rows
-         * @returns {boolean}
+         * Check if the csv data is acceptable for the soil sample import process
+         * @param columnHeaders     Input CSV file header columns
+         * @param rows              Input CSV file data as array of arrays
+         * @returns {boolean}       true if csv data is valid, false otherwise
+         * @private
          */
         importFieldSelectionValidator.validateCreateNew = function(columnHeaders, rows) {
             if (!validations.isDefined(columnHeaders) || columnHeaders.length == 0) {

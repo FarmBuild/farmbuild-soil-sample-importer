@@ -20,7 +20,7 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Create default intermediate object for storing CSV data before converting to FarmData block
      * @method createDefault
-     * @returns {{dateLastUpdated: Date, results: {columnHeaders: Array, rows: Array}, importFieldDictionary: {}, paddockRowDictionary: {}, paddockNameColumn: undefined}}
+     * @returns {object} having a structure of {{dateLastUpdated: Date, results: {columnHeaders: Array, rows: Array}, importFieldDictionary: {}, paddockRowDictionary: {}, paddockNameColumn: undefined}}
      * @public
      */
     function createDefault(){
@@ -43,14 +43,13 @@ angular.module('farmbuild.soilSampleImporter')
 
 
     /**
-     * Using the predefined intermediate object, {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault},
-     * which has the loaded CSV information convert to FarmData block.
-     * Will remove any previously loaded soil sampleResults blocks in FarmData and add new soil sampleResults.
+     * Add the loaded CSV information in to FarmData.
+     * The CSV information should be held in the predefined intermediate object, {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault},
+     * This predefined object will be added to the FardData object as soil sampleResults block. This method will remove any previously loaded soil sampleResults blocks in FarmData and add new soil sampleResults.
      * @method toFarmData
-     * @param {!object} FarmData Valid FarmData with paddocks (need not contain soil sampleResults)
-     * @param {!object} newSampleResults predefined intermediate object,
-     * @see {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault}
-     * @returns FarmData block with soil sampleResults
+     * @param {!object} FarmData Valid FarmData with paddocks (need not contain a soil sampleResults block)
+     * @param {!object} newSampleResults Predefined intermediate object, {@link module:soilSampleImporter/soilSampleConverter~createDefault|createDefault}
+     * @returns FarmData with soils sampleResults block
      * @public
      */
     function toFarmData(farmData , newSampleResults){

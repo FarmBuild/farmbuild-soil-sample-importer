@@ -15,12 +15,6 @@ describe('FarmBuild soil sample import examples ', function() {
         toContain('FarmBuild Soil Sample Importer');
     });
 
-//    it('should have correct version', function() {
-//      expect(element.all(by.css('version span')).first().getText()).
-//        toContain('0.1');
-//    });
-
-
     
   });
   

@@ -20,9 +20,9 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Get all soil sampleResults for a given paddock name from the FarmData
      * @method soilSamplesInPaddock
-     * @param FarmData
-     * @param paddockName
-     * @returns soil sampleResults array
+     * @param {object} FarmData valid FarmData object
+     * @param {string} paddockName
+     * @returns {array} soil sampleResults array
      * @public
      */
     paddockSoilSampleRetriever.soilSamplesInPaddock = function(farmData, paddockName){
@@ -33,34 +33,28 @@ angular.module('farmbuild.soilSampleImporter')
       }
 
       var paddock = farmData.paddocks;
-      $log.info('soilSamplesInPaddock main  '+paddock.length+' zzzzzz paddock '+JSON.stringify(paddock,null,"  "));
+      $log.info('soilSamplesInPaddock main  '+paddock.length+'  paddock '+JSON.stringify(paddock,null,"  "));
       var singlePaddock,  paddockSoil;
       for(var i=0;i<paddock.length;i++){
         singlePaddock = paddock[i];
-        $log.info('singlePaddock name '+singlePaddock.name);
         if(singlePaddock.name == paddockName){
           paddockSoil = singlePaddock.soils;
           return paddockSoil.sampleResults;
         }
       }
 
-      $log.info('paddockSoil '+paddockSoil);
       if(!_isDefined(paddockSoil) || !_isDefined(paddockSoil.sampleResults)){
         return undefined;
       }
-//      $log.info('paddockSoil after '+paddockSoil.sampleResults[0]);
-//      var singlesamples = paddockSoil.sampleResults[0];
-//      $log.info('singlesamples '+singlesamples['Sample Id']);
-//      return paddockSoil.sampleResults;
 
     }
 
     /**
      * Average given soil sampleResult array values
      * @method averagesForSoilSamples
-     * @param importFieldNames
-     * @param soilSamples
-     * @returns averaged
+     * @param {array} importFieldNames Array of string values containing the field names which are to be imported
+     * @param {array} soilSamples Object array containing values for each import field grouped by soil samples
+     * @returns {array} Array of float values averaged over soil samples for each import field
      * @private
      */
     paddockSoilSampleRetriever.averagesForSoilSamples = function(importFieldNames, soilSamples){
@@ -129,9 +123,9 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Get average sampleResult values for a given paddock name
      * @method averagesForPaddock
-     * @param farmData
-     * @param paddockName
-     * @returns {*}
+     * @param {object} FarmData FarmData object
+     * @param {string} paddockName Name of the paddock which should be in the FarmData
+     * @returns  {array} Array of float values averaged over soil samples for each import field for the given paddock
      * @public
      */
     paddockSoilSampleRetriever.averagesForPaddock = function(farmData, paddockName){

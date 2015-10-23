@@ -18,8 +18,8 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Validate if FarmData has valid soil sampleResult data in it
      * @method isValidFarmDataWithSoilSample
-     * @param {!object} FarmData
-     * @returns {boolean}
+     * @param {!object} FarmData Valid FarmData object
+     * @returns {boolean} Check if FarmData is valid and having a valid soil sampleResult block
      * @public
      */
     soilSampleValidator.isValidFarmDataWithSoilSample = function(farmData){
