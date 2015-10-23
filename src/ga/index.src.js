@@ -21,7 +21,7 @@ angular.module('farmbuild.soilSampleImporter')
 
     /**
      * Sends API usage statistics to Google analytics
-     * @param clientName
+     * @param clientName    FarmBuild client name
      * @public
      * @static
      */

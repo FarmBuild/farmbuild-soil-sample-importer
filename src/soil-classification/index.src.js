@@ -92,13 +92,14 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Find the range for a given classification type, value, and type dependency value
+         * Find the range for a given classification type, value, and type dependency value.
+         * Please note that this method is experimental at this stage.
          * @method findRangeWithDependency
          * @param {string} classificationType String name of the classificationType as defined in <a href="https://raw.githubusercontent.com/FarmBuild/farmbuild-soil-sample-importer/master/src/soil-classification/defaults.conf.src.js">
          *   default.conf.src.js</a> file
          * @param {float} classificationValue Value of the classificationType
          * @param {float} dependencyValue Value of the classificationType which defines the classificationType in question
-         * @returns {object} Object containing name,min,max,defaultColor ???
+         * @returns {object} Object containing name,min,max,defaultColor
          */
         soilClassification.findRangeWithDependency = function (classificationType, classificationValue,
                                                  dependencyValue) {
@@ -123,10 +124,10 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Return the classification for the measurement (identified by the key) in the given soil sample result
-         * ????
-         * @param sampleResult
-         * @param key
-         * @returns {*}
+         *
+         * @param sampleResult {object} The object in the FarmData paddock>>soils>>sampleResults collection
+         * @param key {string} soil classification type
+         * @returns {object} Object containing name,min,max,defaultColor
          */
         soilClassification.classifyResult = function (sampleResult, key) {
 
