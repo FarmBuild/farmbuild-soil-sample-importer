@@ -28,8 +28,8 @@ Example JSON containing paddocks without any soil sample information. Paddocks h
 ###farmdata-new.json
 Contains an example JSON with only the paddocks.
 
-###farmdata-susan-with-sample copy.json
-Is an example JSON file having only two paddocks with soil sample results and paddock groups
+###farmdata-susan-with-sample.json
+Is an example JSON file having only two paddocks and paddock groups
 
 ###Farm12-soil-results.csv
 Contains the soils sample CSV file.
