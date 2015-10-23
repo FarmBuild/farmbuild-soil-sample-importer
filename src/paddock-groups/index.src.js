@@ -21,7 +21,7 @@ angular.module('farmbuild.soilSampleImporter')
     /**
      * Check paddockGroups block and get paddocks for the given paddockGroups name. Undefined if no paddocks found or if FarmData is undefined.
      * @method paddocksInPaddockGroup
-     *  @param {!object } FarmData valid FarrmData object
+     *  @param {!object} FarmData valid FarrmData object
      * @param {string} paddockGroupName name of the paddock group in the paddockGroups block in FarmData
      * @returns {array} Array of paddock names
      * @public

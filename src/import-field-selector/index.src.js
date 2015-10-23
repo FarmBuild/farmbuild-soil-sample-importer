@@ -76,9 +76,10 @@ angular.module('farmbuild.soilSampleImporter')
 
         /**
          * Saves the soil sample data back into farm data object in session.  Internally will validate first.
-         * @param myFarmData
-         * @param importFieldsSelection
-         */
+         * @param {object} myFarmData FarmData object
+         * @param {object} importFieldsSelection temporary object to hold data during soil import process
+         * @return {object} FarmData updated FarmData
+          */
         importFieldSelector.save = function(myFarmData, importFieldsSelection) {
 
             if (!importFieldSelectionValidator.validateImportFieldsDefinition(importFieldsSelection)) {
@@ -98,10 +99,11 @@ angular.module('farmbuild.soilSampleImporter')
 
 
         /**
-         * Given the column header of the CSV file, link an import field with it
+         * Given that the CSV file contains a column with the paddock names, link a paddock to a row in each CSV file.
          * @method autoLinkPaddock
-         * @param importFieldsSelection
-         * @param linkColumnIndex
+         * @param {object} importFieldsSelection temporary object to hold data during soil import process
+         * @param {obejct} linkColumnIndex index of the column in the CSV file containing the paddock name
+         * @return {number} count total number of rows linked successfully
          */
         importFieldSelector.autoLinkPaddock = function(importFieldsSelection, linkColumnIndex) {
             var linkedCount = 0;
@@ -131,11 +133,12 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Associate the row with the given index to a farm paddock
+         * Associate the row in the CSV file with the selected index of a farm paddock
          * @method connectRow
-         * @param importFieldsSelection
-         * @param paddock
-         * @param rowIndex
+         * @param {obejct} importFieldsSelection temporary object to hold data during soil import process
+         * @param {object} paddock paddock object from FarmData
+         * @param {number} rowIndex row index of the CSV
+         *
          */
         importFieldSelector.connectRow =  function(importFieldsSelection, paddock, rowIndex) {
             if (!importFieldsSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
@@ -146,10 +149,9 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Remove association between the row identified by index with the paddock
-         * @param importFieldsSelection
-         * @param paddock
-         * @param index
+         * Remove association between the row identified by index of the paddock
+         * @param {obejct} importFieldsSelection temporary object to hold data during soil import process
+         * @param {object} paddock paddock object from FarmData
          */
         importFieldSelector.disconnectRow =  function(importFieldsSelection, paddock, index) {
             if (importFieldsSelection.paddockRowDictionary.hasOwnProperty(paddock.name)) {
@@ -157,6 +159,12 @@ angular.module('farmbuild.soilSampleImporter')
             }
         }
 
+        /**
+         *  Remove all associations between rows and paddocks.
+         *  @method resetPaddockRowDictionary
+         * @param {object} importFieldsSelection temporary object to hold data during soil import process
+         * @return {obejct} importFieldsSelection temporary object to hold data during soil import process, with the paddock associations removed
+         */
         importFieldSelector.resetPaddockRowDictionary =  function(paddockSelection) {
             paddockSelection.paddockRowDictionary = {};
 
@@ -164,30 +172,39 @@ angular.module('farmbuild.soilSampleImporter')
         }
 
         /**
-         * Add classification for column with given index
+         * Associate a column with a import field definition.
          * @method classifyColumn
-         * @param importFieldsSelection
-         * @param classificationType
-         * @param index
+         * @param {object} importFieldsSelection - temporary object to hold data during soil import process.
+         * @param {object} importFieldDefinition {@link module:soilSampleImporter/importField~createDefault|createDefault}
+         * @param {number} index Column index in the CSV to disconnect
          */
         importFieldSelector.classifyColumn =  function(importFieldsSelection, classificationType, index) {
             importFieldsSelection.importFieldDictionary[classificationType.name] = index;
-            //$log.info("paddockSelection "+JSON.stringify(importFieldsSelection));
         }
 
         /**
          * Remove classification for column with given index
          * @method declassifyColumn
-         * @param paddockSelection
-         * @param classificationType
-         * @param index
+         * @param {object} importFieldsSelection - temporary object to hold data during soil import process.
+         * @param {object} importFieldDefinition {@link module:soilSampleImporter/importField~createDefault|createDefault}
+         * @param {number} index Column index in the CSV to remove
          */
         importFieldSelector.declassifyColumn =  function(paddockSelection, classificationType, index) {
             delete paddockSelection.importFieldDictionary[classificationType.name];
         }
 
-
+        /**
+         * Read the deafult import field definition file and return a collection
+         * <a href="https://raw.githubusercontent.com/FarmBuild/farmbuild-soil-sample-importer/master/src/import-field-definition/defaults.conf.src.js">
+         *  import-field-definition>>default.conf.src.js</a>
+         *  @method types
+         *  @return {collection}  object Collection containing the default import field definitions
+         */
         importFieldSelector.types = _types;
+
+        /**
+         * Refer to  <a href="https://github.com/FarmBuild/farmbuild-farmdata">FarmData</a>.
+         */
         importFieldSelector.paddocks = _paddocks;
 
         return importFieldSelector;
