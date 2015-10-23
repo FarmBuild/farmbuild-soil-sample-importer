@@ -6,10 +6,6 @@
  */
 'use strict';
 
-/**
- * soilSampleImporter/importFieldSelectionValidator
- * @module soilSampleImporter/importFieldSelectionValidator
- */
 angular.module('farmbuild.soilSampleImporter')
     .factory('importFieldSelectionValidator', function ($log, validations, importFieldTypes) {
         var importFieldSelectionValidator = {};
