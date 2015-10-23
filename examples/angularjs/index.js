@@ -39,7 +39,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
                     return;
                 }
               /**
-               * FarmData is defined.
+               * If FarmData is defined update the $scope variable FarmData values
                */
                 updateFarmData($scope, farmData);
                 $scope.prettyContent = JSON.stringify(farmData, null, "    ");
@@ -51,7 +51,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
 
         /**
          * Export the FarmData which is already in session as a json file
-         * @param farmData
+         * @param FarmData
          */
         $scope.exportFarmData = function (farmData) {
             var url = 'data:application/json;charset=utf8,' + encodeURIComponent(JSON.stringify(farmData, undefined, 2));
@@ -60,9 +60,9 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
         };
 
         /**
-         * Get object containing name,min,max,defaultColor for the given string key value
+         * Get object containing name,min,max,defaultColor for the given string key value of a import field name
          * @param sampleResult
-         * @param key
+         * @param key import field name string value (check API documnetation for more details)
          * @return {*}
          */
         $scope.getSampleResultClassification = function(sampleResult, key) {
@@ -70,6 +70,9 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
                 $log.info('avg result is undefined');
                 return undefined;
             }
+            /**
+             * Check if the given import field has a classification associated with it. If so classify it.
+             */
             if (soilSampleImporter.importField.hasClassification(key)) {
                 var range = soilSampleImporter.soilClassification.classifyResult(sampleResult, key);
                 return range;
@@ -78,7 +81,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
         }
 
         /**
-         * Get average of values for a given paddock
+         * Get average of values over soil samples results for a given paddock
          * @param FarmData
          * @param paddockName to average over
          * @return {array|*}
@@ -88,7 +91,7 @@ angular.module('farmbuild.soilSampleImporter.examples', ['farmbuild.soilSampleIm
         }
 
         /**
-         * Find average values for a given paddockGroup
+         * Find average values over soil samples results for a given paddockGroup
          * @param farmData
          * @param paddockGroup
          * @return {*}

@@ -39,38 +39,41 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
         /**
          * Add/Change classification type for a given column
-         * @param paddockSelection
-         * @param colIndex
-         * @param classificationType
-         * @param oldValueString
+         * @param {object} importFieldsSelection - temporary object to hold data during soil import process.
+         * @param {number} colIndex CSV files column index
+         * @param {object} importFieldDefinition new import field the column should be classified in to
+         * @param {string} oldValueString old import field name the column should be disconnected from
          */
-        $scope.changeClassification = function (paddockSelection, colIndex, classificationType, oldValueString) {
+        $scope.changeClassification = function (importFieldsSelection, colIndex, importFieldDefinition, oldValueString) {
           /**
            * Remove any previous classification
            */
             if (!(validations.isEmpty(oldValueString))) {
-                $log.info('removing previously selected classificationType '+oldValueString);
+                $log.info('removing previously selected importFieldDefinition '+oldValueString);
                 //oldValue is string literal of previous value
                 var prevClassification = JSON.parse(oldValueString);
-                importFieldSelector.declassifyColumn(paddockSelection, prevClassification, colIndex);
+                /**
+                 * Remove previous associations
+                 */
+                importFieldSelector.declassifyColumn(importFieldsSelection, prevClassification, colIndex);
                 $scope.classifiedColumns[colIndex]=undefined;
             }
 
           /**
-           * If the new classificationType is not empty classify the column in concern to the new classificationType
+           * If the new importFieldDefinition is not empty classify the column in concern to the new importFieldDefinition
            */
-            if (!(validations.isEmpty(classificationType))) {
-                $log.info('adding newly selected classificationType '+classificationType + " to col "+colIndex);
-                importFieldSelector.classifyColumn(paddockSelection, classificationType, colIndex);
-                $scope.classifiedColumns[colIndex]=classificationType;
+            if (!(validations.isEmpty(importFieldDefinition))) {
+                $log.info('adding newly selected importFieldDefinition '+importFieldDefinition + " to col "+colIndex);
+                importFieldSelector.classifyColumn(importFieldsSelection, importFieldDefinition, colIndex);
+                $scope.classifiedColumns[colIndex]=importFieldDefinition;
             }
-            $scope.valid = importFieldSelector.validate(paddockSelection);
+            $scope.valid = importFieldSelector.validate(importFieldsSelection);
         }
 
 
         /**
-         * Auto link the columns to classificationTypes based on the text column header value
-         * @param importFieldsDefinition
+         * Auto link the columns to importFieldDefinition based on the text column header value
+         * @param {object} importFieldDefinition new import field the column should be classified in to
          */
         $scope.autoLink = function(importFieldsDefinition) {
 
@@ -79,7 +82,9 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             if (colIndex<0) {
                 return;
             }
-
+            /**
+             * Link the given column to the given import field definition
+             */
             importFieldSelector.autoLinkPaddock(importFieldsDefinition, colIndex);
 
             for(var i=0; i<$scope.connectedRows.length; i++) {
@@ -132,7 +137,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
 
       /**
-         * Parse the CSV file been uploaded and get hte intermediate object which represents hte data in the CSV file
+         * Parse the CSV file been uploaded and get the intermediate object which represents the data in the CSV file
          * @param $fileContent
          */
         $scope.loadSoilSample = function ($fileContent) {
