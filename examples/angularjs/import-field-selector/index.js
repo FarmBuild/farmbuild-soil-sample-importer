@@ -1,14 +1,36 @@
 'use strict';
 
+/**
+ * AngularJS is popular JavaScript MVC framework which is developed by google.
+ * In this example we use AngularJS to construct the structure of the client side application.
+ * You can find out more about AngularJS at https://angularjs.org
+ * In farmbuild project we have used AngularJS as an internal dependency to provide modular structure, but to use FarmBuild JavaScript libraries you are forced to use AngularJS.
+ * All the api function are available via "farmbuild" namespace (eg: farmbuild.webmapping, farmbuild.nutrientcalculator).
+ * If you are using AngularJS in your application you can consume farmbuild component as AngularJS modules, similar to this example.
+ */
+ 
+ /**
+ * Defining my application and passing 'farmbuild.soilSampleImporter' as a dependency to be injected.
+ */
 angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbuild.soilSampleImporter'])
-
+	/**
+	 * "run" method is executed before any other function in application, so I am putting my initial configs here.
+	 */
     .run(function ($rootScope) {
+        /**
+	    * Optional version number for sake of this example (not part of the webmapping api)
+		*/
         $rootScope.appVersion = farmbuild.examples.soilsampleimporter.version;
     })
-
+    
+	/**
+	 * controller is where I put the logic of my application
+	 */
     .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, importFieldSelector,validations,
             collections) {
-
+		/**
+		 * Defining variables on the $scope
+		 */
         $scope.paddockSelection = {};
         $scope.noResult = false;
         $scope.paddockColumnIndex = 0;
@@ -186,7 +208,11 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
 
     /**
      * Handle the CSV file import.
-     */
+     * directives are markers on a DOM element (such as an attribute,
+    * element name, comment or CSS class) that tell AngularJS's HTML compiler ($compile) to attach a specified behavior to that DOM element (e.g. via event listeners),
+    * or even to transform the DOM element and its children
+    * visit https://docs.angularjs.org/guide/directive for more information
+    */
     .directive('onReadFile', function ($parse, $log) {
         return {
             restrict: 'A',
@@ -219,6 +245,13 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
             }
         };
     })
+    
+    /**
+     * A custom AngularJS filter
+     * A filter formats the value of an expression for display to the user. 
+     * They can be used in view templates, controllers or services and it is easy to define your own filter.
+     * Read more about filter at: https://docs.angularjs.org/guide/filter
+    */
     .filter('excludeFrom', [function() {
         return function(array,expression1, expression2, comparator){
             //$log.info("expr "+expression);
