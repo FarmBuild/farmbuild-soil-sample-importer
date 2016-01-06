@@ -14,7 +14,7 @@
  */
 angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbuild.soilSampleImporter'])
 	/**
-	 * "run" method is executed before any other function in application, so I am putting my initial configs here.
+	 * "run" method is executed before any other function in application, so we are putting my initial configs here.
 	 */
     .run(function ($rootScope) {
         /**
@@ -24,7 +24,7 @@ angular.module('farmbuild.soilSampleImporter.examples.paddockSelector', ['farmbu
     })
     
 	/**
-	 * controller is where I put the logic of my application
+	 * controller is where we put the logic of my application
 	 */
     .controller('PaddockSelectorCtrl', function ($scope, $log, soilSampleImporter, importFieldSelector,validations,
             collections) {
